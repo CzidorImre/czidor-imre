@@ -1,0 +1,177 @@
+---
+// Standalone A4 print-optimized professional profile.
+// Self-contained: own token set + inline CSS, does NOT load global.css.
+const FAVICON =
+  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 38 38'%3E%3Crect width='38' height='38' rx='7' fill='%23F7F5F0'/%3E%3Cg fill='none' stroke='%233E8A95' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'%3E%3Cpath d='M5 18 L19 6.5 L33 18'/%3E%3Cpath d='M8.5 15.5 V31.5 H29.5 V15.5'/%3E%3Cpath d='M16 31.5 V23 H22 V31.5'/%3E%3C/g%3E%3C/svg%3E";
+---
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Szakmai profil · Czidor Imre · Építési műszaki ellenőr</title>
+<meta name="description" content="Czidor Imre szakmai profilja — építési műszaki ellenőr és felelős műszaki vezető, GÉP-M 2001 Kft., Miskolc. Nyomtatható egyoldalas összefoglaló.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,500;0,600;0,700;1,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" href={FAVICON}>
+<style>
+  :root {
+    --paper:#fff; --ink:#1C1B18; --ink-2:#3B3933; --muted:#6A665D; --faint:#9A958A;
+    --line:rgba(28,27,24,.16); --line-2:rgba(28,27,24,.09); --accent:#3E8A95;
+    --fd:"Spectral",Georgia,serif; --fs:"IBM Plex Sans",system-ui,sans-serif; --fm:"IBM Plex Mono",monospace;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:var(--fs);background:#E9E5DB;color:var(--ink);line-height:1.5;font-size:14px;-webkit-font-smoothing:antialiased;padding:2rem 1rem;}
+  h1,h2,h3,h4{font-family:var(--fd);font-weight:600;letter-spacing:-.01em;line-height:1.15;}
+  .mono{font-family:var(--fm);text-transform:uppercase;letter-spacing:.14em;font-size:9.5px;font-weight:400;}
+
+  /* toolbar (screen only) */
+  .bar{max-width:210mm;margin:0 auto 1rem;display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;}
+  .bar a,.bar button{font-family:var(--fs);font-size:13px;font-weight:500;border-radius:4px;padding:.6rem 1.1rem;cursor:pointer;border:1px solid var(--line);background:#fff;color:var(--ink);display:inline-flex;align-items:center;gap:.5rem;text-decoration:none;}
+  .bar .print{background:var(--ink);color:#fff;border-color:var(--ink);}
+  .bar .print:hover{background:var(--accent);border-color:var(--accent);}
+  .bar a:hover{border-color:var(--ink);}
+
+  /* sheet */
+  .sheet{width:210mm;min-height:297mm;margin:0 auto;background:var(--paper);padding:18mm 16mm;box-shadow:0 10px 40px -12px rgba(0,0,0,.3);}
+  .ph{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:2px solid var(--ink);padding-bottom:1.2rem;margin-bottom:1.4rem;}
+  .ph .who h1{font-size:30px;}
+  .ph .who .role{font-family:var(--fm);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-top:.5rem;}
+  .ph .mark{display:flex;align-items:center;gap:.6rem;}
+  .ph .mark svg{width:40px;height:40px;color:var(--ink);}
+  .ph .mark .co{text-align:right;line-height:1.3;}
+  .ph .mark .co b{font-family:var(--fd);font-size:14px;display:block;}
+  .ph .mark .co span{font-family:var(--fm);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);}
+
+  .intro{font-size:14.5px;color:var(--ink-2);max-width:62ch;margin-bottom:1.6rem;}
+  .intro b{color:var(--ink);}
+
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:1.6rem 2.4rem;}
+  .blk{margin-bottom:1.5rem;break-inside:avoid;}
+  .blk > .h{font-family:var(--fm);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);padding-bottom:.5rem;margin-bottom:.8rem;border-bottom:1px solid var(--line);}
+  .blk ul{list-style:none;}
+  .blk li{display:flex;gap:.6rem;padding:.28rem 0;color:var(--ink-2);font-size:13px;}
+  .blk li::before{content:"";margin-top:.55em;width:6px;height:1px;background:var(--accent);flex-shrink:0;}
+
+  .tl li{display:grid;grid-template-columns:62px 1fr;gap:.7rem;padding:.4rem 0;border-bottom:1px solid var(--line-2);}
+  .tl li::before{display:none;}
+  .tl .y{font-family:var(--fm);font-size:11px;color:var(--accent);}
+  .tl .r{font-weight:600;font-size:13px;}
+  .tl .c{font-size:11.5px;color:var(--muted);}
+
+  .creds{display:flex;flex-direction:column;gap:.5rem;}
+  .cred{display:flex;justify-content:space-between;gap:1rem;padding:.5rem .8rem;border:1px solid var(--line);border-radius:4px;}
+  .cred .t{font-size:12.5px;font-weight:500;}
+  .cred .code{font-family:var(--fm);font-size:11px;color:var(--accent);white-space:nowrap;}
+
+  .ft{margin-top:1.6rem;padding-top:1rem;border-top:2px solid var(--ink);display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;}
+  .ft .c{display:flex;flex-direction:column;gap:.2rem;}
+  .ft .c .k{font-family:var(--fm);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);}
+  .ft .c .v{font-size:13px;font-weight:600;}
+
+  @media print{
+    @page{size:A4;margin:0;}
+    body{background:#fff;padding:0;}
+    .bar{display:none;}
+    .sheet{box-shadow:none;width:auto;min-height:auto;margin:0;padding:16mm 15mm;}
+  }
+  @media (max-width:760px){
+    .sheet{width:100%;padding:1.5rem;}
+    .cols{grid-template-columns:1fr;}
+    .ph{flex-direction:column;gap:1rem;}
+    .ph .mark .co{text-align:left;}
+  }
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <a href="/">← Vissza a weboldalra</a>
+  <button class="print" onclick="window.print()"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-2M6 14h12v7H6z" stroke-linecap="round" stroke-linejoin="round"/></svg>Nyomtatás / PDF mentése</button>
+</div>
+
+<div class="sheet">
+  <header class="ph">
+    <div class="who">
+      <h1>Czidor Imre</h1>
+      <div class="role">Építési műszaki ellenőr · Felelős műszaki vezető</div>
+    </div>
+    <div class="mark">
+      <svg viewBox="0 0 38 38" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M5 18 L19 6.5 L33 18"/><path d="M8.5 15.5 V31.5 H29.5 V15.5"/><path d="M16 31.5 V23 H22 V31.5"/></svg>
+      <div class="co"><b>GÉP-M 2001 Kft.</b><span>Miskolc · 1984 óta</span></div>
+    </div>
+  </header>
+
+  <p class="intro"><b>Több mint 40 év az építőiparban.</b> Független, szakértő építési műszaki ellenőrzés és felelős műszaki vezetés — az építtető oldalán, a tervtől a kulcsrakész átadásig. Minőség, határidő és költség folyamatos kontroll alatt, lakóépülettől az ipari beruházásig.</p>
+
+  <div class="cols">
+    <div>
+      <div class="blk">
+        <div class="h">Szolgáltatások</div>
+        <ul>
+          <li>Építési műszaki ellenőrzés (megbízói oldal)</li>
+          <li>Felelős műszaki vezetés (kivitelezői oldal)</li>
+          <li>Terv- és költségvetés-felülvizsgálat</li>
+          <li>Beruházás-lebonyolítás, műszaki tanácsadás</li>
+          <li>Közbeszerzési (Kbt.) projektek műszaki támogatása</li>
+        </ul>
+      </div>
+      <div class="blk">
+        <div class="h">Szakmai jogosultságok</div>
+        <div class="creds">
+          <div class="cred"><span class="t">Építési műszaki ellenőr</span><span class="code">ME-É-I 05-50111</span></div>
+          <div class="cred"><span class="t">Felelős műszaki vezető (Ép)</span><span class="code">MV-Ép/A 05-50111</span></div>
+          <div class="cred"><span class="t">Felelős műszaki vezető (M)</span><span class="code">MV-M 05-50111</span></div>
+        </div>
+      </div>
+      <div class="blk">
+        <div class="h">Kiemelt referenciák</div>
+        <ul>
+          <li>JET Transzport International Kft. — logisztikai csarnokbővítés (2022)</li>
+          <li>Társasház-beruházások — Eger, Hajdúszoboszló</li>
+          <li>Ipari és önkormányzati létesítmények — BAZ megye</li>
+          <li>Családi házak és felújítások — Miskolc és térsége</li>
+        </ul>
+      </div>
+    </div>
+
+    <div>
+      <div class="blk">
+        <div class="h">Szakmai út</div>
+        <ul class="tl">
+          <li><span class="y">1984–91</span><span><span class="r">Munkahelyi technikus</span><span class="c">Borsod Megyei Állami Építőipari Vállalat</span></span></li>
+          <li><span class="y">1991–02</span><span><span class="r">Létesítményfelelős</span><span class="c">Középület és Lakásépítő Zrt.</span></span></li>
+          <li><span class="y">2001 –</span><span><span class="r">Alapító, ügyvezető</span><span class="c">GÉP-M 2001 Kft.</span></span></li>
+          <li><span class="y">2003–08</span><span><span class="r">Beruházás-lebonyolító, műszaki ellenőr</span><span class="c">OTP Ingatlan Zrt.</span></span></li>
+          <li><span class="y">2008 –</span><span><span class="r">FMV, építési műszaki ellenőr</span><span class="c">Önálló gyakorlat</span></span></li>
+        </ul>
+      </div>
+      <div class="blk">
+        <div class="h">Végzettség</div>
+        <ul class="tl">
+          <li><span class="y">1985</span><span><span class="r">Magasépítő technikus</span><span class="c">Építőipari Szakközépiskola</span></span></li>
+          <li><span class="y">2000</span><span><span class="r">Műszaki oktató diploma</span><span class="c">PTE Pollack Mihály Műszaki Kar</span></span></li>
+        </ul>
+      </div>
+      <div class="blk">
+        <div class="h">Szolgáltatási terület</div>
+        <ul>
+          <li>Miskolc központtal, Borsod-Abaúj-Zemplén megye</li>
+          <li>Észak-Magyarország és a Tiszántúl nagy része</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <footer class="ft">
+    <div class="c"><span class="k">Telefon</span><span class="v">+36 20 942 5707</span></div>
+    <div class="c"><span class="k">E-mail</span><span class="v">gepm.kft@gmail.com</span></div>
+    <div class="c"><span class="k">Székhely</span><span class="v">3535 Miskolc, Tömörkény I. u. 21.</span></div>
+    <div class="c"><span class="k">Kamara</span><span class="v">BAZ Megyei Mérnöki Kamara</span></div>
+  </footer>
+</div>
+
+</body>
+</html>

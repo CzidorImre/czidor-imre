@@ -1,0 +1,18 @@
+---
+// Fixed/floating UI: mobile call bar, back-to-top, cookie note.
+// Behaviour (show/hide, localStorage consent) is in /site.js.
+---
+<!-- mobile click-to-call bar -->
+<div class="callbar" id="callbar" aria-label="Gyors elérhetőség">
+  <a href="tel:+36209425707" class="callbar-btn call"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z" stroke-linecap="round" stroke-linejoin="round"/></svg>Hívás</a>
+  <a href="#kapcsolat" class="callbar-btn quote">Ajánlatkérés</a>
+</div>
+
+<!-- back to top -->
+<button class="totop" id="totop" type="button" aria-label="Vissza a tetejére"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 19V5M6 11l6-6 6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
+<!-- cookie / consent note -->
+<div class="cookie" id="cookie" role="dialog" aria-label="Süti tájékoztató" hidden>
+  <p>Ez a weboldal kizárólag a működéshez szükséges helyi tárolást használ — nyomkövető vagy marketing sütiket nem. <a href="/adatvedelem/" class="lu">Részletek</a></p>
+  <button type="button" id="cookie-ok" class="btn btn-primary">Értem</button>
+</div>

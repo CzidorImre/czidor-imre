@@ -1,0 +1,46 @@
+---
+// 06 — References. Featured project + filter pills + the #proj-grid,
+// which /site.js fills from the `projects` array and filters client-side.
+---
+<section class="section" id="referenciak" style="background:var(--paper-2)">
+  <div class="wrap">
+    <div class="shead">
+      <div class="rv">
+        <div class="eyebrow" style="margin-bottom:1.1rem"><span class="dot"></span><span class="mono">06 — Referenciák</span></div>
+        <h2>Válogatott<br>referenciaprojektek.</h2>
+      </div>
+      <p class="lead rv rv-d1">Több mint 30 projekt 2003 óta — társasházaktól OTP bankfiókokon át a Mezőkövesd Ipari Parkig és a tiszaújvárosi Birla Carbon technológiai alapozásáig.</p>
+    </div>
+
+    <article class="feat rv">
+      <div class="feat-main">
+        <span class="mono k">Kiemelt referencia</span>
+        <h3>JET Transzport International Kft. — logisztikai csarnokbővítés</h3>
+        <p>Logisztikai csarnokbővítés meglévő üzem mellett, folyamatos forgalomban — építési műszaki ellenőri szerepkörben, a kivitelezés teljes folyamatában, az alapozástól a kulcsrakész átadásig.</p>
+        <div class="feat-tags">
+          <span>Ipari létesítmény</span>
+          <span>Műszaki ellenőrzés</span>
+          <span>Generálkivitelezés</span>
+        </div>
+      </div>
+      <div class="feat-side">
+        <div class="big" aria-hidden="true">2022</div>
+        <dl class="feat-dl">
+          <div><dt>Helyszín</dt><dd>Miskolc</dd></div>
+          <div><dt>Szerep</dt><dd>Műsz. ellenőrzés</dd></div>
+          <div><dt>Kategória</dt><dd>Ipari</dd></div>
+          <div><dt>Státusz</dt><dd>Átadva</dd></div>
+        </dl>
+      </div>
+    </article>
+
+    <div class="filters rv" role="group" aria-label="Kategória szűrő">
+      <button class="fbtn act" data-f="all" aria-pressed="true">Összes</button>
+      <button class="fbtn" data-f="lakoepuletek" aria-pressed="false">Lakóépületek</button>
+      <button class="fbtn" data-f="kozepuletek" aria-pressed="false">Középületek</button>
+      <button class="fbtn" data-f="ipari" aria-pressed="false">Ipari létesítmények</button>
+      <button class="fbtn" data-f="bank" aria-pressed="false">Bank- és iroda</button>
+    </div>
+    <div class="proj-grid" id="proj-grid"></div>
+  </div>
+</section>

@@ -1,0 +1,97 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+import StatClients from '../components/StatClients.astro';
+import Services from '../components/Services.astro';
+import WhyEllenor from '../components/WhyEllenor.astro';
+import Process from '../components/Process.astro';
+import WhenMandatory from '../components/WhenMandatory.astro';
+import Catches from '../components/Catches.astro';
+import Tasks from '../components/Tasks.astro';
+import Portfolio from '../components/Portfolio.astro';
+import ServiceArea from '../components/ServiceArea.astro';
+import About from '../components/About.astro';
+import Faq from '../components/Faq.astro';
+import Contact from '../components/Contact.astro';
+import Footer from '../components/Footer.astro';
+import FloatingUI from '../components/FloatingUI.astro';
+
+const ogImage = new URL('/og-image.png', Astro.site).href;
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
+  name: 'Czidor Imre — GÉP-M 2001 Kft.',
+  description:
+    'Építési műszaki ellenőrzés és felelős műszaki vezetés Miskolcon és a régióban. 1984 óta az építőiparban.',
+  founder: { '@type': 'Person', name: 'Czidor Imre' },
+  areaServed: 'Miskolc és Borsod-Abaúj-Zemplén megye, Észak-Magyarország',
+  telephone: '+36209425707',
+  email: 'gepm.kft@gmail.com',
+  knowsAbout: [
+    'Építési műszaki ellenőrzés',
+    'Felelős műszaki vezetés',
+    'Költségvetés-felülvizsgálat',
+    'Elektronikus építési napló',
+  ],
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: 'Tömörkény István utca 21.',
+    addressLocality: 'Miskolc',
+    postalCode: '3535',
+    addressCountry: 'HU',
+  },
+};
+---
+<BaseLayout
+  title="Czidor Imre · Építési műszaki ellenőrzés · 3D"
+  description="Czidor Imre — 40+ év az építőiparban. Építési műszaki ellenőrzés és felelős műszaki vezetés Miskolcon. GÉP-M 2001 Kft."
+>
+  <Fragment slot="head">
+    <meta name="author" content="Czidor Imre" />
+    <meta name="keywords" content="építési műszaki ellenőr, felelős műszaki vezető, FMV, műszaki ellenőrzés, Miskolc, GÉP-M 2001 Kft, épőipar" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="hu_HU" />
+    <meta property="og:site_name" content="Czidor Imre — Építési műszaki ellenőr" />
+    <meta property="og:title" content="Czidor Imre · Építési műszaki ellenőrzés · Felelős műszaki vezetés" />
+    <meta property="og:description" content="40+ év az épőiparban. Független, szakértő építési műszaki ellenőrzés és felelős műszaki vezetés Miskolcon és a régióban." />
+    <meta property="og:url" content={Astro.site} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:title" content="Czidor Imre · Építési műszaki ellenőrzés" />
+    <meta name="twitter:description" content="40+ év az épőiparban. Független műszaki ellenőrzés és felelős műszaki vezetés Miskolcon." />
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  </Fragment>
+
+  <a href="#main" class="skip">Ugrás a tartalomhoz</a>
+
+  <Header />
+
+  <main id="main">
+    <Hero />
+    <StatClients />
+    <Services />
+    <WhyEllenor />
+    <Process />
+    <WhenMandatory />
+    <Catches />
+    <Tasks />
+    <Portfolio />
+    <ServiceArea />
+    <About />
+    <Faq />
+    <Contact />
+  </main>
+
+  <Footer />
+  <FloatingUI />
+
+  <!-- Three.js r128 (legacy global build) + scene + interactions -->
+  <script is:inline src="https://unpkg.com/three@0.128.0/build/three.min.js"></script>
+  <script is:inline src="https://unpkg.com/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+  <script is:inline src="/scene.js"></script>
+  <script is:inline src="/site.js"></script>
+</BaseLayout>

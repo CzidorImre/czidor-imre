@@ -1,0 +1,52 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout
+  title="Impresszum · Czidor Imre · GÉP-M 2001 Kft."
+  description="Impresszum — GÉP-M 2001 Kft., Czidor Imre építési műszaki ellenőr, Miskolc."
+  noindex
+>
+  <style slot="head">
+    .legal-wrap { max-width: 760px; margin-inline: auto; padding: clamp(6rem,12vw,9rem) clamp(1.25rem,4vw,2rem) 5rem; }
+    .legal-back { display: inline-flex; align-items: center; gap: .5rem; font-family: var(--fm); font-size: 11.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-bottom: 2.5rem; transition: color .2s; }
+    .legal-back:hover { color: var(--accent); }
+    .legal-wrap h1 { font-size: clamp(2rem,5vw,3rem); margin-bottom: .6rem; }
+    .legal-sub { color: var(--muted); margin-bottom: 3rem; }
+    .legal-wrap h2 { font-size: 1.3rem; margin: 2.5rem 0 1rem; }
+    .legal-dl > div { display: grid; grid-template-columns: 200px 1fr; gap: 1rem; padding: .9rem 0; border-top: 1px solid var(--line); }
+    .legal-dl dt { font-family: var(--fm); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--faint); }
+    .legal-dl dd { font-size: 1rem; }
+    .legal-dl dd a:hover { color: var(--accent); }
+    .legal-wrap p { color: var(--ink-2); margin-bottom: 1rem; }
+    @media (max-width: 560px){ .legal-dl > div { grid-template-columns: 1fr; gap: .2rem; } }
+  </style>
+
+  <main class="legal-wrap">
+    <a href="/" class="legal-back"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15 18l-6-6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg> Vissza a főoldalra</a>
+    <h1>Impresszum</h1>
+    <p class="legal-sub">A jelen weboldal üzemeltetőjének adatai.</p>
+
+    <h2>Szolgáltató</h2>
+    <dl class="legal-dl">
+      <div><dt>Cégnév</dt><dd>GÉP-M 2001 Kft.</dd></div>
+      <div><dt>Képviselő</dt><dd>Czidor Imre, ügyvezető</dd></div>
+      <div><dt>Székhely</dt><dd>3535 Miskolc, Tömörkény István utca 21.</dd></div>
+      <div><dt>Cégjegyzékszám</dt><dd>05-09-XXXXXX (Miskolci Törvényszék Cégbírósága)</dd></div>
+      <div><dt>Adószám</dt><dd>XXXXXXXX-2-05</dd></div>
+      <div><dt>E-mail</dt><dd><a href="mailto:gepm.kft@gmail.com">gepm.kft@gmail.com</a></dd></div>
+      <div><dt>Telefon</dt><dd><a href="tel:+36209425707">+36 20 942 5707</a></dd></div>
+    </dl>
+
+    <h2>Szakmai jogosultságok</h2>
+    <dl class="legal-dl">
+      <div><dt>Építési műszaki ellenőr</dt><dd>ME-É-I 05-50111</dd></div>
+      <div><dt>Felelős műszaki vezető</dt><dd>MV-Ép/A 05-50111 · MV-M 05-50111</dd></div>
+      <div><dt>Kamara</dt><dd>Borsod-Abaúj-Zemplén Megyei Mérnöki Kamara (MMK)</dd></div>
+    </dl>
+
+    <h2>Tárhelyszolgáltató</h2>
+    <p>A weboldal tárhelyét a mindenkori üzemeltető biztosítja. A pontos tárhelyszolgáltatói adatok a közzétételkor frissülnek.</p>
+
+    <p style="margin-top:3rem;color:var(--faint);font-size:.85rem">Az „XXXX” jelölésű mezőket kérjük a tényleges cégadatokkal kitölteni a publikálás előtt.</p>
+  </main>
+</BaseLayout>

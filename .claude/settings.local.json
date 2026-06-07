@@ -1,0 +1,25 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(unzip -o source.docx -d source_extracted/)",
+      "Bash(rm -f source.docx)",
+      "Bash(rm -rf source_extracted)",
+      "Bash(npm --version)",
+      "Bash(where npm.cmd)",
+      "Bash(\"/c/Program Files/nodejs/node.exe\" --version)",
+      "Read(//c/Program Files/**)",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(where node *)",
+      "Bash(where npm *)",
+      "Read(//c/Users/Imre/AppData/Roaming/**)",
+      "Read(//c/Users/Imre/AppData/Local/Programs/**)",
+      "Read(//c/ProgramData/chocolatey/bin/**)",
+      "Bash(\"/c/Program Files/nodejs/npm.cmd\" --version)",
+      "Bash(\"/c/Program Files/nodejs/npm.cmd\" install)",
+      "Bash(export PATH=\"/c/Program Files/nodejs:$PATH\")",
+      "Bash(npm install *)",
+      "Bash(rm -f src/components/Team.astro src/components/Trust.astro src/data/team.ts)",
+      "Read(//a/a/Claude/apa weboldal/src/**)"
+    ]
+  }
+}

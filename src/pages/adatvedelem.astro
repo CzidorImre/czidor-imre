@@ -1,0 +1,54 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout
+  title="Adatvédelmi tájékoztató · Czidor Imre · GÉP-M 2001 Kft."
+  description="Adatkezelési tájékoztató — a kapcsolatfelvételi űrlapon megadott személyes adatok kezeléséről."
+  noindex
+>
+  <style slot="head">
+    .legal-wrap { max-width: 760px; margin-inline: auto; padding: clamp(6rem,12vw,9rem) clamp(1.25rem,4vw,2rem) 5rem; }
+    .legal-back { display: inline-flex; align-items: center; gap: .5rem; font-family: var(--fm); font-size: 11.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-bottom: 2.5rem; transition: color .2s; }
+    .legal-back:hover { color: var(--accent); }
+    .legal-wrap h1 { font-size: clamp(2rem,5vw,3rem); margin-bottom: .6rem; }
+    .legal-sub { color: var(--muted); margin-bottom: 2.5rem; }
+    .legal-wrap h2 { font-size: 1.3rem; margin: 2.6rem 0 .9rem; }
+    .legal-wrap p { color: var(--ink-2); margin-bottom: 1rem; }
+    .legal-wrap ul { margin: 0 0 1rem 0; display: flex; flex-direction: column; gap: .5rem; }
+    .legal-wrap li { display: flex; gap: .7rem; color: var(--ink-2); }
+    .legal-wrap li::before { content: ""; margin-top: .65em; width: 7px; height: 1px; background: var(--accent); flex-shrink: 0; }
+    .legal-wrap a { color: var(--accent); }
+  </style>
+
+  <main class="legal-wrap">
+    <a href="/" class="legal-back"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15 18l-6-6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg> Vissza a főoldalra</a>
+    <h1>Adatkezelési tájékoztató</h1>
+    <p class="legal-sub">A kapcsolatfelvételi űrlapon megadott személyes adatok kezeléséről, az EU 2016/679 (GDPR) rendelet alapján.</p>
+
+    <h2>1. Az adatkezelő</h2>
+    <p>GÉP-M 2001 Kft. (3535 Miskolc, Tömörkény István utca 21.), képviseli Czidor Imre. Elérhetőség: <a href="mailto:gepm.kft@gmail.com">gepm.kft@gmail.com</a>, <a href="tel:+36209425707">+36 20 942 5707</a>.</p>
+
+    <h2>2. A kezelt adatok és a cél</h2>
+    <p>A weboldal kapcsolatfelvételi űrlapján Ön az alábbi adatokat adhatja meg, kizárólag a megkeresésére adott válasz, illetve az ajánlatadás céljából:</p>
+    <ul>
+      <li>név — a megszólításhoz és a kapcsolattartáshoz;</li>
+      <li>e-mail cím — a válaszadáshoz;</li>
+      <li>telefonszám (opcionális) — gyorsabb egyeztetéshez;</li>
+      <li>a projektre vonatkozó üzenet — az ajánlat elkészítéséhez.</li>
+    </ul>
+
+    <h2>3. Az adatkezelés jogalapja</h2>
+    <p>Az Ön önkéntes, kifejezett hozzájárulása (GDPR 6. cikk (1) a) pont), amelyet az űrlap elküldése előtti jelölőnégyzet bejelölésével ad meg.</p>
+
+    <h2>4. Az adatkezelés időtartama</h2>
+    <p>A megadott adatokat a megkeresés megválaszolásához, illetve az esetleges szerződéskötéshez szükséges ideig, de legfeljebb a hozzájárulás visszavonásáig kezeljük.</p>
+
+    <h2>5. Adattovábbítás</h2>
+    <p>Az űrlap technikai továbbítását az üzenetküldő szolgáltató (pl. Formspree) végzi mint adatfeldolgozó. Az adatokat harmadik fél részére marketing célból nem adjuk át.</p>
+
+    <h2>6. Az Ön jogai</h2>
+    <p>Ön bármikor kérheti a kezelt adataihoz való hozzáférést, azok helyesbítését, törlését vagy az adatkezelés korlátozását, továbbá visszavonhatja hozzájárulását a fenti elérhetőségeken. Jogai sérelme esetén a Nemzeti Adatvédelmi és Információszabadság Hatósághoz (NAIH) fordulhat.</p>
+
+    <p style="margin-top:3rem;color:var(--faint);font-size:.85rem">Ez egy általános minta-tájékoztató; a publikálás előtt javasolt szakmai (jogi) ellenőrzés, valamint a tényleges adatfeldolgozó adatainak pontosítása.</p>
+  </main>
+</BaseLayout>

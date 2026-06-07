@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+Disallow: /szakmai-profil/
+Disallow: /impresszum/
+Disallow: /adatvedelem/
+
+Sitemap: https://czidor-imre.hu/sitemap-index.xml

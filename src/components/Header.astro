@@ -1,0 +1,38 @@
+---
+// Fixed site header + full-screen mobile navigation overlay.
+// Scroll state, burger toggle and scroll-spy are wired up in /site.js.
+---
+<header class="hdr" id="hdr">
+  <div class="wrap hdr-in">
+    <a href="#top" class="brand" aria-label="Czidor Imre — kezdőlap">
+      <svg class="mark" viewBox="0 0 38 38" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M5 18 L19 6.5 L33 18"/><path d="M8.5 15.5 V31.5 H29.5 V15.5"/><path d="M16 31.5 V23 H22 V31.5"/></svg>
+      <span class="bt"><span class="bn">Czidor Imre</span><span class="bs">Műszaki ellenőr · FMV</span></span>
+    </a>
+    <nav class="nav" aria-label="Fő navigáció">
+      <a href="#szolgaltatasok" class="lu">Szolgáltatások</a>
+      <a href="#szerep" class="lu">Szerep</a>
+      <a href="#folyamat" class="lu">Folyamat</a>
+      <a href="#referenciak" class="lu">Referenciák</a>
+      <a href="#bemutatkozas" class="lu">Bemutatkozás</a>
+      <a href="#gyik" class="lu">GYIK</a>
+    </nav>
+    <div class="hdr-right">
+      <a href="tel:+36209425707" class="hdr-phone" aria-label="Telefonszám hívása"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z" stroke-linecap="round" stroke-linejoin="round"/></svg><span>+36 20 942 5707</span></a>
+      <a href="#kapcsolat" class="btn btn-primary hdr-cta">Ajánlatkérés <span class="arr" aria-hidden="true">→</span></a>
+    </div>
+    <button class="burger" id="burger" aria-label="Menü megnyitása" aria-expanded="false" aria-controls="mnav">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 7h16M4 12h16M4 17h16" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+</header>
+
+<nav class="mnav" id="mnav" aria-label="Mobil navigáció">
+  <a href="#szolgaltatasok" data-ml>Szolgáltatások <span>01</span></a>
+  <a href="#szerep" data-ml>Szerep <span>02</span></a>
+  <a href="#folyamat" data-ml>Folyamat <span>03</span></a>
+  <a href="#feladatok" data-ml>Feladatok <span>05</span></a>
+  <a href="#referenciak" data-ml>Referenciák <span>06</span></a>
+  <a href="#bemutatkozas" data-ml>Bemutatkozás <span>07</span></a>
+  <a href="#gyik" data-ml>GYIK <span>08</span></a>
+  <a href="#kapcsolat" class="btn btn-primary" data-ml>Ajánlatkérés →</a>
+</nav>
