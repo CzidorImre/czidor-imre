@@ -246,9 +246,13 @@
   $$('.tilt').forEach(bindTilt);
   observeReveal();
 
-  /* ── contact form (Formspree) ── */
-  // ▶ Cserélje a 'your-id'-t a valódi Formspree azonosítóra (https://formspree.io), hogy az üzenetek e-mailben megérkezzenek.
-  const FORMSPREE = 'https://formspree.io/f/your-id';
+  /* ── contact form (FormSubmit → e-mail) ── */
+  // Az üzenetek erre az e-mail címre érkeznek. Az ELSŐ beküldés után a FormSubmit
+  // egy megerősítő e-mailt küld erre a címre — a benne lévő linkre kattintva
+  // aktiválódik a továbbítás (egyszeri lépés).
+  // ⚠ ÉLESÍTÉS ELŐTT: cserélje a céges címre (gepm.kft@gmail.com).
+  const FORM_EMAIL = 'andras.imre.czidor@gmail.com';            // TESZT cím
+  const FORM_ENDPOINT = 'https://formsubmit.co/ajax/' + FORM_EMAIL;
   const form = $('#con-form');
   if (form) {
     const showErr = (id, msg) => { const s = $(`.err[data-for="${id}"]`); if (s) s.textContent = msg || ''; };
@@ -264,11 +268,13 @@
       if (!consent.checked) { showErr('fc', 'Az adatkezelés elfogadása kötelező.'); ok = false; }
       if (!ok) return;
       const btn = form.querySelector('button[type=submit]');
-      // Demo mode until a real endpoint is configured
-      if (FORMSPREE.includes('your-id')) { finish(); return; }
       const orig = btn.innerHTML; btn.disabled = true; btn.textContent = 'Küldés…';
+      const data = new FormData(form);
+      data.append('_subject', 'Új ajánlatkérés — czidor-imre.hu');
+      data.append('_template', 'table');
+      data.append('_captcha', 'false');
       try {
-        const res = await fetch(FORMSPREE, { method: 'POST', headers: { Accept: 'application/json' }, body: new FormData(form) });
+        const res = await fetch(FORM_ENDPOINT, { method: 'POST', headers: { Accept: 'application/json' }, body: data });
         if (res.ok) finish();
         else { showErr('fm', 'Hiba történt a küldés során. Kérem, próbálja újra, vagy írjon e-mailt.'); btn.disabled = false; btn.innerHTML = orig; }
       } catch (err) {
