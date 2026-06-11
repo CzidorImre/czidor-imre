@@ -48,13 +48,15 @@
       ['Külső munkák', 'Exterior works', 0.74],
       ['Kulcsrakész', 'Handover', 0.86],
     ];
-    // build stepper
-    stepsEl.innerHTML = phases.map((p, i) => `
-      <li class="bstep" data-i="${i}">
-        <span class="meta"><span class="bn">0${i + 1} / 08</span><span class="lbl">${p[0]}</span></span>
-        <span class="pip" aria-hidden="true"></span>
-      </li>`).join('');
-    const stepEls = $$('.bstep', stepsEl);
+    // build stepper (optional — desktop side dots may be absent)
+    if (stepsEl) {
+      stepsEl.innerHTML = phases.map((p, i) => `
+        <li class="bstep" data-i="${i}">
+          <span class="meta"><span class="bn">0${i + 1} / 08</span><span class="lbl">${p[0]}</span></span>
+          <span class="pip" aria-hidden="true"></span>
+        </li>`).join('');
+    }
+    const stepEls = stepsEl ? $$('.bstep', stepsEl) : [];
 
     function activeIndex(p) {
       let idx = 0;
