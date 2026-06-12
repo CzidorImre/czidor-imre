@@ -89,9 +89,8 @@ const jsonLd = {
   <Footer />
   <FloatingUI />
 
-  <!-- Three.js r128 (legacy global build) + scene + interactions -->
-  <script is:inline src="https://unpkg.com/three@0.128.0/build/three.min.js"></script>
-  <script is:inline src="https://unpkg.com/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
-  <script is:inline src="/scene.js"></script>
+  <!-- Bundled Three.js scene (ESM, processed by Astro/Vite) -->
+  <script src="../scripts/scene.js"></script>
+  <!-- Site interactions (inline, no bundling needed) -->
   <script is:inline src="/site.js"></script>
 </BaseLayout>
