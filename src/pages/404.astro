@@ -1,0 +1,125 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout
+  title="Az oldal nem található · Czidor Imre"
+  description="A keresett oldal nem létezik vagy áthelyezték. Térjen vissza a főoldalra."
+  noindex={true}
+>
+  <a href="#main" class="skip">Ugrás a tartalomhoz</a>
+
+  <main id="main" class="not-found">
+    <!-- Brand mark -->
+    <a href="/" class="brand-mark" aria-label="Vissza a főoldalra">
+      <svg viewBox="0 0 38 38" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+        <rect width="38" height="38" rx="7" fill="var(--paper-2)"/>
+        <g fill="none" stroke="var(--accent)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round">
+          <path d="M5 18 L19 6.5 L33 18"/>
+          <path d="M8.5 15.5 V31.5 H29.5 V15.5"/>
+          <path d="M16 31.5 V23 H22 V31.5"/>
+        </g>
+      </svg>
+      <span class="brand-name">Czidor Imre</span>
+    </a>
+
+    <div class="nf-body">
+      <p class="nf-code mono">404</p>
+      <h1 class="nf-heading">Az oldal nem&nbsp;található.</h1>
+      <p class="nf-sub">A keresett oldal nem létezik, vagy áthelyezték.<br>Tekintse meg a főoldalt.</p>
+      <a href="/" class="btn btn-p nf-cta">
+        <span>Vissza a főoldalra</span>
+        <svg class="arr" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+
+    <p class="nf-footer mono">czidor-imre.hu</p>
+  </main>
+</BaseLayout>
+
+<style>
+  .not-found {
+    min-height: 100dvh;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    align-items: center;
+    padding: clamp(2rem, 6vw, 4rem) clamp(1.25rem, 4vw, 3.5rem);
+    max-width: 680px;
+    margin-inline: auto;
+  }
+
+  /* ── brand row ── */
+  .brand-mark {
+    display: inline-flex;
+    align-items: center;
+    gap: .75rem;
+    justify-self: start;
+    opacity: .85;
+    transition: opacity .2s;
+  }
+  .brand-mark:hover { opacity: 1; }
+  .brand-mark svg { width: 38px; height: 38px; }
+  .brand-name {
+    font-family: var(--fd);
+    font-weight: 600;
+    font-size: 1.05rem;
+    letter-spacing: -.01em;
+    color: var(--ink);
+  }
+
+  /* ── body ── */
+  .nf-body {
+    padding-block: clamp(3rem, 8vw, 5rem);
+  }
+
+  .nf-code {
+    color: var(--accent);
+    font-size: 13px;
+    letter-spacing: .22em;
+    margin-bottom: 1.25rem;
+  }
+
+  .nf-heading {
+    font-size: clamp(2.4rem, 6vw, 3.8rem);
+    line-height: 1.08;
+    color: var(--ink);
+    margin-bottom: 1.25rem;
+  }
+
+  .nf-sub {
+    color: var(--muted);
+    font-size: clamp(1rem, 1.4vw, 1.1rem);
+    line-height: 1.7;
+    margin-bottom: 2.5rem;
+  }
+
+  /* ── cta button ── */
+  .nf-cta {
+    background: var(--ink);
+    color: var(--paper);
+    font-size: 1rem;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: .55rem;
+    padding: .95rem 1.7rem;
+    border-radius: var(--r);
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: background .2s;
+    text-decoration: none;
+  }
+  .nf-cta:hover { background: var(--ink-2); }
+  .nf-cta .arr { transition: transform .25s var(--ease); }
+  .nf-cta:hover .arr { transform: translateX(4px); }
+
+  /* ── footer ── */
+  .nf-footer {
+    color: var(--faint);
+    font-size: 11px;
+    letter-spacing: .18em;
+    justify-self: start;
+    padding-bottom: .5rem;
+  }
+</style>
