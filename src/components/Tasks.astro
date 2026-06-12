@@ -1,6 +1,16 @@
 ---
-// 05 — Inspector's duties. The accordion items are rendered by /site.js
-// (the `taskGroups` array); toggle behaviour is delegated there too.
+// 05 — Inspector's duties. Rendered at build time; accordion toggle is delegated in /site.js.
+const pad = (n: number) => String(n).padStart(2, '0');
+
+const taskGroups: [string, string[]][] = [
+  ['Folyamatos helyszíni kontroll', ['A kivitelezési tevékenység teljes folyamatának figyelemmel kísérése és ellenőrzése.', 'A munkák szakszerű és biztonságos elvégeztetése.', 'A szakszerűség ellenőrzése a jogerős építési engedély és a jóváhagyott tervdokumentáció alapján.', 'Az engedélyekben és tervdokumentációkban foglaltak betartatása.', 'Műemlék esetén az örökségvédelmi engedélynek való megfelelés ellenőrzése.']],
+  ['Kitűzés, felmérések, járulékos munkák', ['Az építmény kitűzése helyességének ellenőrzése.', 'A talajmechanikai, környezetvédelmi és egyéb felmérések megtörténtének ellenőrzése.', 'A biztonságos használathoz szükséges járulékos munkálatok megkövetelése.']],
+  ['Építési napló (E-napló és papír alapú)', ['Az elektronikus és papír alapú építési napló(k) ellenőrzése.', 'A bejegyzések és jegyzőkönyvek ellenjegyzése, észrevételezése.', 'A napló hatósági eljárásra való rendelkezésre állásának biztosítása.', 'A hibák, hiányosságok és eltérések feltüntetése a naplóban.']],
+  ['Terv- és tervváltoztatási döntések előkészítése', ['Műszaki vagy gazdasági szükségességből indokolt tervváltoztatási javaslatok megtétele.', 'Műszaki kérdésekben az építtető döntéseinek előkészítése.', 'Javaslattétel pl. szakértő bevonására.']],
+  ['Minőségi és mennyiségi ellenőrzés', ['Az eltakarásra kerülő szerkezetek mennyiségi és minőségi ellenőrzése.', 'A műszakilag indokolt további vizsgálatok meghatározása.', 'A beépített anyagok, késztermékek megfelelőség-igazolásainak ellenőrzése.', 'A technológiai biztonsági előírások betartásának ellenőrzése.']],
+  ['Pénzügyi kontroll, teljesítésigazolás', ['A pénzügyi elszámolások és felmérések ellenőrzése.', 'Teljesítésigazolás kiállítása a fővállalkozó részére.', 'Az átadás-átvételi és birtokbaadási eljárásban való részvétel.']],
+  ['Dokumentáció', ['A műszaki ellenőri feladatok elvégzésének dokumentálása az építési naplóban.']],
+];
 ---
 <section class="section" id="feladatok">
   <div class="wrap">
@@ -11,6 +21,24 @@
       </div>
       <p class="lead rv rv-d1">A feladatkör pontos, a felelősség megosztott. Az ellenőr az építtető helyszíni képviselője a kivitelezés teljes folyamatában.</p>
     </div>
-    <div class="acc" id="tasks-acc"></div>
+    <div class="acc" id="tasks-acc">
+      {taskGroups.map((g, i) => (
+        <div class={`acc-item rv${i === 0 ? ' open' : ''}`}>
+          <button class="acc-h" aria-expanded={i === 0 ? 'true' : 'false'} aria-controls={`task-body-${i}`}>
+            <span class="sn">{pad(i + 1)}</span><span class="tt">{g[0]}</span>
+            <span class="pm" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 2v10M2 7h10" stroke-linecap="round"/></svg></span>
+          </button>
+          <div class="acc-body" id={`task-body-${i}`}>
+            <div class="acc-body-in">
+              <ul class="acc-list">
+                {g[1].map(t => (
+                  <li><span class="b"></span><span>{t}</span></li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
   </div>
 </section>

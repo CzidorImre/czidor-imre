@@ -5,7 +5,6 @@
   'use strict';
   const $ = (s, c = document) => c.querySelector(s);
   const $$ = (s, c = document) => Array.from(c.querySelectorAll(s));
-  const pad = n => String(n).padStart(2, '0');
 
   /* ── header scroll state ── */
   const hdr = $('#hdr');
@@ -145,55 +144,8 @@
   /* ── (minimal theme: no cursor-glow / tilt) ── */
   function bindTilt() {}
 
-  /* ── MANDATORY ── */
-  const mandates = [
-    ['Építési naplóhoz kötött tevékenység', 'Minden olyan kivitelezési tevékenység esetén, amelyhez építési napló vezetése kötelező.'],
-    ['Több fővállalkozó kivitelező', 'Ha az építőipari kivitelezést több fővállalkozó kivitelező végzi.'],
-    ['Műemléki védelem alatt álló építmény', 'Ha a kivitelezési tevékenység műemléki védelem alatt álló építményt érint.'],
-    ['Közbeszerzési (Kbt.) hatály', 'Ha az építési beruházás a Kbt. hatálya alá tartozik.'],
-    ['Nemzetgazdasági szempontból kiemelt beruházás', 'Ha a tevékenység ilyen kiemelt ügy tárgyát képezi.'],
-    ['Építtetői fedezetkezelő közreműködése', 'Amikor építtetői fedezetkezelő működik közre a beruházásban.'],
-    ['Hitelfolyósítási feltétel', 'Ha a pénzintézet a hitelfolyósítás feltételeként írja elő.'],
-  ];
-  $('#mand-grid').innerHTML = mandates.map((m, i) => `
-    <div class="mand rv${i % 2 ? ' rv-d1' : ''}"><div class="n">${pad(i + 1)}</div><div><h3>${m[0]}</h3><p>${m[1]}</p></div></div>`).join('');
-
-  /* ── TASKS accordion ── */
-  const taskGroups = [
-    ['Folyamatos helyszíni kontroll', ['A kivitelezési tevékenység teljes folyamatának figyelemmel kísérése és ellenőrzése.', 'A munkák szakszerű és biztonságos elvégeztetése.', 'A szakszerűség ellenőrzése a jogerős építési engedély és a jóváhagyott tervdokumentáció alapján.', 'Az engedélyekben és tervdokumentációkban foglaltak betartatása.', 'Műemlék esetén az örökségvédelmi engedélynek való megfelelés ellenőrzése.']],
-    ['Kitűzés, felmérések, járulékos munkák', ['Az építmény kitűzése helyességének ellenőrzése.', 'A talajmechanikai, környezetvédelmi és egyéb felmérések megtörténtének ellenőrzése.', 'A biztonságos használathoz szükséges járulékos munkálatok megkövetelése.']],
-    ['Építési napló (E-napló és papír alapú)', ['Az elektronikus és papír alapú építési napló(k) ellenőrzése.', 'A bejegyzések és jegyzőkönyvek ellenjegyzése, észrevételezése.', 'A napló hatósági eljárásra való rendelkezésre állásának biztosítása.', 'A hibák, hiányosságok és eltérések feltüntetése a naplóban.']],
-    ['Terv- és tervváltoztatási döntések előkészítése', ['Műszaki vagy gazdasági szükségességből indokolt tervváltoztatási javaslatok megtétele.', 'Műszaki kérdésekben az építtető döntéseinek előkészítése.', 'Javaslattétel pl. szakértő bevonására.']],
-    ['Minőségi és mennyiségi ellenőrzés', ['Az eltakarásra kerülő szerkezetek mennyiségi és minőségi ellenőrzése.', 'A műszakilag indokolt további vizsgálatok meghatározása.', 'A beépített anyagok, késztermékek megfelelőség-igazolásainak ellenőrzése.', 'A technológiai biztonsági előírások betartásának ellenőrzése.']],
-    ['Pénzügyi kontroll, teljesítésigazolás', ['A pénzügyi elszámolások és felmérések ellenőrzése.', 'Teljesítésigazolás kiállítása a fővállalkozó részére.', 'Az átadás-átvételi és birtokbaadási eljárásban való részvétel.']],
-    ['Dokumentáció', ['A műszaki ellenőri feladatok elvégzésének dokumentálása az építési naplóban.']],
-  ];
-  $('#tasks-acc').innerHTML = taskGroups.map((g, i) => `
-    <div class="acc-item rv${i === 0 ? ' open' : ''}">
-      <button class="acc-h" aria-expanded="${i === 0}" aria-controls="task-body-${i}">
-        <span class="sn">${pad(i + 1)}</span><span class="tt">${g[0]}</span>
-        <span class="pm" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 2v10M2 7h10" stroke-linecap="round"/></svg></span>
-      </button>
-      <div class="acc-body" id="task-body-${i}"><div class="acc-body-in"><ul class="acc-list">${g[1].map(t => `<li><span class="b"></span><span>${t}</span></li>`).join('')}</ul></div></div>
-    </div>`).join('');
-
-  /* ── FAQ ── */
-  const faqs = [
-    ['Mi a különbség a műszaki ellenőr és a felelős műszaki vezető között?', 'Az építési műszaki ellenőr az építtetőt (a megrendelőt) képviseli, és a kivitelezővel szemben ellenőrzi a minőséget, határidőt és költséget. A felelős műszaki vezető (FMV) ezzel szemben a kivitelező oldalán felel a megvalósítás szakszerűségéért. A két szerep ugyanazon a projekten összeférhetetlen — én bármelyik szerepkört vállalom, de egy projekten csak az egyiket.'],
-    ['Mikor kötelező műszaki ellenőrt megbízni?', 'Többek között akkor, ha a kivitelezéshez építési napló kötelező, ha több fővállalkozó dolgozik, műemlék érintett, a beruházás közbeszerzés (Kbt.) hatálya alá esik, nemzetgazdasági szempontból kiemelt, építtetői fedezetkezelő működik közre, vagy ha a hitelt nyújtó pénzintézet előírja.'],
-    ['Mennyibe kerül a műszaki ellenőrzés?', 'A díj a projekt léptékétől, időtartamától és összetettségétől függ — általában a kivitelezési költség arányában vagy havi átalánydíjban kerül meghatározásra. Az első konzultáció minden esetben díjmentes, és pontos ajánlatot a projekt alapadatainak ismeretében adok.'],
-    ['Mikor érdemes bevonni a munkába?', 'A legjobb már a tervek és a kivitelezői szerződés véglegesítése előtt — így a szerződéses kockázatok és a költségvetés is felülvizsgálhatók a munka megkezdése előtt. Megkezdett kivitelezésnél is be lehet kapcsolódni, de minél korábban, annál nagyobb a megtakarítási és kockázatcsökkentési lehetőség.'],
-    ['Milyen területen és léptékben vállal munkát?', 'Elsősorban Miskolc és Borsod-Abaúj-Zemplén, valamint az észak-magyarországi régió. Lakóépülettől és felújítástól a középületeken át az ipari, technológiai beruházásokig — a referenciák között társasházak, bankfiókok, ipari park és nehézipari alapozás is szerepel.'],
-    ['Vállal közbeszerzési (Kbt.) projekteket?', 'Igen. A közbeszerzés hatálya alá tartozó beruházásoknál a műszaki ellenőr alkalmazása kötelező, és több ilyen projektben — köztük a Mezőkövesd Ipari Park fejlesztésében — vettem részt.'],
-  ];
-  $('#faq-acc').innerHTML = faqs.map((f, i) => `
-    <div class="acc-item rv">
-      <button class="acc-h" aria-expanded="false" aria-controls="faq-body-${i}">
-        <span class="q">${f[0]}</span>
-        <span class="pm" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 2v10M2 7h10" stroke-linecap="round"/></svg></span>
-      </button>
-      <div class="acc-body" id="faq-body-${i}"><div class="acc-body-in"><div class="acc-list"><p>${f[1]}</p></div></div></div>
-    </div>`).join('');
+  /* ── (content for Mandatory / Tasks / FAQ / Portfolio is now rendered
+        server-side in their respective Astro components) ── */
 
   /* ── accordion behaviour (delegated) ── */
   document.addEventListener('click', (e) => {
@@ -204,45 +156,7 @@
     h.setAttribute('aria-expanded', open);
   });
 
-  /* ── PORTFOLIO ── */
-  const catLabel = { lakoepuletek: 'Lakóépületek', kozepuletek: 'Középületek', ipari: 'Ipari', bank: 'Bank · iroda' };
-  const roleLabel = { me: 'Műszaki ellenőrzés', fmv: 'Felelős műsz. vezetés' };
-  const ICON = `<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M6 42V20l18-12 18 12v22" stroke-linejoin="round"/><path d="M6 42h36M18 42V28h12v14" stroke-linejoin="round"/></svg>`;
-  const projects = [
-    ['Birla Carbon Hungary — 4. gyártósor technológiai alapozása', 'Tiszaújváros', '2024–25', 'fmv', 'ipari', 'Nehézipari technológiai alapozás, feszített ütemterv, kritikus geometriai tűréshatárok.'],
-    ['Családi ház kivitelezése — Vass Albert u.', 'Bükkaranyos', '2024', 'me', 'lakoepuletek', 'Új építésű családi ház teljes kivitelezésének műszaki ellenőrzése.'],
-    ['Gabonatároló építése — Eper út', 'Mezőkövesd', '2023', 'fmv', 'ipari', 'Mezőgazdasági gabonatároló létesítmény építése.'],
-    ['Mezőkövesd Ipari Park fejlesztése — I–III. ütem', 'Mezőkövesd', '2020–23', 'fmv', 'ipari', 'Háromütemű ipari park infrastruktúra- és csarnokfejlesztés, közbeszerzés keretében.'],
-    ['Rózsa Étterem bővítése konferenciateremmel', 'Mezőkövesd', '2022', 'fmv', 'kozepuletek', 'Meglévő étterem bővítése akusztikailag optimalizált teremmel.'],
-    ['JET Transzport — logisztikai csarnokbővítés', 'Miskolc', '2022', 'me', 'ipari', 'Csarnokbővítés meglévő üzem mellett, folyamatos forgalomban.'],
-    ['Zsóry gyógy- és egészségpark fejlesztése', 'Mezőkövesd', '2020', 'fmv', 'kozepuletek', 'Gyógy- és egészségpark kivitelezési munkái.'],
-    ['Lakóépület — Pöltenberg E. u. 25.', 'Miskolc', '2020', 'me', 'lakoepuletek', ''],
-    ['Mezőkövesdi Járási Kormányhivatal épülete', 'Mezőkövesd', '2019', 'fmv', 'kozepuletek', 'Közigazgatási épület, akadálymentes megközelítéssel.'],
-    ['Bogács — Gyógy- és Strandfürdő, öltöző és bejárat', 'Bogács', '2018', 'fmv', 'kozepuletek', 'Öltöző és bejárati épületrész működő fürdő mellett.'],
-    ['Berente — volt bányaépület felújítása, átalakítása', 'Berente', '2016', 'fmv', 'ipari', 'Komplex felújítás és belső átalakítás, funkcióváltással.'],
-    ['Miskolci Állatkert — farkas- és hiúzkifutó', 'Miskolc', '2015', 'me', 'kozepuletek', 'Ragadozó kifutók, speciális biztonsági és állatjóléti követelményekkel.'],
-    ['Szikszói görögkatolikus templom — szerkezetépítés', 'Szikszó', '2015', 'me', 'kozepuletek', ''],
-    ['Társasház energetikai felújítása — Szilvás út 1–7.', 'Miskolc', '2014', 'me', 'lakoepuletek', 'Paneles társasház komplex korszerűsítése, homlokzati hőszigeteléssel.'],
-    ['OTP bankfiók — Győri kapu 51.', 'Miskolc', '2013', 'me', 'bank', ''],
-    ['OTP bankfiók — Agria park', 'Eger', '2012', 'me', 'bank', ''],
-    ['Miskolc Mechatronikai Park — VIZI & Co Kft.', 'Miskolc', '2011', 'me', 'ipari', 'Műhely és irodaépület mechatronikai park területén.'],
-    ['Piac u. – Hatvan u. — 70 lakásos társasház', 'Debrecen', '2007', 'me', 'lakoepuletek', '70 lakás, 9 üzlet, OTP fiók és 89 állásos teremgarázs.'],
-    ['Andor u. – Miklós u. — 68 lakásos társasház', 'Miskolc', '2007', 'me', 'lakoepuletek', '30+38 lakásos együttes teremgarázzsal és irodaegységgel.'],
-    ['OTP Régióközpont — szerkezetépítés', 'Miskolc', '2007', 'me', 'bank', ''],
-    ['Isonzó u. — 22 lakásos társasház', 'Hajdúszoboszló', '2005', 'me', 'lakoepuletek', 'Társasház teremgarázzsal, üdülőövezeti kontextusban.'],
-    ['Perczel Mór u. 54. — 12 lakásos társasház', 'Miskolc', '2003', 'me', 'lakoepuletek', 'Az első önálló műszaki ellenőri referencia.'],
-  ];
-  const pg = $('#proj-grid');
-  pg.innerHTML = projects.map((p, i) => `
-    <article class="card proj" data-cat="${p[4]}">
-      <div class="proj-head"><span class="yr">${p[2]}</span><span class="cat">${catLabel[p[4]]}</span></div>
-      <h3>${p[0]}</h3>
-      <div class="loc">${p[1]}</div>
-      ${p[5] ? `<p>${p[5]}</p>` : ''}
-      <div class="foot"><span class="role-t">${roleLabel[p[3]]}</span><span class="idx">N° ${pad(projects.length - i)}</span></div>
-    </article>`).join('');
-
-  /* filter */
+  /* ── PORTFOLIO filter ── */
   $$('.fbtn').forEach(btn => btn.addEventListener('click', () => {
     const f = btn.dataset.f;
     $$('.fbtn').forEach(b => { const on = b === btn; b.classList.toggle('act', on); b.setAttribute('aria-pressed', on); });
