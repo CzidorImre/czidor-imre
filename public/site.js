@@ -236,24 +236,12 @@
     });
   }));
 
-  /* ── before / after slider ── */
-  (function () {
-    const r = $('#ba-r'), before = $('#ba-before'), handle = $('#ba-handle');
-    if (!r) return;
-    const upd = () => { const v = r.value; before.style.clipPath = `inset(0 ${100 - v}% 0 0)`; handle.style.left = v + '%'; };
-    r.addEventListener('input', upd); upd();
-  })();
-
   /* ── bind tilt + observe reveals (after dynamic injection) ── */
   $$('.tilt').forEach(bindTilt);
   observeReveal();
 
   /* ── contact form (FormSubmit → e-mail) ── */
-  // Az üzenetek erre az e-mail címre érkeznek. Az ELSŐ beküldés után a FormSubmit
-  // egy megerősítő e-mailt küld erre a címre — a benne lévő linkre kattintva
-  // aktiválódik a továbbítás (egyszeri lépés).
-  // ⚠ ÉLESÍTÉS ELŐTT: cserélje a céges címre (gepm.kft@gmail.com).
-  const FORM_EMAIL = 'andras.imre.czidor@gmail.com';            // TESZT cím
+  const FORM_EMAIL = 'gepm.kft@gmail.com';
   const FORM_ENDPOINT = 'https://formsubmit.co/ajax/' + FORM_EMAIL;
   const form = $('#con-form');
   if (form) {
