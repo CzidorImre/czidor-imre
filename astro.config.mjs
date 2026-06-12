@@ -5,10 +5,7 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
   site: 'https://czidor-imre.hu',
   integrations: [
-    sitemap({
-      filter: (page) =>
-        !/\/(impresszum|adatvedelem|szakmai-profil)\/?$/.test(page),
-    }),
+    sitemap(),
   ],
   build: {
     inlineStylesheets: 'auto',
