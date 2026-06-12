@@ -14,10 +14,26 @@
 
   /* ── mobile menu ── */
   const burger = $('#burger'), mnav = $('#mnav');
-  const setMenu = o => { mnav.classList.toggle('open', o); burger.setAttribute('aria-expanded', o); burger.setAttribute('aria-label', o ? 'Menü bezárása' : 'Menü megnyitása'); document.body.style.overflow = o ? 'hidden' : ''; };
+  const mnavLinks = () => $$('a, button', mnav);
+  const setMenu = o => {
+    mnav.classList.toggle('open', o);
+    mnav.setAttribute('aria-hidden', !o);
+    if (o) { mnav.removeAttribute('inert'); } else { mnav.setAttribute('inert', ''); }
+    burger.setAttribute('aria-expanded', o);
+    burger.setAttribute('aria-label', o ? 'Menü bezárása' : 'Menü megnyitása');
+    document.body.style.overflow = o ? 'hidden' : '';
+    if (o) { const first = mnavLinks()[0]; if (first) first.focus(); }
+  };
   burger.addEventListener('click', () => setMenu(!mnav.classList.contains('open')));
-  $$('[data-ml]').forEach(a => a.addEventListener('click', () => setMenu(false)));
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') setMenu(false); });
+  $$('[data-ml]').forEach(a => a.addEventListener('click', () => { setMenu(false); burger.focus(); }));
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && mnav.classList.contains('open')) { setMenu(false); burger.focus(); return; }
+    if (e.key !== 'Tab' || !mnav.classList.contains('open')) return;
+    const links = mnavLinks();
+    const first = links[0], last = links[links.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  });
 
   /* ── reveal on scroll ── */
   const io = new IntersectionObserver((ents) => {
@@ -154,11 +170,11 @@
   ];
   $('#tasks-acc').innerHTML = taskGroups.map((g, i) => `
     <div class="acc-item rv${i === 0 ? ' open' : ''}">
-      <button class="acc-h" aria-expanded="${i === 0}">
+      <button class="acc-h" aria-expanded="${i === 0}" aria-controls="task-body-${i}">
         <span class="sn">${pad(i + 1)}</span><span class="tt">${g[0]}</span>
         <span class="pm" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 2v10M2 7h10" stroke-linecap="round"/></svg></span>
       </button>
-      <div class="acc-body"><div class="acc-body-in"><ul class="acc-list">${g[1].map(t => `<li><span class="b"></span><span>${t}</span></li>`).join('')}</ul></div></div>
+      <div class="acc-body" id="task-body-${i}"><div class="acc-body-in"><ul class="acc-list">${g[1].map(t => `<li><span class="b"></span><span>${t}</span></li>`).join('')}</ul></div></div>
     </div>`).join('');
 
   /* ── FAQ ── */
@@ -172,11 +188,11 @@
   ];
   $('#faq-acc').innerHTML = faqs.map((f, i) => `
     <div class="acc-item rv">
-      <button class="acc-h" aria-expanded="false">
+      <button class="acc-h" aria-expanded="false" aria-controls="faq-body-${i}">
         <span class="q">${f[0]}</span>
         <span class="pm" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 2v10M2 7h10" stroke-linecap="round"/></svg></span>
       </button>
-      <div class="acc-body"><div class="acc-body-in"><div class="acc-list"><p>${f[1]}</p></div></div></div>
+      <div class="acc-body" id="faq-body-${i}"><div class="acc-body-in"><div class="acc-list"><p>${f[1]}</p></div></div></div>
     </div>`).join('');
 
   /* ── accordion behaviour (delegated) ── */
