@@ -171,7 +171,7 @@
   observeReveal();
 
   /* ── contact form (FormSubmit → e-mail) ── */
-  const FORM_EMAIL = 'gepm.kft@gmail.com';
+  const FORM_EMAIL = 'andras.imre.czidor@gmail.com';
   const FORM_ENDPOINT = 'https://formsubmit.co/ajax/' + FORM_EMAIL;
   const form = $('#con-form');
   if (form) {
