@@ -5,7 +5,8 @@
       "name": "Astro dev",
       "runtimeExecutable": "C:\\Program Files\\nodejs\\node.exe",
       "runtimeArgs": ["./node_modules/astro/astro.js", "dev"],
-      "port": 4321
+      "port": 4321,
+      "autoPort": true
     },
     {
       "name": "Astro preview",

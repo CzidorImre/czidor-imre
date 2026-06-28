@@ -10,7 +10,6 @@ import WhenMandatory from '../components/WhenMandatory.astro';
 import Catches from '../components/Catches.astro';
 import Tasks from '../components/Tasks.astro';
 import Portfolio from '../components/Portfolio.astro';
-import ServiceArea from '../components/ServiceArea.astro';
 import About from '../components/About.astro';
 import Faq from '../components/Faq.astro';
 import Contact from '../components/Contact.astro';
@@ -21,7 +20,7 @@ const ogImage = new URL('/og-image.png', Astro.site).href;
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'ProfessionalService',
-  name: 'Czidor Imre — GÉP-M 2001 Kft.',
+  name: 'Czidor Imre · GÉP-M 2001 Kft.',
   description:
     'Építési műszaki ellenőrzés és felelős műszaki vezetés Miskolcon és a régióban. 1984 óta az építőiparban.',
   founder: { '@type': 'Person', name: 'Czidor Imre' },
@@ -45,14 +44,14 @@ const jsonLd = {
 ---
 <BaseLayout
   title="Czidor Imre · Építési műszaki ellenőrzés · 3D"
-  description="Czidor Imre — 40+ év az építőiparban. Építési műszaki ellenőrzés és felelős műszaki vezetés Miskolcon. GÉP-M 2001 Kft."
+  description="Czidor Imre · 40+ év az építőiparban. Építési műszaki ellenőrzés és felelős műszaki vezetés Miskolcon. GÉP-M 2001 Kft."
 >
   <Fragment slot="head">
     <meta name="author" content="Czidor Imre" />
     <meta name="keywords" content="építési műszaki ellenőr, felelős műszaki vezető, FMV, műszaki ellenőrzés, Miskolc, GÉP-M 2001 Kft, építőipar" />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="hu_HU" />
-    <meta property="og:site_name" content="Czidor Imre — Építési műszaki ellenőr" />
+    <meta property="og:site_name" content="Czidor Imre · Építési műszaki ellenőr" />
     <meta property="og:title" content="Czidor Imre · Építési műszaki ellenőrzés · Felelős műszaki vezetés" />
     <meta property="og:description" content="40+ év az építőiparban. Független, szakértő építési műszaki ellenőrzés és felelős műszaki vezetés Miskolcon és a régióban." />
     <meta property="og:url" content={Astro.site} />
@@ -80,7 +79,6 @@ const jsonLd = {
     <Catches />
     <Tasks />
     <Portfolio />
-    <ServiceArea />
     <About />
     <Faq />
     <Contact />

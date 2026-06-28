@@ -45,7 +45,6 @@
     const track = $('#hero-track');
     if (!track) return;
     const stepsEl = $('#build-steps');
-    const pillPh = $('.build-pill .ph'), pillLb = $('.build-pill .lb');
     const barI = $('#build-bar-i');
     const hint = $('#drag-hint'), hintT = $('#drag-hint-t');
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -91,8 +90,6 @@
           el.classList.toggle('active', i === ai);
           el.classList.toggle('done', i < ai);
         });
-        if (pillPh) pillPh.textContent = `Fázis 0${ai + 1} / 08`;
-        if (pillLb) pillLb.textContent = phases[ai][0];
       }
       // hint fades out once the build is under way
       if (hint) {
@@ -190,7 +187,7 @@
       const btn = form.querySelector('button[type=submit]');
       const orig = btn.innerHTML; btn.disabled = true; btn.textContent = 'Küldés…';
       const data = new FormData(form);
-      data.append('_subject', 'Új ajánlatkérés — czidor-imre.hu');
+      data.append('_subject', 'Új ajánlatkérés · czidor-imre.hu');
       data.append('_template', 'table');
       data.append('_captcha', 'false');
       try {

@@ -16,46 +16,46 @@ const roleLabel: Record<string, string> = {
 
 type Project = [string, string, string, string, string, string];
 const projects: Project[] = [
-  ['Birla Carbon Hungary — 4. gyártósor technológiai alapozása', 'Tiszaújváros', '2024–25', 'fmv', 'ipari', 'Nehézipari technológiai alapozás, feszített ütemterv, kritikus geometriai tűréshatárok.'],
-  ['Családi ház kivitelezése — Vass Albert u.', 'Bükkaranyos', '2024', 'me', 'lakoepuletek', 'Új építésű családi ház teljes kivitelezésének műszaki ellenőrzése.'],
-  ['Gabonatároló építése — Eper út', 'Mezőkövesd', '2023', 'fmv', 'ipari', 'Mezőgazdasági gabonatároló létesítmény építése.'],
-  ['Mezőkövesd Ipari Park fejlesztése — I–III. ütem', 'Mezőkövesd', '2020–23', 'fmv', 'ipari', 'Háromütemű ipari park infrastruktúra- és csarnokfejlesztés, közbeszerzés keretében.'],
+  ['Birla Carbon Hungary, 4. gyártósor technológiai alapozása', 'Tiszaújváros', '2024–25', 'fmv', 'ipari', 'Nehézipari technológiai alapozás, feszített ütemterv, kritikus geometriai tűréshatárok.'],
+  ['Családi ház kivitelezése, Vass Albert u.', 'Bükkaranyos', '2024', 'me', 'lakoepuletek', 'Új építésű családi ház teljes kivitelezésének műszaki ellenőrzése.'],
+  ['Gabonatároló építése, Eper út', 'Mezőkövesd', '2023', 'fmv', 'ipari', 'Mezőgazdasági gabonatároló létesítmény építése.'],
+  ['Mezőkövesd Ipari Park fejlesztése, I–III. ütem', 'Mezőkövesd', '2020–23', 'fmv', 'ipari', 'Háromütemű ipari park infrastruktúra- és csarnokfejlesztés, közbeszerzés keretében.'],
   ['Rózsa Étterem bővítése konferenciateremmel', 'Mezőkövesd', '2022', 'fmv', 'kozepuletek', 'Meglévő étterem bővítése akusztikailag optimalizált teremmel.'],
-  ['JET Transzport — logisztikai csarnokbővítés', 'Miskolc', '2022', 'me', 'ipari', 'Csarnokbővítés meglévő üzem mellett, folyamatos forgalomban.'],
+  ['JET Transzport, logisztikai csarnokbővítés', 'Miskolc', '2022', 'me', 'ipari', 'Csarnokbővítés meglévő üzem mellett, folyamatos forgalomban.'],
   ['Zsóry gyógy- és egészségpark fejlesztése', 'Mezőkövesd', '2020', 'fmv', 'kozepuletek', 'Gyógy- és egészségpark kivitelezési munkái.'],
-  ['Lakóépület — Pöltenberg E. u. 25.', 'Miskolc', '2020', 'me', 'lakoepuletek', ''],
+  ['Lakóépület, Pöltenberg E. u. 25.', 'Miskolc', '2020', 'me', 'lakoepuletek', ''],
   ['Mezőkövesdi Járási Kormányhivatal épülete', 'Mezőkövesd', '2019', 'fmv', 'kozepuletek', 'Közigazgatási épület, akadálymentes megközelítéssel.'],
-  ['Bogács — Gyógy- és Strandfürdő, öltöző és bejárat', 'Bogács', '2018', 'fmv', 'kozepuletek', 'Öltöző és bejárati épületrész működő fürdő mellett.'],
-  ['Berente — volt bányaépület felújítása, átalakítása', 'Berente', '2016', 'fmv', 'ipari', 'Komplex felújítás és belső átalakítás, funkcióváltással.'],
-  ['Miskolci Állatkert — farkas- és hiúzkifutó', 'Miskolc', '2015', 'me', 'kozepuletek', 'Ragadozó kifutók, speciális biztonsági és állatjóléti követelményekkel.'],
-  ['Szikszói görögkatolikus templom — szerkezetépítés', 'Szikszó', '2015', 'me', 'kozepuletek', ''],
-  ['Társasház energetikai felújítása — Szilvás út 1–7.', 'Miskolc', '2014', 'me', 'lakoepuletek', 'Paneles társasház komplex korszerűsítése, homlokzati hőszigeteléssel.'],
-  ['OTP bankfiók — Győri kapu 51.', 'Miskolc', '2013', 'me', 'bank', ''],
-  ['OTP bankfiók — Agria park', 'Eger', '2012', 'me', 'bank', ''],
-  ['Miskolc Mechatronikai Park — VIZI & Co Kft.', 'Miskolc', '2011', 'me', 'ipari', 'Műhely és irodaépület mechatronikai park területén.'],
-  ['Piac u. – Hatvan u. — 70 lakásos társasház', 'Debrecen', '2007', 'me', 'lakoepuletek', '70 lakás, 9 üzlet, OTP fiók és 89 állásos teremgarázs.'],
-  ['Andor u. – Miklós u. — 68 lakásos társasház', 'Miskolc', '2007', 'me', 'lakoepuletek', '30+38 lakásos együttes teremgarázzsal és irodaegységgel.'],
-  ['OTP Régióközpont — szerkezetépítés', 'Miskolc', '2007', 'me', 'bank', ''],
-  ['Isonzó u. — 22 lakásos társasház', 'Hajdúszoboszló', '2005', 'me', 'lakoepuletek', 'Társasház teremgarázzsal, üdülőövezeti kontextusban.'],
-  ['Perczel Mór u. 54. — 12 lakásos társasház', 'Miskolc', '2003', 'me', 'lakoepuletek', 'Az első önálló műszaki ellenőri referencia.'],
+  ['Bogács, Gyógy- és Strandfürdő, öltöző és bejárat', 'Bogács', '2018', 'fmv', 'kozepuletek', 'Öltöző és bejárati épületrész működő fürdő mellett.'],
+  ['Berente, volt bányaépület felújítása, átalakítása', 'Berente', '2016', 'fmv', 'ipari', 'Komplex felújítás és belső átalakítás, funkcióváltással.'],
+  ['Miskolci Állatkert, farkas- és hiúzkifutó', 'Miskolc', '2015', 'me', 'kozepuletek', 'Ragadozó kifutók, speciális biztonsági és állatjóléti követelményekkel.'],
+  ['Szikszói görögkatolikus templom, szerkezetépítés', 'Szikszó', '2015', 'me', 'kozepuletek', ''],
+  ['Társasház energetikai felújítása, Szilvás út 1–7.', 'Miskolc', '2014', 'me', 'lakoepuletek', 'Paneles társasház komplex korszerűsítése, homlokzati hőszigeteléssel.'],
+  ['OTP bankfiók, Győri kapu 51.', 'Miskolc', '2013', 'me', 'bank', ''],
+  ['OTP bankfiók, Agria park', 'Eger', '2012', 'me', 'bank', ''],
+  ['Miskolc Mechatronikai Park, VIZI & Co Kft.', 'Miskolc', '2011', 'me', 'ipari', 'Műhely és irodaépület mechatronikai park területén.'],
+  ['Piac u. – Hatvan u., 70 lakásos társasház', 'Debrecen', '2007', 'me', 'lakoepuletek', '70 lakás, 9 üzlet, OTP fiók és 89 állásos teremgarázs.'],
+  ['Andor u. – Miklós u., 68 lakásos társasház', 'Miskolc', '2007', 'me', 'lakoepuletek', '30+38 lakásos együttes teremgarázzsal és irodaegységgel.'],
+  ['OTP Régióközpont, szerkezetépítés', 'Miskolc', '2007', 'me', 'bank', ''],
+  ['Isonzó u., 22 lakásos társasház', 'Hajdúszoboszló', '2005', 'me', 'lakoepuletek', 'Társasház teremgarázzsal, üdülőövezeti kontextusban.'],
+  ['Perczel Mór u. 54., 12 lakásos társasház', 'Miskolc', '2003', 'me', 'lakoepuletek', 'Az első önálló műszaki ellenőri referencia.'],
 ];
 ---
 <section class="section" id="referenciak" style="background:var(--paper-2)">
   <div class="wrap">
     <div class="shead">
       <div class="rv">
-        <div class="eyebrow" style="margin-bottom:1.1rem"><span class="dot"></span><span class="mono">06 — Referenciák</span></div>
+        <div class="eyebrow" style="margin-bottom:1.1rem"><span class="dot"></span><span class="mono">06 · Referenciák</span></div>
         <h2>Válogatott<br>referenciaprojektek.</h2>
       </div>
-      <p class="lead rv rv-d1">Több mint 30 projekt 2003 óta — társasházaktól OTP bankfiókokon át a Mezőkövesd Ipari Parkig és a tiszaújvárosi Birla Carbon technológiai alapozásáig.</p>
+      <p class="lead rv rv-d1">Több mint 30 projekt 2003 óta, társasházaktól OTP bankfiókokon át a Mezőkövesd Ipari Parkig és a tiszaújvárosi Birla Carbon technológiai alapozásáig.</p>
     </div>
 
     <!-- Featured project -->
     <article class="feat rv">
       <div class="feat-main">
         <span class="mono k">Kiemelt referencia</span>
-        <h3>Birla Carbon Hungary — 4. gyártósor technológiai alapozása</h3>
-        <p>Nehézipari technológiai alapozás Tiszaújvárosban — felelős műszaki vezetői szerepkörben, feszített ütemtervvel és kritikus geometriai tűréshatárokkal. A projekt komplexitása és léptéke a régió egyik meghatározó ipari beruházása.</p>
+        <h3>Birla Carbon Hungary, 4. gyártósor technológiai alapozása</h3>
+        <p>Nehézipari technológiai alapozás Tiszaújvárosban, felelős műszaki vezetői szerepkörben, feszített ütemtervvel és kritikus geometriai tűréshatárokkal. A projekt komplexitása és léptéke a régió egyik meghatározó ipari beruházása.</p>
         <div class="feat-tags">
           <span>Ipari létesítmény</span>
           <span>Felelős műszaki vezetés</span>

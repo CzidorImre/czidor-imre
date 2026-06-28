@@ -1,33 +1,43 @@
 ---
 // 04 — When an inspector is legally mandatory. Content rendered at build time.
-const pad = (n: number) => String(n).padStart(2, '0');
+// Structure mirrors the source: 16. § (1) chapeau, then lettered a)-e) conditions.
+const base = [
+  '§',
+  'Az építési napló vezetéshez kötött tevékenység',
+  'Kötelező építési műszaki ellenőrt megbízni az építési napló vezetéshez kötött építési tevékenység esetén [16. § (1)],',
+];
 
-const mandates = [
-  ['Építési naplóhoz kötött tevékenység', 'Minden olyan kivitelezési tevékenység esetén, amelyhez építési napló vezetése kötelező.'],
-  ['Több fővállalkozó kivitelező', 'Ha az építőipari kivitelezést több fővállalkozó kivitelező végzi.'],
-  ['Műemléki védelem alatt álló építmény', 'Ha a kivitelezési tevékenység műemléki védelem alatt álló építményt érint.'],
-  ['Közbeszerzési (Kbt.) hatály', 'Ha az építési beruházás a Kbt. hatálya alá tartozik.'],
-  ['Nemzetgazdasági szempontból kiemelt beruházás', 'Ha a tevékenység ilyen kiemelt ügy tárgyát képezi.'],
-  ['Építtetői fedezetkezelő közreműködése', 'Amikor építtetői fedezetkezelő működik közre a beruházásban.'],
-  ['Hitelfolyósítási feltétel', 'Ha a pénzintézet a hitelfolyósítás feltételeként írja elő.'],
+const subs = [
+  ['a)', 'Több fővállalkozó kivitelező', 'az építőipari kivitelezési tevékenységet több fővállalkozó kivitelező végzi.'],
+  ['b)', 'Közbeszerzési (Kbt.) hatály', 'az építési beruházás a Kbt. hatálya alá tartozik.'],
+  ['c)', 'Kiemelt beruházás', 'az építőipari kivitelezési tevékenység kiemelt beruházás.'],
+  ['d)', 'Nemzeti emlékké minősített műemlék építmény', 'az építőipari kivitelezési tevékenység nemzeti emléknek minősülő műemlék építményt érint.'],
+  ['e)', 'Építtetői fedezetkezelő közreműködése', 'építtetői fedezetkezelő működik közre.'],
 ];
 ---
 <section class="section" id="mikor" style="background:var(--paper-2)">
   <div class="wrap">
     <div class="shead">
       <div class="rv">
-        <div class="eyebrow" style="margin-bottom:1.1rem"><span class="dot"></span><span class="mono">04 — Jogszabályi kötelezettség</span></div>
+        <div class="eyebrow" style="margin-bottom:1.1rem"><span class="dot"></span><span class="mono">04 · Jogszabályi kötelezettség</span></div>
         <h2>Mikor kötelező<br>műszaki ellenőr?</h2>
       </div>
-      <p class="lead rv rv-d1">Több esetben nem választás, hanem jogszabályi kötelezettség. Az alábbi helyzetekben — többek között — kötelező építési műszaki ellenőrt megbízni.</p>
+      <p class="lead rv rv-d1">Több esetben nem választás, hanem jogszabályi kötelezettség. A 16. § (1) szerint az alábbi esetekben kötelező építési műszaki ellenőrt megbízni.</p>
     </div>
-    <div class="mand-grid" id="mand-grid">
-      {mandates.map((m, i) => (
-        <div class={`mand rv${i % 2 ? ' rv-d1' : ''}`}>
-          <div class="n">{pad(i + 1)}</div>
-          <div><h3>{m[0]}</h3><p>{m[1]}</p></div>
-        </div>
-      ))}
+    <div class="mand-tree rv" id="mand-grid">
+      <div class="mand-base">
+        <div class="n">{base[0]}</div>
+        <div><h3>{base[1]}</h3><p>{base[2]}</p></div>
+      </div>
+      <div class="mand-connector">ha</div>
+      <div class="mand-sublist">
+        {subs.map((s) => (
+          <div class="mand-sub">
+            <div class="n">{s[0]}</div>
+            <div><h3>{s[1]}</h3><p>{s[2]}</p></div>
+          </div>
+        ))}
+      </div>
     </div>
   </div>
 </section>

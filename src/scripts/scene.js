@@ -15,7 +15,9 @@ function boot() {
 
   // ── Renderer ──
   const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  // Cap the pixel ratio lower on phones — they run 2.5–3× DPR, which makes the
+  // continuous WebGL render needlessly heavy on battery/GPU for little visual gain.
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, small() ? 1.5 : 2));
   renderer.setSize(W(), H());
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = THREE.PCFShadowMap;

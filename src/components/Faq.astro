@@ -2,12 +2,11 @@
 // 08 — FAQ. Rendered at build time; accordion toggle delegated to /site.js.
 // Also emits FAQPage JSON-LD for rich-result eligibility.
 const faqs: [string, string][] = [
-  ['Mi a különbség a műszaki ellenőr és a felelős műszaki vezető között?', 'Az építési műszaki ellenőr az építtetőt (a megrendelőt) képviseli, és a kivitelezővel szemben ellenőrzi a minőséget, határidőt és költséget. A felelős műszaki vezető (FMV) ezzel szemben a kivitelező oldalán felel a megvalósítás szakszerűségéért. A két szerep ugyanazon a projekten összeférhetetlen — én bármelyik szerepkört vállalom, de egy projekten csak az egyiket.'],
+  ['Mi a különbség a műszaki ellenőr és a felelős műszaki vezető között?', 'Az építési műszaki ellenőr az építtetőt (a megrendelőt) képviseli, és a kivitelezővel szemben ellenőrzi a minőséget, határidőt és költséget. A felelős műszaki vezető (FMV) ezzel szemben a kivitelező oldalán felel a megvalósítás szakszerűségéért. A két szerep ugyanazon a projekten összeférhetetlen, én bármelyik szerepkört vállalom, de egy projekten csak az egyiket.'],
   ['Mikor kötelező műszaki ellenőrt megbízni?', 'Többek között akkor, ha a kivitelezéshez építési napló kötelező, ha több fővállalkozó dolgozik, műemlék érintett, a beruházás közbeszerzés (Kbt.) hatálya alá esik, nemzetgazdasági szempontból kiemelt, építtetői fedezetkezelő működik közre, vagy ha a hitelt nyújtó pénzintézet előírja.'],
-  ['Mennyibe kerül a műszaki ellenőrzés?', 'A díj a projekt léptékétől, időtartamától és összetettségétől függ — általában a kivitelezési költség arányában vagy havi átalánydíjban kerül meghatározásra. Az első konzultáció minden esetben díjmentes, és pontos ajánlatot a projekt alapadatainak ismeretében adok.'],
-  ['Mikor érdemes bevonni a munkába?', 'A legjobb már a tervek és a kivitelezői szerződés véglegesítése előtt — így a szerződéses kockázatok és a költségvetés is felülvizsgálhatók a munka megkezdése előtt. Megkezdett kivitelezésnél is be lehet kapcsolódni, de minél korábban, annál nagyobb a megtakarítási és kockázatcsökkentési lehetőség.'],
-  ['Milyen területen és léptékben vállal munkát?', 'Elsősorban Miskolc és Borsod-Abaúj-Zemplén, valamint az észak-magyarországi régió. Lakóépülettől és felújítástól a középületeken át az ipari, technológiai beruházásokig — a referenciák között társasházak, bankfiókok, ipari park és nehézipari alapozás is szerepel.'],
-  ['Vállal közbeszerzési (Kbt.) projekteket?', 'Igen. A közbeszerzés hatálya alá tartozó beruházásoknál a műszaki ellenőr alkalmazása kötelező, és több ilyen projektben — köztük a Mezőkövesd Ipari Park fejlesztésében — vettem részt.'],
+  ['Mennyibe kerül a műszaki ellenőrzés?', 'A díj a projekt léptékétől, időtartamától és összetettségétől függ, általában a kivitelezési költség arányában vagy havi átalánydíjban kerül meghatározásra. Az első konzultáció minden esetben díjmentes, és pontos ajánlatot a projekt alapadatainak ismeretében adok.'],
+  ['Mikor érdemes bevonni a munkába?', 'A legjobb már a tervek és a kivitelezői szerződés véglegesítése előtt, így a szerződéses kockázatok és a költségvetés is felülvizsgálhatók a munka megkezdése előtt. Megkezdett kivitelezésnél is be lehet kapcsolódni, de minél korábban, annál nagyobb a megtakarítási és kockázatcsökkentési lehetőség.'],
+  ['Milyen területen és léptékben vállal munkát?', 'Elsősorban Miskolc és Borsod-Abaúj-Zemplén, valamint az észak-magyarországi régió. Lakóépülettől és felújítástól a középületeken át az ipari, technológiai beruházásokig, a referenciák között társasházak, bankfiókok, ipari park és nehézipari alapozás is szerepel.'],
 ];
 
 const faqJsonLd = {
@@ -24,7 +23,7 @@ const faqJsonLd = {
   <div class="wrap">
     <div class="shead" style="grid-template-columns:1fr;text-align:center;justify-items:center">
       <div class="rv">
-        <div class="eyebrow" style="margin-bottom:1.1rem;justify-content:center"><span class="dot"></span><span class="mono">08 — GYIK</span></div>
+        <div class="eyebrow" style="margin-bottom:1.1rem;justify-content:center"><span class="dot"></span><span class="mono">08 · GYIK</span></div>
         <h2>Gyakran ismételt kérdések.</h2>
       </div>
     </div>
