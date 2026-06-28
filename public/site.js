@@ -40,13 +40,12 @@
   }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
   const observeReveal = () => $$('.rv:not(.in)').forEach(el => io.observe(el));
 
-  /* ── SCROLL-BUILT HOUSE: drive 3D build + phase HUD ── */
+  /* ── AUTO-BUILT HOUSE: builds once on load, no scroll involvement ── */
   (function () {
     const track = $('#hero-track');
     if (!track) return;
     const stepsEl = $('#build-steps');
     const barI = $('#build-bar-i');
-    const hint = $('#drag-hint'), hintT = $('#drag-hint-t');
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     let autoPlaying = false;
     const replayBtn = document.getElementById('replay-btn');
@@ -91,12 +90,10 @@
           el.classList.toggle('done', i < ai);
         });
       }
-      // hint fades out once the build is under way
-      if (hint) {
-        hint.style.opacity = p > 0.06 ? '0' : '';
-      }
       showReplay(p);
     }
+
+    function showReplay(p) { if (replayBtn) replayBtn.classList.toggle('show', p > 0.985 && !autoPlaying); }
 
     if (reduced) {
       document.documentElement.classList.add('reduced');
@@ -104,38 +101,24 @@
       return;
     }
 
-    let ticking = false;
-    function update() {
-      if (autoPlaying) return;
-      ticking = false;
-      const rect = track.getBoundingClientRect();
-      const travel = track.offsetHeight - window.innerHeight;
-      const p = travel > 0 ? Math.min(1, Math.max(0, -rect.top / travel)) : 0;
-      paint(p);
+    function playBuild() {
+      autoPlaying = true;
+      if (replayBtn) replayBtn.classList.remove('show');
+      const dur = 3600, t0 = performance.now();
+      (function step(now) {
+        const k = Math.min(1, (now - t0) / dur);
+        const e = k < 0.5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
+        paint(e);
+        if (k < 1) requestAnimationFrame(step);
+        else { autoPlaying = false; showReplay(1); }
+      })(t0);
     }
-    window.addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
-    window.addEventListener('resize', update);
 
-    // ── replay: re-watch the build from zero ──
-    function showReplay(p) { if (replayBtn) replayBtn.classList.toggle('show', p > 0.985 && !autoPlaying); }
     if (replayBtn) {
-      replayBtn.addEventListener('click', () => {
-        if (autoPlaying) return;
-        autoPlaying = true;
-        replayBtn.classList.remove('show');
-        window.scrollTo(0, 0);
-        const dur = 3600, t0 = performance.now();
-        (function step(now) {
-          const k = Math.min(1, (now - t0) / dur);
-          const e = k < 0.5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
-          paint(e);
-          if (k < 1) requestAnimationFrame(step);
-          else { autoPlaying = false; window.scrollTo(0, Math.max(0, track.offsetHeight - window.innerHeight)); }
-        })(t0);
-      });
+      replayBtn.addEventListener('click', () => { if (!autoPlaying) playBuild(); });
     }
 
-    update();
+    playBuild();
   })();
 
   /* ── (minimal theme: no cursor-glow / tilt) ── */
@@ -166,39 +149,6 @@
   /* ── bind tilt + observe reveals (after dynamic injection) ── */
   $$('.tilt').forEach(bindTilt);
   observeReveal();
-
-  /* ── contact form (FormSubmit → e-mail) ── */
-  const FORM_EMAIL = 'andras.imre.czidor@gmail.com';
-  const FORM_ENDPOINT = 'https://formsubmit.co/ajax/' + FORM_EMAIL;
-  const form = $('#con-form');
-  if (form) {
-    const showErr = (id, msg) => { const s = $(`.err[data-for="${id}"]`); if (s) s.textContent = msg || ''; };
-    const finish = () => { form.style.display = 'none'; $('#form-done').classList.add('show'); };
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      let ok = true;
-      const name = $('#fn'), email = $('#fe'), msg = $('#fm'), consent = $('#fc');
-      ['fn', 'fe', 'fm', 'fc'].forEach(id => showErr(id, ''));
-      if (!name.value.trim()) { showErr('fn', 'Kérem, adja meg a nevét.'); ok = false; }
-      if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email.value)) { showErr('fe', 'Érvényes e-mail címet adjon meg.'); ok = false; }
-      if (!msg.value.trim()) { showErr('fm', 'Írjon néhány szót a projektről.'); ok = false; }
-      if (!consent.checked) { showErr('fc', 'Az adatkezelés elfogadása kötelező.'); ok = false; }
-      if (!ok) return;
-      const btn = form.querySelector('button[type=submit]');
-      const orig = btn.innerHTML; btn.disabled = true; btn.textContent = 'Küldés…';
-      const data = new FormData(form);
-      data.append('_subject', 'Új ajánlatkérés · czidor-imre.hu');
-      data.append('_template', 'table');
-      data.append('_captcha', 'false');
-      try {
-        const res = await fetch(FORM_ENDPOINT, { method: 'POST', headers: { Accept: 'application/json' }, body: data });
-        if (res.ok) finish();
-        else { showErr('fm', 'Hiba történt a küldés során. Kérem, próbálja újra, vagy írjon e-mailt.'); btn.disabled = false; btn.innerHTML = orig; }
-      } catch (err) {
-        showErr('fm', 'Nem sikerült elküldeni. Írjon e-mailt: gepm.kft@gmail.com'); btn.disabled = false; btn.innerHTML = orig;
-      }
-    });
-  }
 
   /* ── active-section nav highlight ── */
   (function () {

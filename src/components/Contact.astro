@@ -1,61 +1,24 @@
 ---
-// 09 — Contact. Form validation + (demo) Formspree submit live in /site.js.
+// 09 — Contact: direct phone/e-mail/address only.
 ---
 <section class="section" id="kapcsolat" style="background:var(--paper-2)">
   <div class="wrap">
-    <div class="shead">
+    <div class="shead" style="grid-template-columns:1fr">
       <div class="rv">
-        <div class="eyebrow" style="margin-bottom:1.1rem"><span class="dot"></span><span class="mono">09 · Kapcsolat</span></div>
-        <h2>Vegyük fel<br>a kapcsolatot.</h2>
+        <div class="eyebrow" style="margin-bottom:1.1rem"><span class="dot"></span><span class="mono">06 · Kapcsolat</span></div>
+        <h2>Vegyük fel<br>a kapcsolatot</h2>
       </div>
-      <p class="lead rv rv-d1">Az első konzultáció díjmentes és nem kötelez semmire. Küldje el a projekt alapadatait, 48 órán belül személyesen válaszolok.</p>
     </div>
-    <div class="con-lay">
-      <div class="card con-form rv">
-        <form id="con-form" novalidate>
-          <div class="frow">
-            <div class="fld"><label for="fn">Név *</label><input id="fn" name="name" type="text" autocomplete="name" required><span class="err" data-for="fn"></span></div>
-            <div class="fld"><label for="fe">E-mail *</label><input id="fe" name="email" type="email" autocomplete="email" required><span class="err" data-for="fe"></span></div>
-          </div>
-          <div class="frow">
-            <div class="fld"><label for="fp">Telefon</label><input id="fp" name="phone" type="tel" autocomplete="tel"><span class="err"></span></div>
-            <div class="fld"><label for="ft">Projekt típusa</label>
-              <select id="ft" name="type">
-                <option value="">Válasszon…</option>
-                <option>Lakóépület (családi ház, társasház)</option>
-                <option>Középület</option>
-                <option>Ipari létesítmény</option>
-                <option>Felújítás, energetikai korszerűsítés</option>
-                <option>Felelős műszaki vezetés</option>
-                <option>Építési műszaki ellenőrzés</option>
-                <option>Költségvetés / szerződés felülvizsgálat</option>
-                <option>Egyéb, konzultáció</option>
-              </select><span class="err"></span>
-            </div>
-          </div>
-          <div class="fld"><label for="fm">Üzenet *</label><textarea id="fm" name="message" required placeholder="Röviden a projekt helyszíne, léptéke és a tervezett szerepköröm…"></textarea><span class="err" data-for="fm"></span></div>
-          <label class="consent"><input type="checkbox" id="fc" required><span>Elolvastam és elfogadom az <a href="/adatvedelem/" class="lu" style="color:var(--accent)">adatkezelési tájékoztatót</a>, és hozzájárulok adataim kezeléséhez. *</span></label>
-          <span class="err" data-for="fc" style="display:block;margin:-.8rem 0 1rem"></span>
-          <button type="submit" class="btn btn-primary">Üzenet küldése <span class="arr" aria-hidden="true">→</span></button>
-        </form>
-        <div class="form-done" id="form-done">
-          <div class="ok"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-          <h3>Köszönöm az üzenetet!</h3>
-          <p>48 órán belül személyesen válaszolok a megadott elérhetőségen.</p>
-        </div>
+    <aside class="con-side rv" style="max-width:480px">
+      <div class="card panel">
+        <dl>
+          <div class="con-row"><dt>Vállalkozás</dt><dd>GÉP-M 2001 Kft.</dd></div>
+          <div class="con-row"><dt>Cím</dt><dd>3535 Miskolc,<br>Tömörkény István utca 21.</dd></div>
+          <div class="con-row"><dt>Telefon</dt><dd><a href="tel:+36209425707">+36 20 942 5707</a></dd></div>
+          <div class="con-row"><dt>E-mail</dt><dd><a href="mailto:gepm.kft@gmail.com">gepm.kft@gmail.com</a></dd></div>
+        </dl>
       </div>
-      <aside class="con-side rv rv-d1">
-        <div class="card panel">
-          <h3>Közvetlen elérhetőség</h3>
-          <dl>
-            <div class="con-row"><dt>Vállalkozás</dt><dd>GÉP-M 2001 Kft.</dd></div>
-            <div class="con-row"><dt>Cím</dt><dd>3535 Miskolc,<br>Tömörkény István utca 21.</dd></div>
-            <div class="con-row"><dt>Telefon</dt><dd><a href="tel:+36209425707">+36 20 942 5707</a></dd></div>
-            <div class="con-row"><dt>E-mail</dt><dd><a href="mailto:gepm.kft@gmail.com">gepm.kft@gmail.com</a></dd></div>
-          </dl>
-        </div>
-        <div class="map"><iframe title="Iroda · Miskolc, Tömörkény István u. 21." src="https://www.google.com/maps?q=Miskolc%2C+T%C3%B6m%C3%B6rk%C3%A9ny+Istv%C3%A1n+utca+21&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
-      </aside>
-    </div>
+      <div class="map"><iframe title="Iroda · Miskolc, Tömörkény István u. 21." src="https://www.google.com/maps?q=Miskolc%2C+T%C3%B6m%C3%B6rk%C3%A9ny+Istv%C3%A1n+utca+21&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
+    </aside>
   </div>
 </section>
