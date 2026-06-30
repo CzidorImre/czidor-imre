@@ -46,9 +46,6 @@ em { font-style: italic; }
 .skip { position: absolute; left: 1rem; top: 1rem; padding: .65rem 1rem; background: var(--ink); color: var(--paper); font-weight: 600; z-index: 200; transform: translateY(-200%); transition: transform .2s; border-radius: var(--r); }
 .skip:focus-visible { transform: translateY(0); }
 
-.eyebrow { display: inline-flex; align-items: center; gap: .65rem; color: var(--accent); }
-.eyebrow .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
-
 /* section head */
 .shead { display: grid; grid-template-columns: 1.05fr 1fr; gap: 1.6rem clamp(2rem,5vw,5rem); align-items: end; margin-bottom: clamp(2.5rem,5vw,4rem); }
 .shead h2 { font-size: clamp(2rem, 4.4vw, 3.4rem); }
@@ -113,7 +110,6 @@ em { font-style: italic; }
 .hero .sub { color: var(--muted); font-size: clamp(1.05rem, 1.4vw, 1.25rem); max-width: 50ch; margin-top: 1.5rem; opacity: 0; animation: fade .8s ease .5s forwards; }
 .hero .cta-row { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: 2rem; opacity: 0; animation: fade .8s ease .65s forwards; }
 @keyframes fade { to { opacity: 1; } }
-.hero-eyebrow { margin-bottom: 1.5rem; opacity: 0; animation: fade .8s ease .3s forwards; }
 
 /* overall build progress bar */
 .build-bar { position: absolute; left: 0; bottom: 0; height: 2px; width: 100%; background: var(--line-2); z-index: 5; }
@@ -130,7 +126,6 @@ em { font-style: italic; }
   .hero .cta-row { flex-direction: column; align-items: stretch; gap: .7rem; }
   .hero .cta-row .btn { width: 100%; justify-content: center; }
   .hero .sub { margin-top: 1.2rem; }
-  .hero-eyebrow { margin-bottom: 1.2rem; }
   /* tighten oversized section rhythm on small screens */
   .section { padding-block: clamp(3.25rem, 11vw, 4.5rem); }
   .shead { margin-bottom: 2rem; }
