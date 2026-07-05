@@ -44,52 +44,15 @@
   (function () {
     const track = $('#hero-track');
     if (!track) return;
-    const stepsEl = $('#build-steps');
     const barI = $('#build-bar-i');
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     let autoPlaying = false;
     const replayBtn = document.getElementById('replay-btn');
 
-    // 8 construction phases (must roughly mirror scene.js stage ranges)
-    const phases = [
-      ['Alapozás', 'Foundation', 0.00],
-      ['Földszint', 'Ground floor', 0.10],
-      ['Üvegezés', 'Glazing', 0.24],
-      ['Födém', 'Floor slab', 0.36],
-      ['Emelet', 'Upper floor', 0.46],
-      ['Tetőszerkezet', 'Roof', 0.62],
-      ['Külső munkák', 'Exterior works', 0.74],
-      ['Kulcsrakész', 'Handover', 0.86],
-    ];
-    // build stepper (optional — desktop side dots may be absent)
-    if (stepsEl) {
-      stepsEl.innerHTML = phases.map((p, i) => `
-        <li class="bstep" data-i="${i}">
-          <span class="meta"><span class="bn">0${i + 1} / 08</span><span class="lbl">${p[0]}</span></span>
-          <span class="pip" aria-hidden="true"></span>
-        </li>`).join('');
-    }
-    const stepEls = stepsEl ? $$('.bstep', stepsEl) : [];
-
-    function activeIndex(p) {
-      let idx = 0;
-      for (let i = 0; i < phases.length; i++) if (p >= phases[i][2] - 0.001) idx = i;
-      return idx;
-    }
-
-    let last = -1;
     function paint(p) {
       if (window.HouseScene && window.HouseScene.ready) window.HouseScene.setProgress(p);
       const pct = Math.round(p * 100);
       if (barI) barI.style.width = pct + '%';
-      const ai = activeIndex(p);
-      if (ai !== last) {
-        last = ai;
-        stepEls.forEach((el, i) => {
-          el.classList.toggle('active', i === ai);
-          el.classList.toggle('done', i < ai);
-        });
-      }
       showReplay(p);
     }
 

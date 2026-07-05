@@ -19,7 +19,20 @@ const jsonLd = {
   description:
     'Építési műszaki ellenőrzés és felelős műszaki vezetés Miskolcon és a régióban. 1984 óta az építőiparban.',
   founder: { '@type': 'Person', name: 'Czidor Imre' },
-  areaServed: 'Miskolc és Borsod-Abaúj-Zemplén megye, Észak-Magyarország',
+  areaServed: [
+    'Miskolc',
+    'Tiszaújváros',
+    'Mezőkövesd',
+    'Eger',
+    'Bogács',
+    'Berente',
+    'Szikszó',
+    'Debrecen',
+    'Hajdúszoboszló',
+    'Bükkaranyos',
+    'Borsod-Abaúj-Zemplén megye',
+    'Észak-Magyarország',
+  ],
   telephone: '+36209425707',
   email: 'gepm.kft@gmail.com',
   knowsAbout: [
@@ -35,11 +48,16 @@ const jsonLd = {
     postalCode: '3535',
     addressCountry: 'HU',
   },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: 48.1035,
+    longitude: 20.7784,
+  },
 };
 ---
 <BaseLayout
-  title="Czidor Imre · Építési műszaki ellenőrzés · 3D"
-  description="Czidor Imre · 40+ év az építőiparban. Építési műszaki ellenőrzés és felelős műszaki vezetés Miskolcon. GÉP-M 2001 Kft."
+  title="Czidor Imre · Építési műszaki ellenőr Miskolcon"
+  description="Czidor Imre építési műszaki ellenőr és felelős műszaki vezető Miskolcon. 40+ év tapasztalat, GÉP-M 2001 Kft."
 >
   <Fragment slot="head">
     <meta name="author" content="Czidor Imre" />

@@ -131,16 +131,6 @@ em { font-style: italic; }
   .shead { margin-bottom: 2rem; }
 }
 
-/* stat strip */
-.statbar { position: relative; z-index: 5; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: var(--paper); }
-.statbar .wrap { display: grid; grid-template-columns: repeat(3, 1fr); }
-.stat { padding: 1.8rem 0; }
-.stat + .stat { border-left: 1px solid var(--line); padding-left: 1.6rem; }
-.stat .n { font-family: var(--fd); font-weight: 600; font-size: clamp(1.6rem,2.6vw,2.4rem); }
-.stat .n em { color: var(--accent); font-style: normal; }
-.stat .l { font-family: var(--fm); font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-top: .3rem; }
-@media (max-width: 720px){ .statbar .wrap { grid-template-columns: repeat(2,1fr); }
-  .stat:nth-child(3) { border-left: none; border-top: 1px solid var(--line); padding-left: 0; } }
 
 /* ═══ card base (flat, hairline) ═══ */
 .card { position: relative; background: var(--paper); border: 1px solid var(--line); border-radius: var(--r); transition: border-color .25s; }
@@ -354,15 +344,6 @@ em { font-style: italic; }
 @media (max-width: 1180px){ .hdr-phone span { display: none; } }
 @media (max-width: 1040px){ .hdr-right { display: none; } }
 
-/* ═══ CLIENT STRIP ═══ */
-.clients { border-bottom: 1px solid var(--line); background: var(--paper); position: relative; z-index: 5; }
-.clients-in { display: flex; align-items: center; gap: 2rem; padding-block: 1.4rem; flex-wrap: wrap; }
-.clients-lbl { color: var(--faint); flex-shrink: 0; }
-.clients-row { display: flex; flex-wrap: wrap; gap: 1.1rem 2.2rem; align-items: center; }
-.clients-row li { font-family: var(--fd); font-weight: 600; font-size: 1rem; color: var(--muted); position: relative; transition: color .2s; }
-.clients-row li:hover { color: var(--ink); }
-.clients-row li:not(:last-child)::after { content: "·"; position: absolute; right: -1.2rem; color: var(--line); }
-@media (max-width: 720px){ .clients-in { gap: 1rem; } .clients-row { gap: .6rem 1.6rem; } .clients-row li { font-size: .92rem; } }
 
 /* ═══ HIBALISTA (catches) ═══ */
 .catch { display: grid; gap: 0; border-top: 1px solid var(--line); counter-reset: c; }
