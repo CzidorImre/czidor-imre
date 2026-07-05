@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://czidor-imre.hu/sitemap-index.xml
+Sitemap: https://muszakiellenorborsod.hu/sitemap-index.xml

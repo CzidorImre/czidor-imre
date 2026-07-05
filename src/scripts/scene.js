@@ -352,8 +352,16 @@ function boot() {
   mount.classList.add('scene-ready');
 }
 
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', boot);
+// Defer the heavy WebGL setup until after the page's critical resources have
+// loaded and the main thread is idle, so it doesn't compete with first paint /
+// Core Web Vitals. The #scene canvas fades in via CSS once ready either way.
+function bootWhenIdle() {
+  const idle = window.requestIdleCallback || (cb => setTimeout(cb, 200));
+  idle(boot, { timeout: 2000 });
+}
+
+if (document.readyState === 'complete') {
+  bootWhenIdle();
 } else {
-  boot();
+  window.addEventListener('load', bootWhenIdle);
 }

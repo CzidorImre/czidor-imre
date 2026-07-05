@@ -3,7 +3,7 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  site: 'https://czidor-imre.hu',
+  site: 'https://muszakiellenorborsod.hu',
   integrations: [
     sitemap(),
   ],

@@ -46,8 +46,8 @@ markupot adják; a dinamikus listákat (`#proj-grid`, `#tasks-acc`, `#faq-acc`,
    vagy kösse a projekt saját backendjére.
 2. **Cégadatok** — `src/pages/impresszum.astro`: cégjegyzékszám és adószám
    (jelenleg `XXXX` placeholder), valamint a tárhelyszolgáltató adatai.
-3. **Domain** — `astro.config.mjs` (`site`), `public/robots.txt`. Jelenleg
-   `czidor-imre.hu` placeholder.
+3. ~~**Domain**~~ — véglegesítve: `muszakiellenorborsod.hu` (`astro.config.mjs`
+   `site`, `public/robots.txt`).
 4. **MMK jogosultsági számok**, telefon, e-mail, térkép-cím megerősítése
    (jelenleg `…05-50111`).
 5. A **megbízói lista** és néhány referenciasor reprezentatív — publikálás előtt
