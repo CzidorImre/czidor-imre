@@ -7,3 +7,9 @@ dist/
 *.log
 source_extracted/
 source.docx
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+!.env.example
