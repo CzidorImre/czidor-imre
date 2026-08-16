@@ -125,9 +125,45 @@ function boot() {
   const concreteBump = bumpTex(128, 46, 2, 2);
   const woodBump = bumpTex(128, 30, 1, 7);
 
+  // Concrete-block coursing: a running-bond grid of blocks with mortar joints,
+  // used as both the color map (subtle per-block shade variation) and the
+  // bump map (recessed joints) for the wall material.
+  function blockGrid(size, cols, rows, draw) {
+    const c = document.createElement('canvas'); c.width = c.height = size;
+    const x = c.getContext('2d');
+    const cw = size / cols, rh = size / rows;
+    draw(x, cw, rh, cols, rows);
+    const t = new THREE.CanvasTexture(c);
+    t.wrapS = t.wrapT = THREE.RepeatWrapping; t.repeat.set(3.2, 1.4);
+    return t;
+  }
+  const blockColor = blockGrid(256, 10, 5, (x, cw, rh, cols, rows) => {
+    x.fillStyle = '#b9b3a4'; x.fillRect(0, 0, cols * cw, rows * rh);
+    for (let r = 0; r < rows; r++) {
+      const offset = (r % 2) * (cw / 2);
+      for (let ci = -1; ci <= cols; ci++) {
+        const v = 205 + Math.floor(Math.random() * 22 - 11);
+        x.fillStyle = `rgb(${v},${v - 4},${v - 14})`;
+        x.fillRect(ci * cw + offset + 1.5, r * rh + 1.5, cw - 3, rh - 3);
+      }
+    }
+  });
+  blockColor.colorSpace = THREE.SRGBColorSpace;
+  const blockBump = blockGrid(256, 10, 5, (x, cw, rh, cols, rows) => {
+    x.fillStyle = '#5a5a5a'; x.fillRect(0, 0, cols * cw, rows * rh); // mortar = recessed
+    for (let r = 0; r < rows; r++) {
+      const offset = (r % 2) * (cw / 2);
+      for (let ci = -1; ci <= cols; ci++) {
+        x.fillStyle = '#c8c8c8'; // block face = raised
+        x.fillRect(ci * cw + offset + 2, r * rh + 2, cw - 4, rh - 4);
+      }
+    }
+  });
+
   // ── Materials ──
   const M = {
-    wall:    new THREE.MeshStandardMaterial({ color: 0xeae4d8, roughness: 0.92, bumpMap: plasterBump, bumpScale: 0.012, envMapIntensity: 0.6 }),
+    wall:    new THREE.MeshStandardMaterial({ color: 0xffffff, map: blockColor, roughness: 0.88, bumpMap: blockBump, bumpScale: 0.016, envMapIntensity: 0.6 }),
+    scaffold:new THREE.MeshStandardMaterial({ color: 0xb8bcc2, roughness: 0.45, metalness: 0.65, envMapIntensity: 0.9 }),
     dark:    new THREE.MeshStandardMaterial({ color: 0x2b2d31, roughness: 0.55, metalness: 0.25, envMapIntensity: 0.9 }),
     wood:    new THREE.MeshStandardMaterial({ color: 0xa9743e, roughness: 0.7, bumpMap: woodBump, bumpScale: 0.02, envMapIntensity: 0.4 }),
     concrete:new THREE.MeshStandardMaterial({ color: 0xc7c1b3, roughness: 0.95, bumpMap: concreteBump, bumpScale: 0.03, envMapIntensity: 0.4 }),
@@ -151,13 +187,25 @@ function boot() {
   const villa = new THREE.Group();
   scene.add(villa);
 
-  // ── Build registry (crane-placed: settle + fade) ──
+  // ── Build registry ──
+  // Each piece animates in a way that matches how it's actually built:
+  //  'rise'    concrete/masonry growing up from its own base — foundations,
+  //            walls, slabs, paving, hedges. Anchored at the bottom edge so
+  //            it extrudes upward instead of scaling from its center.
+  //  'drop'    lowered into place from above — roof elements a crane sets
+  //            on top of the finished walls.
+  //  'install' fitted into an existing opening — windows, doors, fencing.
+  //            Fades and settles in place, no vertical travel.
+  //  'pop'     organic growth — trees, planted after the build is done.
   const builders = [];
   const easeOut = t => 1 - Math.pow(1 - t, 3);
   const easeBack = t => { const c = 1.70158; return 1 + (c + 1) * Math.pow(t - 1, 3) + c * Math.pow(t - 1, 2); };
 
+  // Tag a built mesh with its construction mode for seq()/reg().
+  function tag(obj, mode) { return { obj, mode }; }
+
   function reg(obj, start, end, mode) {
-    mode = mode || 'place';
+    mode = mode || 'drop';
     const mats = [];
     obj.traverse(o => {
       if (o.isMesh) {
@@ -166,16 +214,26 @@ function boot() {
         mats.push({ mat: o.material, op: o.material.opacity });
       }
     });
-    builders.push({ obj, start, end, mode, mats, targetY: obj.position.y, drop: mode === 'pop' ? 0 : 1.5 });
+    const halfH = (mode === 'rise' && obj.geometry && obj.geometry.parameters && obj.geometry.parameters.height)
+      ? obj.geometry.parameters.height / 2 : 0;
+    builders.push({
+      obj, start, end, mode, mats,
+      targetY: obj.position.y,
+      baseY: obj.position.y - halfH,
+      halfH,
+      drop: mode === 'drop' ? 1.5 : 0,
+    });
     if (obj.isMesh && obj.parent !== villa) villa.add(obj);
     return obj;
   }
-  function seq(list, start, end, mode) {
+  function seq(list, start, end, defaultMode) {
     const n = list.length, span = end - start;
-    list.forEach((m, i) => {
+    list.forEach((entry, i) => {
+      const obj = (entry && entry.obj) ? entry.obj : entry;
+      const mode = (entry && entry.mode) ? entry.mode : defaultMode;
       const a = start + span * (i / n) * 0.55;
       const b = start + span * ((i + 1) / n);
-      reg(m, a, Math.min(b, end), mode);
+      reg(obj, a, Math.min(b, end), mode);
     });
   }
   function applyBuild(p) {
@@ -185,14 +243,26 @@ function boot() {
       const vis = t > 0.001;
       b.obj.visible = vis;
       if (!vis) continue;
+
       if (b.mode === 'pop') {
         b.obj.scale.setScalar(Math.max(easeBack(t), 0.0001));
+      } else if (b.mode === 'rise') {
+        const e = easeOut(t);
+        const s = Math.max(e, 0.0001);
+        b.obj.scale.y = s;
+        b.obj.position.y = b.baseY + b.halfH * s;
+      } else if (b.mode === 'install') {
+        const e = easeOut(t);
+        const s = 0.82 + 0.18 * e;
+        b.obj.scale.set(s, s, s);
+        b.obj.position.y = b.targetY;
       } else {
         const e = easeOut(t);
         b.obj.position.y = b.targetY + (1 - e) * b.drop;
         const s = 0.97 + 0.03 * e;
         b.obj.scale.set(s, s, s);
       }
+
       const fade = Math.min(1, t * 1.5);
       for (const m of b.mats) {
         m.mat.opacity = m.op * fade;
@@ -207,68 +277,82 @@ function boot() {
   villa.add(at(box(11.4, 0.3, 7.9, M.soil), -0.1, -0.05, 0, false, true));
 
   // ════════ 0 · ALAPOZÁS ════════
+  // Rebar goes in first, then the slab pours up around it.
   const s0 = [];
-  s0.push(at(box(11, 0.5, 7.5, M.concrete), 0, 0.25, 0));
-  [-4.5, -1.5, 1.5, 4.5].forEach(x => { [-3, 3].forEach(z => { s0.push(at(cyl(0.05, 0.05, 0.9, 5, M.rebar), x, 0.8, z)); }); });
-  seq(s0, 0.0, 0.10, 'place');
+  [-4.5, -1.5, 1.5, 4.5].forEach(x => { [-3, 3].forEach(z => { s0.push(tag(at(cyl(0.05, 0.05, 0.9, 5, M.rebar), x, 0.8, z), 'rise')); }); });
+  s0.push(tag(at(box(11, 0.5, 7.5, M.concrete), 0, 0.25, 0), 'rise'));
+  seq(s0, 0.0, 0.10);
 
   // ════════ 1 · FÖLDSZINT ════════
-  const s1 = [];
-  s1.push(at(box(9.2, 3.2, 6, M.wall), -0.3, 2.1, 0));
-  s1.push(at(box(2.6, 3.0, 0.15, M.wood), -3.0, 2.05, 3.05));
-  s1.push(at(box(1.3, 2.4, 0.2, M.dark), -3.0, 1.75, 3.06));
-  s1.push(at(box(0.08, 0.5, 0.12, M.accent), -2.55, 1.7, 3.16));
-  seq(s1, 0.10, 0.24, 'place');
+  // Wall rises out of the foundation, then the door is fitted into the opening.
+  const s1 = [
+    tag(at(box(9.2, 3.2, 6, M.wall), -0.3, 2.1, 0), 'rise'),
+    tag(at(box(2.6, 3.0, 0.15, M.wood), -3.0, 2.05, 3.05), 'install'),
+    tag(at(box(1.3, 2.4, 0.2, M.dark), -3.0, 1.75, 3.06), 'install'),
+    tag(at(box(0.08, 0.5, 0.12, M.accent), -2.55, 1.7, 3.16), 'install'),
+  ];
+  seq(s1, 0.10, 0.24);
 
   // ════════ 2 · ÜVEGEZÉS ════════
+  // Glazing is fitted into the finished wall openings — no vertical travel.
   const s2 = [];
   s2.push(at(box(4.4, 2.5, 0.12, M.glass), 1.4, 1.95, 3.04));
   for (let i = -1; i <= 1; i++) s2.push(at(box(0.08, 2.5, 0.16, M.dark), 1.4 + i * 1.45, 1.95, 3.06));
   s2.push(at(box(4.6, 0.1, 0.18, M.dark), 1.4, 3.2, 3.06));
   s2.push(at(box(4.6, 0.1, 0.18, M.dark), 1.4, 0.7, 3.06));
+  s2.push(at(box(4.6, 0.08, 0.16, M.dark), 1.4, 1.95, 3.06)); // horizontal mullion — multi-pane grid
   s2.push(at(box(0.12, 2.2, 3.4, M.glassWarm), 4.35, 1.95, 0.4));
   s2.push(at(box(4.85, 0.14, 0.4, M.concrete), 1.4, 0.62, 3.16));
-  seq(s2, 0.24, 0.36, 'place');
+  seq(s2, 0.24, 0.36, 'install');
 
   // ════════ 3 · FÖDÉM ════════
-  reg(at(box(10, 0.45, 7, M.concrete), 0.2, 3.85, 0), 0.36, 0.46, 'place');
+  // Ceiling/floor slab poured on top of the ground floor.
+  reg(at(box(10, 0.45, 7, M.concrete), 0.2, 3.85, 0), 0.36, 0.46, 'rise');
 
   // ════════ 4 · EMELET ════════
-  const s4 = [];
-  s4.push(at(box(6.4, 2.9, 5.4, M.wall), 1.2, 5.55, -0.1));
-  s4.push(at(box(3.0, 2.9, 5.6, M.dark), -1.4, 5.55, -0.1));
-  s4.push(at(box(5.6, 1.5, 0.12, M.glass), 1.4, 5.7, 2.66));
-  for (let i = -2; i <= 2; i++) s4.push(at(box(0.07, 1.5, 0.16, M.dark), 1.4 + i * 1.1, 5.7, 2.68));
-  s4.push(at(box(1.6, 1.4, 0.12, M.glassWarm), -1.4, 5.75, 2.6));
-  s4.push(at(box(5.9, 0.12, 0.34, M.concrete), 1.4, 4.93, 2.72));
-  seq(s4, 0.46, 0.62, 'place');
+  const s4 = [
+    tag(at(box(6.4, 2.9, 5.4, M.wall), 1.2, 5.55, -0.1), 'rise'),
+    tag(at(box(3.0, 2.9, 5.6, M.dark), -1.4, 5.55, -0.1), 'rise'),
+    tag(at(box(5.6, 1.5, 0.12, M.glass), 1.4, 5.7, 2.66), 'install'),
+  ];
+  for (let i = -2; i <= 2; i++) s4.push(tag(at(box(0.07, 1.5, 0.16, M.dark), 1.4 + i * 1.1, 5.7, 2.68), 'install'));
+  s4.push(tag(at(box(5.7, 0.07, 0.16, M.dark), 1.4, 5.7, 2.68), 'install')); // horizontal mullion — multi-pane grid
+  s4.push(tag(at(box(1.6, 1.4, 0.12, M.glassWarm), -1.4, 5.75, 2.6), 'install'));
+  s4.push(tag(at(box(5.9, 0.12, 0.34, M.concrete), 1.4, 4.93, 2.72), 'install'));
+  seq(s4, 0.46, 0.62);
 
   // ════════ 5 · TETŐSZERKEZET ════════
-  const s5 = [];
-  s5.push(at(box(7.0, 0.4, 6.0, M.concrete), 1.2, 7.2, -0.1));
-  s5.push(at(box(7.0, 0.5, 0.12, M.wall), 1.2, 7.5, 2.8));
-  s5.push(at(box(7.0, 0.12, 0.14, M.accent), 1.2, 7.62, 2.86));
-  s5.push(at(box(0.7, 1.2, 0.7, M.dark), 3.0, 8.0, -1.5));
-  s5.push(at(box(0.92, 0.16, 0.92, M.dark), 3.0, 8.68, -1.5));
-  seq(s5, 0.62, 0.74, 'place');
+  // Roof slab and parapet are lifted on top last; the chimney is then
+  // built up (bricked) from the finished roof.
+  const s5 = [
+    tag(at(box(7.0, 0.4, 6.0, M.concrete), 1.2, 7.2, -0.1), 'drop'),
+    tag(at(box(7.0, 0.5, 0.12, M.wall), 1.2, 7.5, 2.8), 'drop'),
+    tag(at(box(7.0, 0.12, 0.14, M.accent), 1.2, 7.62, 2.86), 'drop'),
+    tag(at(box(0.7, 1.2, 0.7, M.dark), 3.0, 8.0, -1.5), 'rise'),
+    tag(at(box(0.92, 0.16, 0.92, M.dark), 3.0, 8.68, -1.5), 'drop'),
+  ];
+  seq(s5, 0.62, 0.74);
 
   // ════════ 6 · KÜLSŐ MUNKÁK ════════
-  const s6 = [];
-  s6.push(at(box(5.5, 0.2, 3.1, M.concrete), -4.5, 0.2, -3.2, false, true));
-  s6.push(at(box(5.0, 0.4, 2.6, M.water), -4.5, 0.35, -3.2));
-  s6.push(at(box(6.5, 0.18, 2.2, M.deck), -4.0, 0.42, 0.4, false, true));
-  s6.push(at(box(3.2, 0.35, 1.2, M.concrete), -0.3, 0.42, 4.0, false, true));
-  s6.push(at(box(0.9, 0.7, 0.9, M.wall), 5.0, 0.55, 3.4));
-  s6.push(at(box(0.9, 0.7, 0.9, M.wall), 5.0, 0.55, 1.8));
-  for (let i = -5; i <= 5; i++) { if (Math.abs(i) < 2) continue; s6.push(at(box(1.6, 0.6, 0.5, M.leaf2), i * 2.0, 0.5, 9.5)); }
-  s6.push(at(box(6.4, 0.6, 0.05, M.glass), -4.0, 0.82, 1.45));
-  s6.push(at(box(6.62, 0.06, 0.1, M.dark), -4.0, 1.14, 1.45));
-  s6.push(at(box(0.07, 0.62, 0.1, M.dark), -7.17, 0.82, 1.45));
-  s6.push(at(box(0.07, 0.62, 0.1, M.dark), -0.83, 0.82, 1.45));
-  s6.push(at(box(1.1, 0.08, 0.7, M.concrete), -0.55, 0.06, 5.2, false, true));
-  s6.push(at(box(1.1, 0.08, 0.7, M.concrete), -0.85, 0.06, 6.25, false, true));
-  s6.push(at(box(1.1, 0.08, 0.7, M.concrete), -1.15, 0.06, 7.3, false, true));
-  seq(s6, 0.74, 0.86, 'place');
+  // Poured/paved surfaces rise, the garage grows like any other wall,
+  // fence posts go in before the panel is fitted between them.
+  const s6 = [
+    tag(at(box(5.5, 0.2, 3.1, M.concrete), -4.5, 0.2, -3.2, false, true), 'rise'),
+    tag(at(box(5.0, 0.4, 2.6, M.water), -4.5, 0.35, -3.2), 'rise'),
+    tag(at(box(6.5, 0.18, 2.2, M.deck), -4.0, 0.42, 0.4, false, true), 'rise'),
+    tag(at(box(3.2, 0.35, 1.2, M.concrete), -0.3, 0.42, 4.0, false, true), 'rise'),
+    tag(at(box(0.9, 0.7, 0.9, M.concrete), 5.0, 0.55, 3.4), 'rise'),
+    tag(at(box(0.9, 0.7, 0.9, M.concrete), 5.0, 0.55, 1.8), 'rise'),
+    tag(at(box(0.07, 0.62, 0.1, M.dark), -7.17, 0.82, 1.45), 'rise'),
+    tag(at(box(0.07, 0.62, 0.1, M.dark), -0.83, 0.82, 1.45), 'rise'),
+    tag(at(box(6.4, 0.6, 0.05, M.glass), -4.0, 0.82, 1.45), 'install'),
+    tag(at(box(6.62, 0.06, 0.1, M.dark), -4.0, 1.14, 1.45), 'install'),
+    tag(at(box(1.1, 0.08, 0.7, M.concrete), -0.55, 0.06, 5.2, false, true), 'rise'),
+    tag(at(box(1.1, 0.08, 0.7, M.concrete), -0.85, 0.06, 6.25, false, true), 'rise'),
+    tag(at(box(1.1, 0.08, 0.7, M.concrete), -1.15, 0.06, 7.3, false, true), 'rise'),
+  ];
+  for (let i = -5; i <= 5; i++) { if (Math.abs(i) < 2) continue; s6.push(tag(at(box(1.6, 0.6, 0.5, M.leaf2), i * 2.0, 0.5, 9.5), 'rise')); }
+  seq(s6, 0.74, 0.86);
 
   // ════════ 7 · KULCSRAKÉSZ ════════
   function tree(x, z, s) {
@@ -284,7 +368,52 @@ function boot() {
   trees.forEach(t => villa.add(t));
   seq(trees, 0.86, 1.0, 'pop');
 
+  // ════════ Scaffolding (up during the build, struck before turnkey) ════════
+  // Not part of the reg()/seq() build registry — it fades in early and back
+  // out again later, which the one-shot builders don't support.
+  const scaffoldMats = [];
+  function scaffoldTower(x, z) {
+    const g = new THREE.Group();
+    const hw = 0.55, hd = 0.35, h = 7.3, poleR = 0.045;
+    [[-hw, -hd], [hw, -hd], [-hw, hd], [hw, hd]].forEach(([px, pz]) => {
+      g.add(at(cyl(poleR, poleR, h, 6, M.scaffold), px, h / 2, pz));
+    });
+    const levels = 3;
+    for (let lv = 1; lv <= levels; lv++) {
+      const ly = (h / (levels + 1)) * lv;
+      g.add(at(box(hw * 2, 0.04, 0.04, M.scaffold), 0, ly, -hd, false, false));
+      g.add(at(box(hw * 2, 0.04, 0.04, M.scaffold), 0, ly, hd, false, false));
+      g.add(at(box(0.04, 0.04, hd * 2, M.scaffold), -hw, ly, 0, false, false));
+      g.add(at(box(0.04, 0.04, hd * 2, M.scaffold), hw, ly, 0, false, false));
+      g.add(at(box(hw * 2.1, 0.035, hd * 2.1, M.wood), 0, ly + 0.03, 0, false, false));
+    }
+    g.position.set(x, 0, z);
+    g.traverse(o => {
+      if (o.isMesh) {
+        o.material = o.material.clone();
+        o.material.transparent = true;
+        scaffoldMats.push(o.material);
+      }
+    });
+    villa.add(g);
+    return g;
+  }
+  const scaffolds = [scaffoldTower(-4.85, 3.5), scaffoldTower(-0.3, 3.5), scaffoldTower(3.6, -3.35)];
+  const SCAFF = { inStart: 0.11, inEnd: 0.2, outStart: 0.8, outEnd: 0.88 };
+  function applyScaffold(p) {
+    let op;
+    if (p <= SCAFF.inStart) op = 0;
+    else if (p < SCAFF.inEnd) op = (p - SCAFF.inStart) / (SCAFF.inEnd - SCAFF.inStart);
+    else if (p < SCAFF.outStart) op = 1;
+    else if (p < SCAFF.outEnd) op = 1 - (p - SCAFF.outStart) / (SCAFF.outEnd - SCAFF.outStart);
+    else op = 0;
+    const vis = op > 0.01;
+    scaffolds.forEach(s => { s.visible = vis; });
+    if (vis) scaffoldMats.forEach(m => { m.opacity = op; m.transparent = op < 1; });
+  }
+
   applyBuild(0);
+  applyScaffold(0);
 
   // ── Camera path ──
   const tmpTarget = new THREE.Vector3();
@@ -321,6 +450,7 @@ function boot() {
     curP += (targetP - curP) * 0.14;
     if (Math.abs(targetP - curP) < 0.0005) curP = targetP;
     applyBuild(curP);
+    applyScaffold(curP);
     villa.position.y = (0.025 + 0.025 * curP) * Math.sin(t * 0.55);
     if (curP > 0.992) {
       if (!built) { built = true; controls.enabled = true; controls.autoRotate = true; applyCamera(1); controls.update(); }
