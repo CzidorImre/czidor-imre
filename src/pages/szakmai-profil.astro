@@ -1,6 +1,7 @@
 ---
 // Standalone A4 print-optimized professional profile.
 // Self-contained: own token set + inline CSS, does NOT load global.css.
+import PhoneReveal from '../components/PhoneReveal.astro';
 const FAVICON =
   "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 38 38'%3E%3Crect width='38' height='38' rx='7' fill='%23F7F5F0'/%3E%3Cg fill='none' stroke='%233E8A95' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'%3E%3Cpath d='M5 18 L19 6.5 L33 18'/%3E%3Cpath d='M8.5 15.5 V31.5 H29.5 V15.5'/%3E%3Cpath d='M16 31.5 V23 H22 V31.5'/%3E%3C/g%3E%3C/svg%3E";
 ---
@@ -70,6 +71,12 @@ const FAVICON =
   .ft .c{display:flex;flex-direction:column;gap:.2rem;}
   .ft .c .k{font-family:var(--fm);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);}
   .ft .c .v{font-size:13px;font-weight:600;}
+  /* reveal button + revealed link, styled like the value they replace.
+     :global() because Astro-scoped styles do not reach a child component,
+     and this page deliberately does not load global.css. */
+  .ft .c :global(button.v){background:none;border:0;padding:0;margin:0;font-family:var(--fs);font-size:13px;font-weight:600;color:var(--accent);cursor:pointer;text-align:left;}
+  .ft .c :global(a.v){font-size:13px;font-weight:600;}
+  .ft .c :global([hidden]){display:none!important;}
 
   @media print{
     @page{size:A4;margin:0;}
@@ -166,12 +173,13 @@ const FAVICON =
   </div>
 
   <footer class="ft">
-    <div class="c"><span class="k">Telefon</span><span class="v">+36 20 942 5707</span></div>
+    <div class="c"><span class="k">Telefon</span><PhoneReveal buttonClass="v" linkClass="v" /></div>
     <div class="c"><span class="k">E-mail</span><span class="v">gepm.kft@gmail.com</span></div>
     <div class="c"><span class="k">Székhely</span><span class="v">3535 Miskolc, Tömörkény I. u. 21.</span></div>
     <div class="c"><span class="k">Kamara</span><span class="v">BAZ Megyei Mérnöki Kamara</span></div>
   </footer>
 </div>
 
+<script is:inline src="/phone.js"></script>
 </body>
 </html>

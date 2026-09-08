@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import PhoneReveal from '../components/PhoneReveal.astro';
 ---
 <BaseLayout
   title="Adatvédelmi tájékoztató · Czidor Imre · GÉP-M 2001 Kft."
@@ -18,15 +19,18 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     .legal-wrap li { display: flex; gap: .7rem; color: var(--ink-2); }
     .legal-wrap li::before { content: ""; margin-top: .65em; width: 7px; height: 1px; background: var(--accent); flex-shrink: 0; }
     .legal-wrap a { color: var(--accent); }
+    .legal-wrap code { font-family: var(--fm); font-size: .85em; color: var(--ink); }
+    /* :global() because Astro-scoped styles do not reach a child component */
+    .legal-wrap :global(.legal-phone) { color: var(--accent); }
   </style>
 
   <main class="legal-wrap">
     <a href="/" class="legal-back"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15 18l-6-6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg> Vissza a főoldalra</a>
     <h1>Adatkezelési tájékoztató</h1>
-    <p class="legal-sub">A kapcsolatfelvételi űrlapon megadott személyes adatok kezeléséről, az EU 2016/679 (GDPR) rendelet alapján.</p>
+    <p class="legal-sub">A kapcsolatfelvételi űrlapon megadott személyes adatok és a weboldal látogatási adatainak kezeléséről, az EU 2016/679 (GDPR) rendelet alapján.</p>
 
     <h2>1. Az adatkezelő</h2>
-    <p>GÉP-M 2001 Kft. (3535 Miskolc, Tömörkény István utca 21.), képviseli Czidor Imre. Elérhetőség: <a href="mailto:gepm.kft@gmail.com">gepm.kft@gmail.com</a>, <a href="tel:+36209425707">+36 20 942 5707</a>.</p>
+    <p>GÉP-M 2001 Kft. (3535 Miskolc, Tömörkény István utca 21.), képviseli Czidor Imre. Elérhetőség: <a href="mailto:gepm.kft@gmail.com">gepm.kft@gmail.com</a>, <PhoneReveal buttonClass="legal-phone" linkClass="legal-phone" />.</p>
 
     <h2>2. A kezelt adatok és a cél</h2>
     <p>A weboldal kapcsolatfelvételi űrlapján Ön az alábbi adatokat adhatja meg, kizárólag a megkeresésére adott válasz, illetve az ajánlatadás céljából:</p>
@@ -43,10 +47,15 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <h2>4. Az adatkezelés időtartama</h2>
     <p>A megadott adatokat a megkeresés megválaszolásához, illetve az esetleges szerződéskötéshez szükséges ideig, de legfeljebb a hozzájárulás visszavonásáig kezeljük.</p>
 
-    <h2>5. Adattovábbítás</h2>
+    <h2>5. Webanalitika – Microsoft Clarity</h2>
+    <p>A weboldal – kizárólag az Ön előzetes hozzájárulása esetén – a Microsoft Clarity látogatói elemző szolgáltatását használja annak megértésére, hogyan használják a látogatók az oldalt. A szolgáltatás névtelen használati adatokat rögzít: a megtekintett oldalakat, kattintásokat, görgetést és egérmozgást, valamint technikai adatokat (böngésző, eszköztípus, képernyőméret, hivatkozó oldal, az IP-cím alapján becsült földrajzi hely). Ehhez a Microsoft sütiket helyez el az eszközén (<code>_clck</code>, <code>_clsk</code>). Az űrlapmezőkbe beírt szöveget a szolgáltatás alapértelmezés szerint elfedi.</p>
+    <p>Jogalap: az Ön hozzájárulása (GDPR 6. cikk (1) a) pont), amelyet a főoldalon megjelenő süti sávon adhat meg. Hozzájárulás hiányában a szolgáltatás nem töltődik be, és süti sem kerül az eszközére. A hozzájárulás bármikor, következmények nélkül visszavonható: <a href="#" id="consent-reset">a süti beállítás törlése és újra kérdése</a>.</p>
+    <p>Adatfeldolgozó: Microsoft Ireland Operations Limited, illetve a Microsoft Corporation; az adatok az EU-n kívülre is továbbításra kerülhetnek az EU–USA adatvédelmi keretrendszer, illetve az Európai Bizottság által elfogadott általános szerződési feltételek alapján. Részletek a <a href="https://privacy.microsoft.com/hu-hu/privacystatement" target="_blank" rel="noopener">Microsoft adatvédelmi nyilatkozatában</a>.</p>
+
+    <h2>6. Adattovábbítás</h2>
     <p>Az űrlap technikai továbbítását az üzenetküldő szolgáltató (pl. Formspree) végzi mint adatfeldolgozó. Az adatokat harmadik fél részére marketing célból nem adjuk át.</p>
 
-    <h2>6. Az Ön jogai</h2>
+    <h2>7. Az Ön jogai</h2>
     <p>Ön bármikor kérheti a kezelt adataihoz való hozzáférést, azok helyesbítését, törlését vagy az adatkezelés korlátozását, továbbá visszavonhatja hozzájárulását a fenti elérhetőségeken. Jogai sérelme esetén a Nemzeti Adatvédelmi és Információszabadság Hatósághoz (NAIH) fordulhat.</p>
 
     <p style="margin-top:3rem;color:var(--faint);font-size:.85rem">Ez egy általános minta-tájékoztató; a publikálás előtt javasolt szakmai (jogi) ellenőrzés, valamint a tényleges adatfeldolgozó adatainak pontosítása.</p>

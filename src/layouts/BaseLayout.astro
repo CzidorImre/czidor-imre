@@ -8,6 +8,10 @@ export interface Props {
 }
 
 const { title, description, noindex = false } = Astro.props;
+
+// Microsoft Clarity project id (clarity.microsoft.com > Settings > Overview).
+// Public by design — it ships in the page source. Empty = Clarity stays off.
+const CLARITY_ID = 'yf59qg60u9';
 ---
 <!DOCTYPE html>
 <html lang="hu">
@@ -34,5 +38,9 @@ const { title, description, noindex = false } = Astro.props;
   </head>
   <body>
     <slot />
+    <!-- Phone reveal (anti-scraping); markup comes from PhoneReveal.astro -->
+    <script is:inline src="/phone.js"></script>
+    <!-- Microsoft Clarity; only fires after the visitor accepts in the consent bar -->
+    <script is:inline src="/clarity.js" data-clarity-id={CLARITY_ID}></script>
   </body>
 </html>

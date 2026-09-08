@@ -1,0 +1,41 @@
+---
+// Anti-scraping phone reveal.
+//
+// Renders a real <button> where the number used to be, plus the empty tel:
+// link it fills in on click. Neither carries the number in the clear — it
+// travels base64-encoded in a data attribute and is decoded client side.
+// The decode/reveal logic lives once in /phone.js, loaded by the layout.
+import { PHONE_ENCODED } from '../lib/phone';
+
+interface Props {
+  /** extra classes for the reveal button, on top of the .phone-btn reset */
+  buttonClass?: string;
+  /** classes for the tel: link that takes the button's place */
+  linkClass?: string;
+  /** visible button text */
+  label?: string;
+  /** spoken label, for when the visible text is not descriptive on its own */
+  ariaLabel?: string;
+  /** phone icon size in px; omit for no icon */
+  icon?: number;
+}
+
+const {
+  buttonClass = '',
+  linkClass = '',
+  label = 'Telefonszám mutatása',
+  ariaLabel = 'Telefonszám megjelenítése',
+  icon,
+} = Astro.props;
+
+const ICON = 'M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z';
+const id = 'tel-' + Math.random().toString(36).slice(2, 9);
+---
+<button
+  type="button"
+  class:list={['phone-btn', buttonClass]}
+  aria-label={ariaLabel}
+  data-phone={PHONE_ENCODED}
+  data-phone-target={id}
+>{icon && <svg viewBox="0 0 24 24" width={icon} height={icon} fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d={ICON} stroke-linecap="round" stroke-linejoin="round"/></svg>}<span>{label}</span></button>
+<a id={id} class:list={[linkClass]} hidden>{icon && <svg viewBox="0 0 24 24" width={icon} height={icon} fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d={ICON} stroke-linecap="round" stroke-linejoin="round"/></svg>}<span data-phone-num></span></a>

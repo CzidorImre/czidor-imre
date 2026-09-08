@@ -139,19 +139,27 @@
     btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
   })();
 
-  /* ── cookie / consent note ── */
+  /* ── cookie / consent bar ── */
+  /* 'ci_consent' is 'granted' or 'denied'; anything else means not asked yet.
+     Granting loads Microsoft Clarity (see /clarity.js), denying loads nothing. */
   (function () {
-    const bar = $('#cookie'), ok = $('#cookie-ok'); if (!bar || !ok) return;
-    let seen = false;
-    try { seen = localStorage.getItem('ci_cookie_ok') === '1'; } catch (e) {}
-    if (!seen) {
+    const bar = $('#cookie'), ok = $('#cookie-ok'), no = $('#cookie-no');
+    if (!bar || !ok || !no) return;
+    let choice = null;
+    try { choice = localStorage.getItem('ci_consent'); } catch (e) {}
+    if (choice !== 'granted' && choice !== 'denied') {
       bar.hidden = false;
       setTimeout(() => bar.classList.add('show'), 1600);
     }
-    ok.addEventListener('click', () => {
+    const close = (value) => {
       bar.classList.remove('show');
-      try { localStorage.setItem('ci_cookie_ok', '1'); } catch (e) {}
+      try { localStorage.setItem('ci_consent', value); } catch (e) {}
       setTimeout(() => { bar.hidden = true; }, 500);
+    };
+    ok.addEventListener('click', () => {
+      close('granted');
+      if (window.ciClarity) window.ciClarity.load();
     });
+    no.addEventListener('click', () => close('denied'));
   })();
 })();
