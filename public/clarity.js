@@ -15,6 +15,11 @@
       t = l.createElement(r); t.async = 1; t.src = 'https://www.clarity.ms/tag/' + i;
       y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
     })(window, document, 'clarity', 'script', id);
+
+    /* We only get here once the visitor accepted analytics, so tell Clarity it
+       may use its cookies. Ad storage stays denied - no marketing cookies.
+       Queued by the stub above, so it is safe to call before the tag lands. */
+    window.clarity('consentv2', { ad_Storage: 'denied', analytics_Storage: 'granted' });
   }
 
   window.ciClarity = { load: load };
