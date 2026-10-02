@@ -84,8 +84,6 @@
     playBuild();
   })();
 
-  /* ── (minimal theme: no cursor-glow / tilt) ── */
-  function bindTilt() {}
 
   /* ── (content for Mandatory / Tasks / FAQ / Portfolio is now rendered
         server-side in their respective Astro components) ── */
@@ -119,8 +117,7 @@
     });
   }));
 
-  /* ── bind tilt + observe reveals (after dynamic injection) ── */
-  $$('.tilt').forEach(bindTilt);
+  /* ── observe reveals ── */
   observeReveal();
 
   /* ── active-section nav highlight ── */
