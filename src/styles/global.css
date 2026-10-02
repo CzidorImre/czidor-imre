@@ -266,7 +266,6 @@ em { font-style: italic; }
 .cred .code { align-self: start; font-family: var(--fm); font-size: 11px; letter-spacing: .08em; padding: .35rem .7rem; border-radius: var(--r); border: 1px solid var(--line); color: var(--accent-d); }
 .cred h4 { font-family: var(--fd); font-weight: 600; font-size: 1.1rem; }
 .cred p { font-size: .85rem; color: var(--muted); }
-.cred-verify { display: inline-block; margin-top: 1.2rem; font-size: .92rem; color: var(--accent-d); }
 @media (max-width: 860px){ .about-grid { grid-template-columns: 1fr; } .cred-grid { grid-template-columns: 1fr; } }
 
 /* ═══ FAQ ═══ */
