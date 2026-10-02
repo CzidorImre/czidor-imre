@@ -94,7 +94,10 @@ em { font-style: italic; }
 .mnav a { font-family: var(--fd); font-weight: 600; font-size: clamp(1.5rem,6vw,2.1rem); padding-block: .5rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--line-2); color: var(--ink); }
 .mnav a span { font-family: var(--fm); font-size: 12px; color: var(--faint); }
 .mnav .btn { margin-top: 1.4rem; justify-content: center; font-size: 1.05rem; }
-@media (max-width: 1040px){ .nav, .hdr-cta { display: none; } .burger { display: grid; } }
+/* narrow laptops / tablets: keep the full bar, just tighter; fold into the burger only below 860px */
+@media (max-width: 1040px){ .nav { gap: 1.25rem; } .nav a { font-size: 14.5px; } }
+@media (max-width: 960px){ .brand .bs { display: none; } }
+@media (max-width: 860px){ .nav, .hdr-cta { display: none; } .burger { display: grid; } }
 
 /* ═══ HERO (auto-built on load) ═══ */
 .hero { position: relative; }
@@ -365,7 +368,7 @@ em { font-style: italic; }
 .hdr-phone:hover { color: var(--accent-d); }
 .hdr-phone svg { color: var(--accent-d); }
 @media (max-width: 1180px){ .hdr-phone span { display: none; } }
-@media (max-width: 1040px){ .hdr-right { display: none; } }
+@media (max-width: 860px){ .hdr-right { display: none; } }
 
 
 /* ═══ HIBALISTA (catches) ═══ */
