@@ -1,8 +1,9 @@
 ---
-// 09 — Contact: direct phone/e-mail/address only.
+// 09 — Contact: phone/e-mail/address plus the pre-filled quote e-mail.
 import PhoneReveal from './PhoneReveal.astro';
+import { QUOTE_MAILTO } from '../lib/quote';
 ---
-<section class="section" id="kapcsolat">
+<section class="section alt" id="kapcsolat">
   <div class="wrap">
     <div class="shead shead-c">
       <div class="rv">
@@ -17,6 +18,7 @@ import PhoneReveal from './PhoneReveal.astro';
           <div class="con-row"><dt>Telefon</dt><dd><PhoneReveal /></dd></div>
           <div class="con-row"><dt>E-mail</dt><dd><a href="mailto:gepm.kft@gmail.com">gepm.kft@gmail.com</a></dd></div>
         </dl>
+        <a href={QUOTE_MAILTO} class="btn btn-primary con-cta">Ajánlatkérés e-mailben <span class="arr" aria-hidden="true">→</span></a>
       </div>
       <div class="map"><iframe title="Iroda · Miskolc, Tömörkény István u. 21." src="https://www.google.com/maps?q=Miskolc%2C+T%C3%B6m%C3%B6rk%C3%A9ny+Istv%C3%A1n+utca+21&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
     </aside>
