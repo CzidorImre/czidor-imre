@@ -99,9 +99,19 @@
     h.setAttribute('aria-expanded', open);
   });
 
+  /* ── PORTFOLIO: phones show 6 cards until asked, or until a filter is used ── */
+  const grid = $('#proj-grid'), more = $('#proj-more');
+  const showAll = () => { grid.classList.add('all'); if (more) more.hidden = true; };
+  if (more) more.addEventListener('click', () => {
+    showAll();
+    const next = grid.children[6]; // keep keyboard focus where the list continues
+    if (next) { next.tabIndex = -1; next.focus({ preventScroll: true }); }
+  });
+
   /* ── PORTFOLIO filter ── */
   $$('.fbtn').forEach(btn => btn.addEventListener('click', () => {
     const f = btn.dataset.f;
+    if (f !== 'all') showAll();
     $$('.fbtn').forEach(b => { const on = b === btn; b.classList.toggle('act', on); b.setAttribute('aria-pressed', on); });
     $$('#proj-grid .proj').forEach(c => {
       const show = f === 'all' || c.dataset.cat === f;

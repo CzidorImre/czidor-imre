@@ -2,6 +2,7 @@
 // Fixed site header + full-screen mobile navigation overlay.
 // Scroll state, burger toggle and scroll-spy are wired up in /site.js.
 import PhoneReveal from './PhoneReveal.astro';
+import { QUOTE_MAILTO } from '../lib/quote';
 ---
 <header class="hdr" id="hdr">
   <div class="wrap hdr-in">
@@ -18,7 +19,7 @@ import PhoneReveal from './PhoneReveal.astro';
     </nav>
     <div class="hdr-right">
       <PhoneReveal buttonClass="hdr-phone" linkClass="hdr-phone" label="Telefonszám" ariaLabel="Telefonszám megjelenítése" icon={15} />
-      <a href="#kapcsolat" class="btn btn-primary hdr-cta">Ajánlatkérés <span class="arr" aria-hidden="true">→</span></a>
+      <a href={QUOTE_MAILTO} class="btn btn-primary hdr-cta">Ajánlatkérés <span class="arr" aria-hidden="true">→</span></a>
     </div>
     <button class="burger" id="burger" aria-label="Menü megnyitása" aria-expanded="false" aria-controls="mnav">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 7h16M4 12h16M4 17h16" stroke-linecap="round"/></svg>
@@ -32,5 +33,5 @@ import PhoneReveal from './PhoneReveal.astro';
   <a href="#referenciak" data-ml>Referenciák <span>03</span></a>
   <a href="#bemutatkozas" data-ml>Bemutatkozás <span>04</span></a>
   <a href="#gyik" data-ml>GYIK <span>05</span></a>
-  <a href="#kapcsolat" class="btn btn-primary" data-ml>Ajánlatkérés →</a>
+  <a href={QUOTE_MAILTO} class="btn btn-primary" data-ml>Ajánlatkérés →</a>
 </nav>

@@ -2,11 +2,12 @@
 // Fixed/floating UI: mobile call bar, back-to-top, cookie consent bar.
 // Behaviour (show/hide, localStorage consent) is in /site.js.
 import PhoneReveal from './PhoneReveal.astro';
+import { QUOTE_MAILTO } from '../lib/quote';
 ---
 <!-- mobile click-to-call bar -->
 <div class="callbar" id="callbar" aria-label="Gyors elérhetőség">
   <PhoneReveal buttonClass="callbar-btn call" linkClass="callbar-btn call" label="Hívás" ariaLabel="Telefonszám megjelenítése a híváshoz" icon={18} />
-  <a href="#kapcsolat" class="callbar-btn quote">Ajánlatkérés</a>
+  <a href={QUOTE_MAILTO} class="callbar-btn quote">Ajánlatkérés</a>
 </div>
 
 <!-- back to top -->

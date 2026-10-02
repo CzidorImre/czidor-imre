@@ -436,7 +436,13 @@ function boot() {
   };
 
   // ── Resize ──
-  function resize() { renderer.setSize(W(), H()); camera.aspect = W() / H(); camera.updateProjectionMatrix(); }
+  function resize() {
+    renderer.setSize(W(), H()); camera.aspect = W() / H();
+    // desktop: shift the house right so it frames the hero copy instead of sitting behind it
+    if (small()) camera.clearViewOffset(); else camera.setViewOffset(W(), H(), -W() * 0.2, 0, W(), H());
+    camera.updateProjectionMatrix();
+  }
+  resize();
   window.addEventListener('resize', resize);
   if (window.ResizeObserver) new ResizeObserver(resize).observe(mount);
 

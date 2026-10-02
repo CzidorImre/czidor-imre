@@ -21,7 +21,11 @@
     if (wasFocused) link.focus();
   }
 
-  buttons().forEach(btn => btn.addEventListener('click', () => reveal(btn)));
+  buttons().forEach(btn => btn.addEventListener('click', () => {
+    reveal(btn);
+    // the mobile call bar says "Hívás", so dial in the same tap
+    if (btn.classList.contains('callbar-btn')) location.href = document.getElementById(btn.dataset.phoneTarget).href;
+  }));
 
   /* The A4 profile sheet is meant to be printed and handed over, so put the
      number on the page before the print dialog renders it. */
