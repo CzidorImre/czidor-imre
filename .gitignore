@@ -7,3 +7,4 @@ dist/
 *.log
 source_extracted/
 source.docx
+.claude/
