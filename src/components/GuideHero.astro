@@ -9,6 +9,7 @@ const { h1, lead, crumb } = Astro.props as { h1: string; lead: string; crumb: st
     <nav class="crumbs" aria-label="Morzsamenü"><a href="/">Főoldal</a><span aria-hidden="true">/</span><span>Tudnivalók</span><span aria-hidden="true">/</span><span>{crumb}</span></nav>
     <h1>{h1}</h1>
     <p class="sub">{lead}</p>
+    <p class="byline">Írta: <a href="/#bemutatkozas">Czidor Imre</a> · építési műszaki ellenőr (ME-É-I 05-50111), felelős műszaki vezető</p>
     <div class="cta-row">
       <a href={QUOTE_MAILTO} class="btn btn-primary">Ajánlatkérés <span class="arr" aria-hidden="true">→</span></a>
       <a href="#kapcsolat" class="btn btn-ghost">Elérhetőségek</a>

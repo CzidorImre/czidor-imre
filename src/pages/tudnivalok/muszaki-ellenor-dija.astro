@@ -2,6 +2,7 @@
 import SubPage from '../../layouts/SubPage.astro';
 import GuideHero from '../../components/GuideHero.astro';
 import GuideLinks from '../../components/GuideLinks.astro';
+import { guideAuthor } from '../../data/topics';
 import { QUOTE_MAILTO } from '../../lib/quote';
 
 const title = 'Mennyibe kerül a műszaki ellenőr? · Czidor Imre';
@@ -16,7 +17,7 @@ const jsonLd = [
     headline: h1,
     description,
     inLanguage: 'hu',
-    author: { '@type': 'Person', name: 'Czidor Imre' },
+    author: guideAuthor,
     publisher: { '@type': 'Organization', name: 'GÉP-M 2001 Kft.' },
   },
 ];

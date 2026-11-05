@@ -1,6 +1,7 @@
 ---
 // Site footer.
 import PhoneReveal from './PhoneReveal.astro';
+import { towns } from '../data/towns';
 
 // On subpages the section links must point back to the main page.
 const { base = '' } = Astro.props as { base?: string };
@@ -29,6 +30,12 @@ const { base = '' } = Astro.props as { base?: string };
           <a href="mailto:gepm.kft@gmail.com" class="lu">gepm.kft@gmail.com</a>
         </address>
       </div>
+      <details class="ftr-col ftr-area" id="terulet">
+        <summary><h4>Szolgáltatási terület</h4></summary>
+        <ul>
+          {towns.map((t) => <li><a href={`/muszaki-ellenor/${t.slug}/`} class="lu">{t.name}</a></li>)}
+        </ul>
+      </details>
     </div>
     <div class="ftr-bottom">
       <div class="copy">© 2026 GÉP-M 2001 Kft. · Czidor Imre · Minden jog fenntartva.</div>

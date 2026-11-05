@@ -16,3 +16,11 @@ export const topics: Topic[] = [
 ];
 
 export const topicUrl = (slug: string) => `/tudnivalok/${slug}/`;
+
+/** JSON-LD author for the guide pages; matches the visible byline in GuideHero. */
+export const guideAuthor = {
+  '@type': 'Person',
+  name: 'Czidor Imre',
+  url: 'https://muszakiellenorborsod.hu/#bemutatkozas',
+  jobTitle: 'Építési műszaki ellenőr, felelős műszaki vezető',
+};
