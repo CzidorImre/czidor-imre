@@ -1,0 +1,19 @@
+---
+// Service area: one compact row of links to the town pages.
+import { towns, projectsIn } from '../data/towns';
+
+const withRefs = towns.filter((t) => projectsIn(t).length > 0);
+const others = towns.filter((t) => projectsIn(t).length === 0);
+---
+<section class="area" id="terulet" aria-labelledby="area-h">
+  <div class="wrap area-in rv">
+    <div class="area-head">
+      <h2 id="area-h" class="mono">Szolgáltatási terület</h2>
+      <p>Miskolc központtal Borsod-Abaúj-Zemplén megyében és a szomszédos megyékben vállalok munkát.</p>
+    </div>
+    <ul class="area-list">
+      {withRefs.map((t) => <li><a href={`/muszaki-ellenor/${t.slug}/`} class="ref">{t.name}</a></li>)}
+      {others.map((t) => <li><a href={`/muszaki-ellenor/${t.slug}/`}>{t.name}</a></li>)}
+    </ul>
+  </div>
+</section>

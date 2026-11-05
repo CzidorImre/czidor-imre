@@ -390,3 +390,43 @@ em { font-style: italic; }
 .rv.in { opacity: 1; transform: none; }
 .rv-d1 { transition-delay: .07s; } .rv-d2 { transition-delay: .14s; }
 .rv-d3 { transition-delay: .21s; } .rv-d4 { transition-delay: .28s; }
+
+/* ═══ SERVICE AREA (main page strip linking the town pages) ═══ */
+.area { padding-block: clamp(2.5rem,5vw,3.5rem); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.area-in { display: grid; grid-template-columns: minmax(220px,.8fr) 2fr; gap: 1.5rem clamp(2rem,5vw,4rem); align-items: start; }
+.area-head h2 { color: var(--accent-d); font-family: var(--fm); font-weight: 400; letter-spacing: .16em; line-height: 1.4; margin-bottom: .8rem; }
+.area-head p { color: var(--muted); font-size: .95rem; max-width: 34ch; }
+.area-list { list-style: none; display: flex; flex-wrap: wrap; gap: .45rem; }
+.area-list a { display: inline-block; font-size: 13.5px; padding: .4rem .85rem; border-radius: 999px; border: 1px solid var(--line); color: var(--muted); transition: color .2s, border-color .2s, background .2s; }
+.area-list a.ref { color: var(--ink-2); border-color: rgba(28,27,24,.28); }
+.area-list a:hover { color: var(--accent-d); border-color: var(--accent); background: var(--accent-soft); }
+@media (max-width: 860px){ .area-in { grid-template-columns: 1fr; } }
+
+/* ═══ TOWN PAGES (/muszaki-ellenor/<town>/) ═══ */
+.town-hero { padding-top: clamp(7rem,13vw,10rem); padding-bottom: clamp(3rem,6vw,4.5rem); }
+.crumbs { display: flex; flex-wrap: wrap; gap: .5rem; font-family: var(--fm); font-size: 11.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--faint); margin-bottom: 2rem; }
+.crumbs a { color: var(--muted); transition: color .2s; }
+.crumbs a:hover { color: var(--accent-d); }
+.town-hero h1 { font-size: clamp(2.3rem,5.6vw,4.2rem); max-width: 18ch; }
+.town-hero h1 em { font-style: italic; color: var(--accent-d); }
+.town-hero .sub { color: var(--muted); font-size: clamp(1.05rem,1.4vw,1.22rem); max-width: 56ch; margin-top: 1.4rem; }
+.town-hero .cta-row { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: 2rem; }
+.town-facts { display: grid; grid-template-columns: repeat(4,1fr); margin-top: clamp(2.5rem,5vw,3.5rem); border-top: 1px solid var(--line); }
+.town-facts > div { padding: 1.1rem 1.2rem 0 0; }
+.town-facts dt { font-family: var(--fm); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--faint); margin-bottom: .35rem; }
+.town-facts dd { font-family: var(--fd); font-weight: 600; font-size: 1.15rem; }
+@media (max-width: 760px){ .town-facts { grid-template-columns: repeat(2,1fr); row-gap: .6rem; } }
+.town-text { max-width: 68ch; color: var(--ink-2); font-size: 1.05rem; }
+.town-text p + p { margin-top: 1rem; }
+.proj .km { font-family: var(--fm); font-size: 11px; color: var(--faint); letter-spacing: .08em; }
+.town-svc { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.town-svc .card { padding: clamp(1.5rem,3vw,2.2rem); }
+.town-svc h3 { font-size: 1.35rem; margin-bottom: .6rem; }
+.town-svc p { color: var(--muted); font-size: .98rem; }
+.town-svc a { display: inline-block; margin-top: 1rem; font-size: .92rem; color: var(--accent-d); }
+@media (max-width: 760px){ .town-svc { grid-template-columns: 1fr; } }
+.town-more { display: flex; flex-wrap: wrap; gap: .45rem; list-style: none; }
+.town-more a { display: inline-flex; gap: .5rem; align-items: baseline; font-size: 14px; padding: .45rem .9rem; border-radius: 999px; border: 1px solid var(--line); color: var(--ink-2); transition: color .2s, border-color .2s, background .2s; }
+.town-more a span { font-family: var(--fm); font-size: 11px; color: var(--faint); }
+.town-more a:hover { color: var(--accent-d); border-color: var(--accent); background: var(--accent-soft); }
+.town-h2 { font-size: clamp(1.7rem,3.4vw,2.5rem); margin-bottom: clamp(1.5rem,3vw,2.2rem); }

@@ -33,6 +33,17 @@ src/
   styles/global.css          # a teljes dizájn (CSS custom property tokenek)
 ```
 
+### Település-oldalak (helyi SEO)
+
+`src/pages/muszaki-ellenor/[varos].astro` minden, a `src/data/towns.ts`-ben
+felsorolt településhez külön oldalt generál (`/muszaki-ellenor/<slug>/`). Az
+oldal tartalma a valós referencialistából (`src/data/projects.ts`) épül: a
+település saját referenciái, a legközelebbi további referenciák távolsággal,
+és a közeli települések. A főoldalon csak a `ServiceArea` sáv linkeli őket.
+Új település: egy sor a `towns` tömbbe + koordináta a `coords`-ba. Új
+referencia: egy sor a `projects` tömbbe, a főoldalon és a település-oldalakon
+is megjelenik.
+
 A 3D jelenet és az összes interakció a `public/scene.js` és `public/site.js`
 fájlokban él (a prototípusból átemelt vanilla JS). A komponensek a statikus
 markupot adják; a dinamikus listákat (`#proj-grid`, `#tasks-acc`, `#faq-acc`,
