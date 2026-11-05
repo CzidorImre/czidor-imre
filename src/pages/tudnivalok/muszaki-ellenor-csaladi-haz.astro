@@ -1,0 +1,82 @@
+---
+import SubPage from '../../layouts/SubPage.astro';
+import GuideHero from '../../components/GuideHero.astro';
+import GuideLinks from '../../components/GuideLinks.astro';
+import { guideAuthor } from '../../data/topics';
+import ProjectCard from '../../components/ProjectCard.astro';
+import { allProjects } from '../../data/projects';
+
+const title = 'Műszaki ellenőr családi ház építéséhez · Czidor Imre';
+const description =
+  'Műszaki ellenőr családi ház építéséhez Miskolcon és Borsodban: szerződés- és költségvetés-felülvizsgálat, e-napló, eltakarás előtti ellenőrzés, átadás-átvétel. Így kísérem végig a munkát.';
+const h1 = 'Műszaki ellenőr családi ház építéséhez';
+
+const steps: [string, string][] = [
+  ['Szerződés és költségvetés felülvizsgálata', 'Még a munkakezdés előtt átnézem a kivitelezői ajánlatokat, a vállalkozási szerződést és a költségvetést, hogy a rejtett kockázatok és a hátrányos feltételek időben kiderüljenek.'],
+  ['Munkakezdés és e-napló', 'Készenlétbe helyezem az elektronikus építési naplót, és dokumentáljuk a munkaterület átadását, így a kivitelezés az első naptól nyomon követhető.'],
+  ['Folyamatos helyszíni ellenőrzés', 'Rendszeresen a helyszínen vagyok: ellenőrzöm az eltakarásra kerülő szerkezeteket, a tervnek és a szerződésnek való megfelelést, és csak az elvégzett munkát igazolom le.'],
+  ['Átadás-átvétel és használatbavétel', 'Levezetem a műszaki átadás-átvételt, jegyzékbe veszem a hibákat és hiányosságokat, és ellenőrzöm a pótlásukat egészen a használatbavételig.'],
+];
+
+const homes = allProjects.filter((p) => p.cat === 'lakoepuletek' && p.role === 'me').slice(0, 6);
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: h1,
+    description,
+    inLanguage: 'hu',
+    author: guideAuthor,
+    publisher: { '@type': 'Organization', name: 'GÉP-M 2001 Kft.' },
+  },
+];
+---
+<SubPage title={title} description={description} crumb="Családi ház" jsonLd={jsonLd}>
+  <GuideHero
+    h1={h1}
+    crumb="Családi ház"
+    lead="Családi háznál a legtöbb pénz a rejtett hibákon és a rosszul megírt szerződésen vész el. Műszaki ellenőrként a szerződéskötéstől a használatbavételig az Ön oldalán állok."
+  />
+
+  <section class="section alt">
+    <div class="wrap">
+      <h2 class="town-h2">Hogyan dolgozom</h2>
+      <ol class="catch">
+        {steps.map(([h, p], i) => (
+          <li class="catch-item"><span class="catch-n mono">{String(i + 1).padStart(2, '0')}</span><div><h3>{h}</h3><p>{p}</p></div></li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap prose">
+      <h2>Kötelező családi háznál?</h2>
+      <p>Egy fővállalkozóval épülő családi háznál a műszaki ellenőr általában nem kötelező, hacsak például a hitelező bank elő nem írja. <a href="/tudnivalok/mikor-kotelezo-a-muszaki-ellenor/" class="lu">Mikor kötelező?</a></p>
+      <p>A kivitelezőnek van felelős műszaki vezetője, de ő a kivitelező oldalán áll. Ha valami nem úgy készül, ahogy a terv és a szerződés előírja, az Ön érdekét a műszaki ellenőr képviseli.</p>
+
+      <h2>Mikor érdemes bevonni?</h2>
+      <p>A legjobb már a tervek és a kivitelezői szerződés véglegesítése előtt. Ekkor még a szerződéses kockázatok és a költségvetés is felülvizsgálhatók. Megkezdett építkezésbe is be lehet kapcsolódni, de minél korábban, annál nagyobb a megtakarítási és kockázatcsökkentési lehetőség.</p>
+
+      <h2>Mire figyelek egy családi háznál</h2>
+      <ul>
+        <li>Alapozás, vasalás, szigetelések eltakarás előtt, mert ezek utólag csak bontással láthatók.</li>
+        <li>A beépített anyagok egyeznek-e a tervvel és az árajánlattal: típus, vastagság, minőségi osztály.</li>
+        <li>A részszámlák mögött tényleg ott van-e az elkészült munka.</li>
+        <li>Az e-napló és a megfelelőségi igazolások hiánytalansága, ami garanciális vitánál véd.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section alt">
+    <div class="wrap">
+      <h2 class="town-h2">Lakóépület-referenciák</h2>
+      <div class="proj-grid all">
+        {homes.map((p) => <ProjectCard project={p} />)}
+      </div>
+    </div>
+  </section>
+
+  <GuideLinks current="muszaki-ellenor-csaladi-haz" />
+</SubPage>

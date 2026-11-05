@@ -1,0 +1,20 @@
+---
+// Bottom of every guide page: the other guides, plus the town pages.
+import { topics, topicUrl } from '../data/topics';
+import { towns } from '../data/towns';
+
+const { current } = Astro.props as { current: string };
+const others = topics.filter((t) => t.slug !== current);
+---
+<section class="section alt">
+  <div class="wrap">
+    <h2 class="town-h2">További tudnivalók</h2>
+    <ul class="town-more">
+      {others.map((t) => <li><a href={topicUrl(t.slug)}>{t.label}</a></li>)}
+    </ul>
+    <h3 class="mono guide-k">Ahol dolgoztam</h3>
+    <ul class="town-more">
+      {towns.map((t) => <li><a href={`/muszaki-ellenor/${t.slug}/`}>{t.name}</a></li>)}
+    </ul>
+  </div>
+</section>

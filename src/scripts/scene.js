@@ -468,12 +468,16 @@ function boot() {
     renderer.render(scene, camera);
   }
   applyCamera(0);
-  animate();
+  // Compile all shaders off the main thread (KHR_parallel_shader_compile) before
+  // the first frame; otherwise the first render blocks input for 1s+ on phones.
+  let started = false;
+  const start = () => { if (started) return; started = true; mount.classList.add('scene-ready'); animate(); };
+  renderer.compileAsync(scene, camera).catch(() => {}).then(start);
 
   // ── Pause when scene is off-screen (IntersectionObserver) ──
   const obs = new IntersectionObserver((ents) => {
     ents.forEach(e => {
-      if (e.isIntersecting) { if (!raf) animate(); }
+      if (e.isIntersecting) { if (started && !raf) animate(); }
       else { cancelAnimationFrame(raf); raf = null; }
     });
   }, { threshold: 0.01 });
@@ -482,10 +486,8 @@ function boot() {
   // ── Pause when browser tab is hidden (item 7) ──
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) { cancelAnimationFrame(raf); raf = null; }
-    else if (!raf) animate();
+    else if (started && !raf) animate();
   });
-
-  mount.classList.add('scene-ready');
 }
 
 // Defer the heavy WebGL setup until after the page's critical resources have

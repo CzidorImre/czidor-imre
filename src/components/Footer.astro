@@ -1,21 +1,25 @@
 ---
 // Site footer.
 import PhoneReveal from './PhoneReveal.astro';
+import { towns } from '../data/towns';
+
+// On subpages the section links must point back to the main page.
+const { base = '' } = Astro.props as { base?: string };
 ---
 <footer class="ftr">
   <div class="wrap">
     <div class="ftr-grid">
       <div class="ftr-brand">
-        <a href="#top" class="brand"><svg class="mark" viewBox="0 0 38 38" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M5 18 L19 6.5 L33 18"/><path d="M8.5 15.5 V31.5 H29.5 V15.5"/><path d="M16 31.5 V23 H22 V31.5"/></svg><span class="bt"><span class="bn">Czidor Imre</span><span class="bs">GÉP-M 2001 Kft. · Miskolc</span></span></a>
+        <a href={base || '#top'} class="brand"><svg class="mark" viewBox="0 0 38 38" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M5 18 L19 6.5 L33 18"/><path d="M8.5 15.5 V31.5 H29.5 V15.5"/><path d="M16 31.5 V23 H22 V31.5"/></svg><span class="bt"><span class="bn">Czidor Imre</span><span class="bs">GÉP-M 2001 Kft. · Miskolc</span></span></a>
         <p>Építési műszaki ellenőrzés és felelős műszaki vezetés Miskolcon, 1984 óta az építőiparban, közületi és magán szférában egyaránt.</p>
       </div>
       <div class="ftr-col">
         <h4>Oldal</h4>
         <ul>
-          <li><a href="#szolgaltatasok" class="lu">Szolgáltatások</a></li>
-          <li><a href="#referenciak" class="lu">Referenciák</a></li>
-          <li><a href="#bemutatkozas" class="lu">Bemutatkozás</a></li>
-          <li><a href="#gyik" class="lu">GYIK</a></li>
+          <li><a href={`${base}#szolgaltatasok`} class="lu">Szolgáltatások</a></li>
+          <li><a href={`${base}#referenciak`} class="lu">Referenciák</a></li>
+          <li><a href={`${base}#bemutatkozas`} class="lu">Bemutatkozás</a></li>
+          <li><a href={`${base}#gyik`} class="lu">GYIK</a></li>
         </ul>
       </div>
       <div class="ftr-col">
@@ -26,6 +30,12 @@ import PhoneReveal from './PhoneReveal.astro';
           <a href="mailto:gepm.kft@gmail.com" class="lu">gepm.kft@gmail.com</a>
         </address>
       </div>
+      <details class="ftr-col ftr-area" id="terulet">
+        <summary><h4>Szolgáltatási terület</h4></summary>
+        <ul>
+          {towns.map((t) => <li><a href={`/muszaki-ellenor/${t.slug}/`} class="lu">{t.name}</a></li>)}
+        </ul>
+      </details>
     </div>
     <div class="ftr-bottom">
       <div class="copy">© 2026 GÉP-M 2001 Kft. · Czidor Imre · Minden jog fenntartva.</div>

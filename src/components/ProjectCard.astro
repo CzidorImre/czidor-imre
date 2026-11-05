@@ -1,0 +1,20 @@
+---
+// One reference card, same look as the main page grid. Used on the town and
+// guide pages (the main page grid keeps its own markup for the filter).
+import { catLabel, roleLabel, type Project } from '../data/projects';
+
+const { project: p, km } = Astro.props as { project: Project; km?: number };
+---
+<article class="card proj">
+  <div class="proj-head">
+    <span class="yr">{p.year}</span>
+    <span class="cat">{catLabel[p.cat]}</span>
+  </div>
+  <h3>{p.title}</h3>
+  <div class="loc">{p.town}</div>
+  {p.desc && <p>{p.desc}</p>}
+  <div class="foot">
+    <span class="role-t">{roleLabel[p.role]}</span>
+    {km !== undefined && <span class="km">{km} km-re</span>}
+  </div>
+</article>

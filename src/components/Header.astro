@@ -3,19 +3,22 @@
 // Scroll state, burger toggle and scroll-spy are wired up in /site.js.
 import PhoneReveal from './PhoneReveal.astro';
 import { QUOTE_MAILTO } from '../lib/quote';
+
+// On subpages the section links must point back to the main page.
+const { base = '' } = Astro.props as { base?: string };
 ---
 <header class="hdr" id="hdr">
   <div class="wrap hdr-in">
-    <a href="#top" class="brand" aria-label="Czidor Imre, kezdőlap">
+    <a href={base || '#top'} class="brand" aria-label="Czidor Imre, kezdőlap">
       <svg class="mark" viewBox="0 0 38 38" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M5 18 L19 6.5 L33 18"/><path d="M8.5 15.5 V31.5 H29.5 V15.5"/><path d="M16 31.5 V23 H22 V31.5"/></svg>
       <span class="bt"><span class="bn">Czidor Imre</span><span class="bs">Műszaki ellenőr · FMV</span></span>
     </a>
     <nav class="nav" aria-label="Fő navigáció">
-      <a href="#szolgaltatasok" class="lu">Szolgáltatások</a>
-      <a href="#szerep" class="lu">Szerep</a>
-      <a href="#referenciak" class="lu">Referenciák</a>
-      <a href="#bemutatkozas" class="lu">Bemutatkozás</a>
-      <a href="#gyik" class="lu">GYIK</a>
+      <a href={`${base}#szolgaltatasok`} class="lu">Szolgáltatások</a>
+      <a href={`${base}#szerep`} class="lu">Szerep</a>
+      <a href={`${base}#referenciak`} class="lu">Referenciák</a>
+      <a href={`${base}#bemutatkozas`} class="lu">Bemutatkozás</a>
+      <a href={`${base}#gyik`} class="lu">GYIK</a>
     </nav>
     <div class="hdr-right">
       <PhoneReveal buttonClass="hdr-phone" linkClass="hdr-phone" label="Telefonszám" ariaLabel="Telefonszám megjelenítése" icon={15} />
@@ -28,10 +31,10 @@ import { QUOTE_MAILTO } from '../lib/quote';
 </header>
 
 <nav class="mnav" id="mnav" aria-label="Mobil navigáció" aria-hidden="true" inert>
-  <a href="#szolgaltatasok" data-ml>Szolgáltatások <span>01</span></a>
-  <a href="#szerep" data-ml>Szerep <span>02</span></a>
-  <a href="#referenciak" data-ml>Referenciák <span>03</span></a>
-  <a href="#bemutatkozas" data-ml>Bemutatkozás <span>04</span></a>
-  <a href="#gyik" data-ml>GYIK <span>05</span></a>
+  <a href={`${base}#szolgaltatasok`} data-ml>Szolgáltatások <span>01</span></a>
+  <a href={`${base}#szerep`} data-ml>Szerep <span>02</span></a>
+  <a href={`${base}#referenciak`} data-ml>Referenciák <span>03</span></a>
+  <a href={`${base}#bemutatkozas`} data-ml>Bemutatkozás <span>04</span></a>
+  <a href={`${base}#gyik`} data-ml>GYIK <span>05</span></a>
   <a href={QUOTE_MAILTO} class="btn btn-primary" data-ml>Ajánlatkérés →</a>
 </nav>

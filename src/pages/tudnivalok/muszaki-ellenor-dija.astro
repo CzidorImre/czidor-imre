@@ -1,0 +1,77 @@
+---
+import SubPage from '../../layouts/SubPage.astro';
+import GuideHero from '../../components/GuideHero.astro';
+import GuideLinks from '../../components/GuideLinks.astro';
+import { guideAuthor } from '../../data/topics';
+import { QUOTE_MAILTO } from '../../lib/quote';
+
+const title = 'Mennyibe kerül a műszaki ellenőr? · Czidor Imre';
+const description =
+  'Mitől függ az építési műszaki ellenőr díja, hogyan számolják (a kivitelezési költség arányában vagy havi átalánydíjban), mi van benne, és milyen adatok kellenek egy pontos ajánlathoz.';
+const h1 = 'Mennyibe kerül a műszaki ellenőr?';
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: h1,
+    description,
+    inLanguage: 'hu',
+    author: guideAuthor,
+    publisher: { '@type': 'Organization', name: 'GÉP-M 2001 Kft.' },
+  },
+];
+---
+<SubPage title={title} description={description} crumb="Díjazás" jsonLd={jsonLd}>
+  <GuideHero
+    h1={h1}
+    crumb="Díjazás"
+    lead="Fix árlista nincs, mert két építkezés sem egyforma. A díj a projekt léptékétől, időtartamától és összetettségétől függ. Leírom, mi befolyásolja, és mi kell egy pontos ajánlathoz."
+  />
+
+  <section class="section alt">
+    <div class="wrap prose">
+      <h2>Hogyan számolják a díjat?</h2>
+      <p>A műszaki ellenőri díjat általában kétféleképpen határozzuk meg:</p>
+      <ul>
+        <li><b>A kivitelezési költség arányában</b>, ami a nagyobb, jól körülhatárolt beruházásoknál jellemző.</li>
+        <li><b>Havi átalánydíjban</b>, ami a hosszabb, változó intenzitású munkáknál átláthatóbb.</li>
+      </ul>
+
+      <h2>Mitől függ?</h2>
+      <ul>
+        <li><b>Lépték:</b> a kivitelezés költsége és az épület mérete.</li>
+        <li><b>Időtartam:</b> meddig tart a kivitelezés, és hány ütemben.</li>
+        <li><b>Összetettség:</b> új építés vagy felújítás, lakóépület, középület vagy ipari létesítmény, működő üzem vagy fürdő melletti munka.</li>
+        <li><b>Helyszíni jelenlét:</b> milyen gyakran kell kint lenni, hány eltakarás előtti ellenőrzés várható.</li>
+        <li><b>Mi tartozik bele:</b> csak kivitelezési ellenőrzés, vagy már a szerződés és a költségvetés felülvizsgálata is.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap prose">
+      <h2>Miért éri meg?</h2>
+      <p>A műszaki ellenőr díja ott térül meg, ahol a hibák és a többletköltségek keletkeznek:</p>
+      <ul>
+        <li>a szerződés és a költségvetés felülvizsgálatánál, még a munkakezdés előtt, a hátrányos feltételek és rejtett kockázatok kiszűrésével;</li>
+        <li>a részszámláknál, mert csak a ténylegesen elkészült munkát igazolom le;</li>
+        <li>az eltakarás előtti ellenőrzéseknél, mert egy utólag kiderülő szigetelési vagy alapozási hiba bontással és újraépítéssel jár.</li>
+      </ul>
+      <p><a href="/tudnivalok/muszaki-ellenor-feladatai/" class="lu">Mi minden tartozik a műszaki ellenőr feladatai közé? →</a></p>
+
+      <h2>Mit küldjön az ajánlatkéréshez?</h2>
+      <ul>
+        <li>a helyszínt (települést),</li>
+        <li>a projekt típusát: új építés, felújítás, ipari vagy egyéb,</li>
+        <li>a kért szolgáltatást: műszaki ellenőrzés vagy felelős műszaki vezetés,</li>
+        <li>a tervezett kezdést és időtartamot,</li>
+        <li>a rendelkezésre álló dokumentumokat: terv, engedély, költségvetés.</li>
+      </ul>
+      <p>Az ajánlatkérő gomb egy előre kitöltött e-mailt nyit meg ezekkel a pontokkal. Pontos ajánlatot a projekt alapadatainak ismeretében adok.</p>
+      <p><a href={QUOTE_MAILTO} class="btn btn-primary">Ajánlatkérés e-mailben <span class="arr" aria-hidden="true">→</span></a></p>
+    </div>
+  </section>
+
+  <GuideLinks current="muszaki-ellenor-dija" />
+</SubPage>

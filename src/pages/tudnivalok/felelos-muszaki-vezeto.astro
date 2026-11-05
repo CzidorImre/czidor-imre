@@ -1,0 +1,85 @@
+---
+import SubPage from '../../layouts/SubPage.astro';
+import GuideHero from '../../components/GuideHero.astro';
+import GuideLinks from '../../components/GuideLinks.astro';
+import { guideAuthor } from '../../data/topics';
+import ProjectCard from '../../components/ProjectCard.astro';
+import { allProjects } from '../../data/projects';
+
+const title = 'Felelős műszaki vezető (FMV) Miskolc, Borsod · Czidor Imre';
+const description =
+  'Mit csinál a felelős műszaki vezető, és miben más, mint a műszaki ellenőr? Magas- és mélyépítési FMV Miskolcon és Borsod-Abaúj-Zemplén megyében, MV-Ép/A és MV-M jogosultsággal.';
+const h1 = 'Felelős műszaki vezető: mit csinál, és miben más?';
+
+const fmvProjects = allProjects.filter((p) => p.role === 'fmv');
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: h1,
+    description,
+    inLanguage: 'hu',
+    author: guideAuthor,
+    publisher: { '@type': 'Organization', name: 'GÉP-M 2001 Kft.' },
+  },
+];
+---
+<SubPage title={title} description={description} crumb="Felelős műszaki vezető" jsonLd={jsonLd}>
+  <GuideHero
+    h1={h1}
+    crumb="FMV"
+    lead="A felelős műszaki vezető (FMV) a kivitelező oldalán felel azért, hogy az épület szakszerűen, a tervnek és a jogszabályoknak megfelelően épüljön meg. Magas- és mélyépítésben, közületi és magánberuházásokon vállalom."
+  />
+
+  <section class="section alt">
+    <div class="wrap">
+      <h2 class="town-h2">Két szerep, két oldal</h2>
+      <div class="town-svc">
+        <article class="card">
+          <h3>Építési műszaki ellenőr</h3>
+          <p>Az építtetőt, vagyis a megrendelőt képviseli, és a kivitelezővel szemben ellenőrzi a minőséget, a határidőt és a költséget.</p>
+          <a href="/tudnivalok/muszaki-ellenor-feladatai/" class="lu">Az ellenőr feladatai →</a>
+        </article>
+        <article class="card">
+          <h3>Felelős műszaki vezető</h3>
+          <p>A kivitelező oldalán felel a megvalósítás szakszerűségéért, a helyszíni munka irányításáért és a jogszabályi megfelelésért.</p>
+        </article>
+      </div>
+      <div class="prose" style="margin-top:1.5rem">
+        <p>A két szerep ugyanazon a projekten összeférhetetlen. Bármelyiket vállalom, de egy projekten csak az egyiket.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap prose">
+      <h2>Az FMV feladatai</h2>
+      <ul>
+        <li>A kivitelezés szakszerű, a tervdokumentációnak, az engedélynek és a jogszabályoknak megfelelő irányítása.</li>
+        <li>Az építési napló vezetése: a munka menetének, a lényeges eseményeknek és az eltéréseknek a rögzítése.</li>
+        <li>A helyszíni munka szervezése és ellenőrzése, a beépített anyagok és a technológia megfelelőségének biztosítása.</li>
+        <li>Részvétel a műszaki átadás-átvételen, a szakszerű megvalósításról szóló nyilatkozat megtétele.</li>
+      </ul>
+
+      <h2>Jogosultságaim</h2>
+      <ul>
+        <li><b>MV-Ép/A 05-50111</b>: felelős műszaki vezető, magasépítés</li>
+        <li><b>MV-M 05-50111</b>: felelős műszaki vezető, mélyépítés</li>
+        <li><b>ME-É-I 05-50111</b>: építési műszaki ellenőr, magasépítés</li>
+      </ul>
+      <p>Generálkivitelezői szerepkörben és közbeszerzéses (Kbt.) projekteken is dolgoztam FMV-ként, Miskolc központtal Borsod-Abaúj-Zemplén megyében és a szomszédos megyékben.</p>
+    </div>
+  </section>
+
+  <section class="section alt">
+    <div class="wrap">
+      <h2 class="town-h2">FMV-referenciák</h2>
+      <div class="proj-grid all">
+        {fmvProjects.map((p) => <ProjectCard project={p} />)}
+      </div>
+    </div>
+  </section>
+
+  <GuideLinks current="felelos-muszaki-vezeto" />
+</SubPage>

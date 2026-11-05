@@ -6,6 +6,11 @@
   const $ = (s, c = document) => c.querySelector(s);
   const $$ = (s, c = document) => Array.from(c.querySelectorAll(s));
 
+  /* ── footer service area: open it when linked to (#terulet) ── */
+  const area = $('#terulet');
+  const openArea = () => { if (area && location.hash === '#terulet') area.open = true; };
+  openArea(); window.addEventListener('hashchange', openArea);
+
   /* ── header scroll state ── */
   const hdr = $('#hdr');
   const onScroll = () => hdr.classList.toggle('scrolled', window.scrollY > 24);

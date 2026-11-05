@@ -1,0 +1,164 @@
+---
+// One page per town in src/data/towns.ts → /muszaki-ellenor/<slug>/.
+// Content is built from the real reference list: the town's own projects,
+// the nearest other ones with distances, and nearby towns.
+import SubPage from '../../layouts/SubPage.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import { QUOTE_MAILTO } from '../../lib/quote';
+import { type Project, type Category } from '../../data/projects';
+import {
+  towns,
+  type Town,
+  kmFromOffice,
+  projectsIn,
+  nearbyProjects,
+  nearbyTowns,
+} from '../../data/towns';
+
+export function getStaticPaths() {
+  return towns.map((town) => ({ params: { varos: town.slug }, props: { town } }));
+}
+
+const { town } = Astro.props as { town: Town };
+
+const own = projectsIn(town);
+const nearby = nearbyProjects(town);
+const close = nearbyTowns(town);
+const dist = kmFromOffice(town);
+const nearest = nearby[0];
+
+// Lower-case category names for running text.
+const catWord: Record<Category, string> = {
+  lakoepuletek: 'lakóépület',
+  kozepuletek: 'középület',
+  ipari: 'ipari létesítmény',
+  bank: 'bankfiók, irodaépület',
+};
+const roleWord = (ps: Project[]) => {
+  const roles = new Set(ps.map((p) => p.role));
+  if (roles.size > 1) return 'műszaki ellenőrként és felelős műszaki vezetőként';
+  return roles.has('fmv') ? 'felelős műszaki vezetőként' : 'építési műszaki ellenőrként';
+};
+const listJoin = (xs: string[]) =>
+  xs.length < 2 ? xs.join('') : `${xs.slice(0, -1).join(', ')} és ${xs[xs.length - 1]}`;
+
+let intro: string;
+if (own.length > 1) {
+  const cats = [...new Set(own.map((p) => catWord[p.cat]))];
+  intro = `${town.loc} eddig ${own.length} projektben dolgoztam, ${roleWord(own)}. A munkák között ${listJoin(cats)} is szerepel, a legutóbbi ${own[0].title} (${own[0].year}).`;
+} else if (own.length === 1) {
+  const p = own[0];
+  intro = `${town.loc} ${roleWord(own)} dolgoztam: ${p.title} (${p.year}).${p.desc ? ` ${p.desc}` : ''}`;
+} else {
+  intro = `${town.loc} még nincs lezárt referenciám. A legközelebbi munkám ${nearest.town} volt, innen kb. ${nearest.km} km-re: ${nearest.title} (${nearest.year}).`;
+}
+const office = `Az irodám Miskolcon van, ${town.name} innen légvonalban kb. ${dist} km. A helyszíni bejárásokat, az eltakarás előtti ellenőrzéseket és az átadás-átvételt ${town.loc} is személyesen végzem.`;
+const scope = 'Új családi háznál, felújításnál, társasháznál, középületnél és ipari beruházásnál is vállalok műszaki ellenőrzést az építtető oldalán, vagy felelős műszaki vezetést a kivitelező oldalán. Egy projekten a kettő közül csak az egyiket, mert a két szerep összeférhetetlen.';
+
+const title = `Műszaki ellenőr ${town.loc} · Czidor Imre`;
+const description =
+  own.length > 0
+    ? `Építési műszaki ellenőrzés és felelős műszaki vezetés ${town.loc}. ${own.length} helyi referencia, 40+ év az építőiparban. Czidor Imre, GÉP-M 2001 Kft., Miskolc.`
+    : `Építési műszaki ellenőrzés és felelős műszaki vezetés ${town.loc}. Legközelebbi referencia: ${nearest.town}, kb. ${nearest.km} km. Czidor Imre, 40+ év az építőiparban.`;
+
+const homeUrl = new URL('/', Astro.site).href;
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'ProfessionalService',
+    name: 'Czidor Imre · GÉP-M 2001 Kft.',
+    url: homeUrl,
+    description: `Építési műszaki ellenőrzés és felelős műszaki vezetés ${town.loc}.`,
+    areaServed: { '@type': 'City', name: town.name },
+    telephone: '+36209425707',
+    email: 'gepm.kft@gmail.com',
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: 'Tömörkény István utca 21.',
+      addressLocality: 'Miskolc',
+      postalCode: '3535',
+      addressCountry: 'HU',
+    },
+  },
+];
+---
+<SubPage title={title} description={description} crumb={`Műszaki ellenőr ${town.loc}`} jsonLd={jsonLd}>
+    <section class="town-hero">
+      <div class="wrap">
+        <nav class="crumbs" aria-label="Morzsamenü"><a href="/">Főoldal</a><span aria-hidden="true">/</span><span>{town.name}</span></nav>
+        <h1>Építési műszaki ellenőr <em>{town.loc}</em></h1>
+        <p class="sub">Független műszaki ellenőrzés és felelős műszaki vezetés {town.loc} és a környező településeken. Czidor Imre, 1984 óta az építőiparban.</p>
+        <div class="cta-row">
+          <a href={QUOTE_MAILTO} class="btn btn-primary">Ajánlatkérés <span class="arr" aria-hidden="true">→</span></a>
+          <a href="#kapcsolat" class="btn btn-ghost">Elérhetőségek</a>
+        </div>
+        <dl class="town-facts">
+          <div><dt>Megye</dt><dd>{town.county}</dd></div>
+          <div><dt>Miskolctól</dt><dd>kb. {dist} km</dd></div>
+          <div><dt>Helyi referencia</dt><dd>{own.length > 0 ? `${own.length} projekt` : 'még nincs'}</dd></div>
+          <div><dt>{own.length > 0 ? 'Közeli referencia' : 'Legközelebbi referencia'}</dt><dd>{nearest.town}, {nearest.km} km</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <section class="section alt">
+      <div class="wrap">
+        <h2 class="town-h2">{town.name} és környéke</h2>
+        <div class="town-text">
+          <p>{intro}</p>
+          <p>{office}</p>
+          <p>{scope}</p>
+        </div>
+      </div>
+    </section>
+
+    {own.length > 0 && (
+      <section class="section">
+        <div class="wrap">
+          <h2 class="town-h2">Referenciák {town.loc}</h2>
+          <div class="proj-grid all">
+            {own.map((p) => <ProjectCard project={p} />)}
+          </div>
+        </div>
+      </section>
+    )}
+
+    <section class={own.length > 0 ? 'section alt' : 'section'}>
+      <div class="wrap">
+        <h2 class="town-h2">Közeli referenciák</h2>
+        <div class="proj-grid all">
+          {nearby.map((p) => <ProjectCard project={p} km={p.km} />)}
+        </div>
+        <p style="margin-top:1.5rem"><a href="/#referenciak" class="btn btn-ghost">Mind a referencia a főoldalon <span class="arr" aria-hidden="true">→</span></a></p>
+      </div>
+    </section>
+
+    <section class={own.length > 0 ? 'section' : 'section alt'}>
+      <div class="wrap">
+        <h2 class="town-h2">Amit vállalok</h2>
+        <div class="town-svc">
+          <article class="card">
+            <h3>Építési műszaki ellenőrzés</h3>
+            <p>Az építtető oldalán, a kivitelezővel szemben: minőség, mennyiség, határidő és költség folyamatos kontrollja a tervtől az átadásig. Szerződés- és árajánlat-felülvizsgálat, e-napló, teljesítésigazolás.</p>
+            <a href="/tudnivalok/muszaki-ellenor-feladatai/" class="lu">A műszaki ellenőr feladatai →</a>
+          </article>
+          <article class="card">
+            <h3>Felelős műszaki vezetés</h3>
+            <p>A kivitelező oldalán, magas- és mélyépítésben, közületi és magánberuházásokon. Jogosultság: MV-Ép/A és MV-M 05-50111.</p>
+            <a href="/tudnivalok/felelos-muszaki-vezeto/" class="lu">Az FMV szerepe részletesen →</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section alt">
+      <div class="wrap">
+        <h2 class="town-h2">Közeli települések</h2>
+        <ul class="town-more">
+          {close.map((o) => <li><a href={`/muszaki-ellenor/${o.slug}/`}>{o.name} <span>{o.km} km</span></a></li>)}
+          <li><a href="#terulet">Összes település</a></li>
+        </ul>
+      </div>
+    </section>
+
+</SubPage>

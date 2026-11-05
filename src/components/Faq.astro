@@ -1,6 +1,7 @@
 ---
 // 08 — FAQ. Rendered at build time; accordion toggle delegated to /site.js.
 // Also emits FAQPage JSON-LD for rich-result eligibility.
+import { topics, topicUrl } from '../data/topics';
 const faqs: [string, string][] = [
   ['Mi a különbség a műszaki ellenőr és a felelős műszaki vezető között?', 'Az építési műszaki ellenőr az építtetőt (a megrendelőt) képviseli, és a kivitelezővel szemben ellenőrzi a minőséget, határidőt és költséget. A felelős műszaki vezető (FMV) ezzel szemben a kivitelező oldalán felel a megvalósítás szakszerűségéért. A két szerep ugyanazon a projekten összeférhetetlen, én bármelyik szerepkört vállalom, de egy projekten csak az egyiket.'],
   ['Mikor kötelező műszaki ellenőrt megbízni?', 'Többek között akkor, ha a kivitelezéshez építési napló kötelező, és több fővállalkozó dolgozik, műemlék érintett, a beruházás közbeszerzés (Kbt.) hatálya alá esik, nemzetgazdasági szempontból kiemelt, építtetői fedezetkezelő működik közre, vagy ha a hitelt nyújtó pénzintézet előírja.'],
@@ -41,6 +42,12 @@ const faqJsonLd = {
         </div>
       ))}
     </div>
+    <nav class="guides rv" aria-label="Részletes tudnivalók">
+      <span class="mono">Részletesen</span>
+      <ul class="area-list">
+        {topics.map((t) => <li><a href={topicUrl(t.slug)}>{t.label}</a></li>)}
+      </ul>
+    </nav>
   </div>
 </section>
 
