@@ -1,0 +1,105 @@
+---
+import SubPage from '../../layouts/SubPage.astro';
+import GuideHero from '../../components/GuideHero.astro';
+import GuideLinks from '../../components/GuideLinks.astro';
+
+const title = 'A műszaki ellenőr feladatai · Czidor Imre';
+const description =
+  'Mit csinál az építési műszaki ellenőr? Helyszíni kontroll, eltakarás előtti ellenőrzés, e-építési napló, teljesítésigazolás, átadás-átvétel. És az öt dolog, amire különösen figyel.';
+const h1 = 'Mit csinál az építési műszaki ellenőr?';
+
+const groups: [string, string[]][] = [
+  ['Folyamatos helyszíni kontroll', [
+    'A kivitelezési tevékenység teljes folyamatának figyelemmel kísérése és ellenőrzése.',
+    'A munkák szakszerű és biztonságos elvégeztetése.',
+    'A szakszerűség ellenőrzése az építési engedély és a jóváhagyott tervdokumentáció alapján.',
+    'Az engedélyekben és tervdokumentációkban foglaltak betartatása.',
+    'Műemlék esetén az örökségvédelmi engedélynek való megfelelés ellenőrzése.',
+  ]],
+  ['Kitűzés, felmérések, járulékos munkák', [
+    'Az építmény kitűzése helyességének ellenőrzése.',
+    'A talajmechanikai, környezetvédelmi és egyéb felmérések megtörténtének ellenőrzése.',
+    'A biztonságos használathoz szükséges járulékos munkálatok megkövetelése.',
+  ]],
+  ['Építési napló', [
+    'Az elektronikus építési napló készenlétbe helyezése és vezetésének ellenőrzése.',
+    'A bejegyzések és jegyzőkönyvek ellenjegyzése, észrevételezése.',
+    'A hibák, hiányosságok és eltérések feltüntetése a naplóban.',
+    'A napló hatósági eljárásra való rendelkezésre állásának biztosítása.',
+  ]],
+  ['Terv- és tervváltoztatási döntések előkészítése', [
+    'Műszaki vagy gazdasági okból indokolt tervváltoztatási javaslatok megtétele.',
+    'Műszaki kérdésekben az építtető döntéseinek előkészítése.',
+    'Javaslattétel például szakértő bevonására.',
+  ]],
+  ['Minőségi és mennyiségi ellenőrzés', [
+    'Az eltakarásra kerülő szerkezetek mennyiségi és minőségi ellenőrzése.',
+    'A műszakilag indokolt további vizsgálatok meghatározása.',
+    'A beépített anyagok és késztermékek megfelelőség-igazolásainak ellenőrzése.',
+    'A technológiai biztonsági előírások betartásának ellenőrzése.',
+  ]],
+  ['Pénzügyi kontroll, teljesítésigazolás', [
+    'A pénzügyi elszámolások és felmérések ellenőrzése.',
+    'Teljesítésigazolás kiállítása a fővállalkozó részére, csak az elvégzett munkára.',
+    'Részvétel az átadás-átvételi és birtokbaadási eljárásban.',
+  ]],
+];
+
+const catches: [string, string][] = [
+  ['Rejtett szerkezetek', 'A vasalás, a szigetelés és az alapozás ellenőrzése eltakarás előtt. Utólag ezek már csak bontással láthatók.'],
+  ['Anyag a tervhez képest', 'A beépített anyag ténylegesen az-e, ami a tervben és a költségvetésben szerepel: típus, vastagság, minőségi osztály, szállítói bizonylat.'],
+  ['Technológiai sorrend és idő', 'A műveletek helyes sorrendje és a technológiai idők betartása. A kapkodás rejtett, később drága hibákat okoz.'],
+  ['Műszaki tartalom és számla', 'A leigazolt teljesítés valóban elkészült-e, és annyi-e, amennyit a vállalkozó leszámláz. A részszámlák műszaki fedezetének ellenőrzése.'],
+  ['Dokumentáció és napló', 'Az e-napló, a mérési jegyzőkönyvek és a megfelelőségi nyilatkozatok hiánytalansága. Ez véd garanciális vita esetén.'],
+];
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: h1,
+    description,
+    inLanguage: 'hu',
+    author: { '@type': 'Person', name: 'Czidor Imre' },
+    publisher: { '@type': 'Organization', name: 'GÉP-M 2001 Kft.' },
+  },
+];
+---
+<SubPage title={title} description={description} crumb="Feladatok" jsonLd={jsonLd}>
+  <GuideHero
+    h1={h1}
+    crumb="Feladatok"
+    lead="Az építési műszaki ellenőr az építtető helyszíni képviselője a kivitelezés teljes folyamatában. Ezek a feladatai, és ezekre figyelek különösen."
+  />
+
+  <section class="section alt">
+    <div class="wrap">
+      <h2 class="town-h2">A feladatkör</h2>
+      <div class="guide-groups">
+        {groups.map(([h, items]) => (
+          <article class="card guide-group">
+            <h3>{h}</h3>
+            <ul>{items.map((i) => <li>{i}</li>)}</ul>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <h2 class="town-h2">Öt dolog, amire különösen figyelek</h2>
+      <div class="prose"><p>A hibák többsége nem a kész falon látszik, hanem az eltakarás pillanatában dől el. Ezeket keresem, mielőtt bármi végleges lenne.</p></div>
+      <ol class="catch">
+        {catches.map(([h, p], i) => (
+          <li class="catch-item"><span class="catch-n mono">{String(i + 1).padStart(2, '0')}</span><div><h3>{h}</h3><p>{p}</p></div></li>
+        ))}
+      </ol>
+      <div class="prose" style="margin-top:2rem">
+        <p>A műszaki ellenőr és a felelős műszaki vezető nem ugyanaz: az ellenőr az építtető, az FMV a kivitelező oldalán áll. <a href="/tudnivalok/felelos-muszaki-vezeto/" class="lu">Miben más a két szerep? →</a></p>
+      </div>
+    </div>
+  </section>
+
+  <GuideLinks current="muszaki-ellenor-feladatai" />
+</SubPage>

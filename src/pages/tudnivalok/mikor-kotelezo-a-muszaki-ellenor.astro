@@ -1,0 +1,85 @@
+---
+import SubPage from '../../layouts/SubPage.astro';
+import GuideHero from '../../components/GuideHero.astro';
+import GuideLinks from '../../components/GuideLinks.astro';
+
+const title = 'Mikor kötelező műszaki ellenőrt megbízni? · Czidor Imre';
+const description =
+  'Mikor kötelező építési műszaki ellenőrt megbízni: építési naplóhoz kötött munka, több fővállalkozó, Kbt., kiemelt beruházás, műemlék, fedezetkezelő, banki előírás. És mikor éri meg akkor is, ha nem kötelező.';
+const h1 = 'Mikor kötelező műszaki ellenőrt megbízni?';
+
+const conditions: [string, string, string][] = [
+  ['a)', 'Több fővállalkozó kivitelező', 'Az építőipari kivitelezési tevékenységet több fővállalkozó kivitelező végzi.'],
+  ['b)', 'Közbeszerzés (Kbt.)', 'Az építési beruházás a közbeszerzési törvény hatálya alá tartozik.'],
+  ['c)', 'Kiemelt beruházás', 'Az építőipari kivitelezési tevékenység kiemelt beruházás.'],
+  ['d)', 'Nemzeti emlék', 'A munka nemzeti emléknek minősülő műemlék építményt érint.'],
+  ['e)', 'Építtetői fedezetkezelő', 'A beruházásban építtetői fedezetkezelő működik közre.'],
+];
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: h1,
+    description,
+    inLanguage: 'hu',
+    author: { '@type': 'Person', name: 'Czidor Imre' },
+    publisher: { '@type': 'Organization', name: 'GÉP-M 2001 Kft.' },
+  },
+];
+---
+<SubPage title={title} description={description} crumb="Mikor kötelező?" jsonLd={jsonLd}>
+  <GuideHero
+    h1={h1}
+    crumb="Mikor kötelező?"
+    lead="Több esetben nem választás, hanem jogszabályi kötelezettség. Összefoglalom, mikor kötelező, és mikor érdemes akkor is megbízni műszaki ellenőrt, ha nem az."
+  />
+
+  <section class="section alt">
+    <div class="wrap">
+      <h2 class="town-h2">A rövid válasz</h2>
+      <div class="prose">
+        <p>A kivitelezési jogszabályok szerint építési napló vezetéséhez kötött építési tevékenységnél kötelező építési műszaki ellenőrt megbízni, ha az alábbi feltételek közül legalább egy teljesül.</p>
+      </div>
+      <div class="mand-tree guide-mand">
+        <div class="mand-base">
+          <div class="n">§</div>
+          <div><h3>Építési napló vezetéséhez kötött tevékenység</h3><p>Kötelező műszaki ellenőrt megbízni, ha emellett:</p></div>
+        </div>
+        <div class="mand-connector">ha</div>
+        <div class="mand-sublist">
+          {conditions.map(([n, h, p]) => (
+            <div class="mand-sub">
+              <div class="n">{n}</div>
+              <div><h3>{h}</h3><p>{p}</p></div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap prose">
+      <h2>Amikor a bank vagy a szerződés írja elő</h2>
+      <p>Jogszabályi kötelezettség nélkül is gyakori, hogy a hitelt nyújtó pénzintézet előírja a műszaki ellenőrt. A bank így szeretne független megerősítést arról, hogy a lehívott összegeknek megfelelő munka valóban elkészült. Ilyenkor a teljesítésigazolás és a részszámlák műszaki ellenőrzése a folyósítás feltétele is lehet.</p>
+
+      <h2>Mikor van építési napló?</h2>
+      <p>Építési naplót jellemzően az engedélyhez vagy bejelentéshez kötött építési munkáknál kell vezetni, ma már elektronikusan (e-építési napló). Hogy az Ön projektje ide tartozik-e, és ha igen, kötelező-e mellé műszaki ellenőr, azt a tervek és az engedély alapján gyorsan meg tudom mondani.</p>
+
+      <h2>Ha nem kötelező, megéri?</h2>
+      <p>A legtöbb családi háznál és kisebb felújításnál nem kötelező, mégis ott térül meg leginkább. A kivitelező felelős műszaki vezetője a kivitelező oldalán áll. Az építtető érdekét a műszaki ellenőr képviseli:</p>
+      <ul>
+        <li><b>Az Ön érdekét képviseli.</b> Független szemmel vizsgálja a minőséget, a mennyiséget és a szerződéses feltételek betartását.</li>
+        <li><b>Pénzt takaríthat meg.</b> A hibák időben történő felismerésével és az indokolatlan többletköltségek kiszűrésével.</li>
+        <li><b>Biztosítja a minőséget.</b> A tervnek, az engedélynek, a jogszabályoknak és a vállalkozási szerződésnek való megfeleltetéssel.</li>
+        <li><b>Megelőzi a problémákat.</b> Az eltakarásra kerülő szerkezetektől a birtokbaadásig minden kritikus ponton jelen van.</li>
+      </ul>
+      <p>A legjobb már a tervek és a kivitelezői szerződés véglegesítése előtt bevonni, így a szerződéses kockázatok és a költségvetés is felülvizsgálhatók a munka megkezdése előtt.</p>
+      <p class="note">Ez az összefoglaló tájékoztató jellegű. Konkrét projektnél mindig a hatályos jogszabályszöveg alapján vizsgálom meg, mi kötelező.</p>
+      <p><a href="/tudnivalok/muszaki-ellenor-feladatai/" class="lu">Mit csinál pontosan a műszaki ellenőr? →</a></p>
+    </div>
+  </section>
+
+  <GuideLinks current="mikor-kotelezo-a-muszaki-ellenor" />
+</SubPage>

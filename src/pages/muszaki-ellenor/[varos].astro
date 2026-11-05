@@ -2,13 +2,10 @@
 // One page per town in src/data/towns.ts → /muszaki-ellenor/<slug>/.
 // Content is built from the real reference list: the town's own projects,
 // the nearest other ones with distances, and nearby towns.
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import Header from '../../components/Header.astro';
-import Contact from '../../components/Contact.astro';
-import Footer from '../../components/Footer.astro';
-import FloatingUI from '../../components/FloatingUI.astro';
+import SubPage from '../../layouts/SubPage.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
 import { QUOTE_MAILTO } from '../../lib/quote';
-import { catLabel, roleLabel, type Project, type Category } from '../../data/projects';
+import { type Project, type Category } from '../../data/projects';
 import {
   towns,
   type Town,
@@ -64,7 +61,6 @@ const description =
     ? `Építési műszaki ellenőrzés és felelős műszaki vezetés ${town.loc}. ${own.length} helyi referencia, 40+ év az építőiparban. Czidor Imre, GÉP-M 2001 Kft., Miskolc.`
     : `Építési műszaki ellenőrzés és felelős műszaki vezetés ${town.loc}. Legközelebbi referencia: ${nearest.town}, kb. ${nearest.km} km. Czidor Imre, 40+ év az építőiparban.`;
 
-const pageUrl = new URL(`/muszaki-ellenor/${town.slug}/`, Astro.site).href;
 const homeUrl = new URL('/', Astro.site).href;
 const jsonLd = [
   {
@@ -84,32 +80,9 @@ const jsonLd = [
       addressCountry: 'HU',
     },
   },
-  {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Főoldal', item: homeUrl },
-      { '@type': 'ListItem', position: 2, name: `Műszaki ellenőr ${town.loc}`, item: pageUrl },
-    ],
-  },
 ];
 ---
-<BaseLayout title={title} description={description}>
-  <Fragment slot="head">
-    <meta property="og:type" content="website" />
-    <meta property="og:locale" content="hu_HU" />
-    <meta property="og:title" content={title} />
-    <meta property="og:description" content={description} />
-    <meta property="og:url" content={pageUrl} />
-    <meta property="og:image" content={new URL('/og-image.png', Astro.site).href} />
-    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
-  </Fragment>
-
-  <a href="#main" class="skip">Ugrás a tartalomhoz</a>
-
-  <Header base="/" />
-
-  <main id="main">
+<SubPage title={title} description={description} crumb={`Műszaki ellenőr ${town.loc}`} jsonLd={jsonLd}>
     <section class="town-hero">
       <div class="wrap">
         <nav class="crumbs" aria-label="Morzsamenü"><a href="/">Főoldal</a><span aria-hidden="true">/</span><span>{town.name}</span></nav>
@@ -144,20 +117,7 @@ const jsonLd = [
         <div class="wrap">
           <h2 class="town-h2">Referenciák {town.loc}</h2>
           <div class="proj-grid all">
-            {own.map((p) => (
-              <article class="card proj">
-                <div class="proj-head">
-                  <span class="yr">{p.year}</span>
-                  <span class="cat">{catLabel[p.cat]}</span>
-                </div>
-                <h3>{p.title}</h3>
-                <div class="loc">{p.town}</div>
-                {p.desc && <p>{p.desc}</p>}
-                <div class="foot">
-                  <span class="role-t">{roleLabel[p.role]}</span>
-                </div>
-              </article>
-            ))}
+            {own.map((p) => <ProjectCard project={p} />)}
           </div>
         </div>
       </section>
@@ -167,21 +127,7 @@ const jsonLd = [
       <div class="wrap">
         <h2 class="town-h2">Közeli referenciák</h2>
         <div class="proj-grid all">
-          {nearby.map((p) => (
-            <article class="card proj">
-              <div class="proj-head">
-                <span class="yr">{p.year}</span>
-                <span class="cat">{catLabel[p.cat]}</span>
-              </div>
-              <h3>{p.title}</h3>
-              <div class="loc">{p.town}</div>
-              {p.desc && <p>{p.desc}</p>}
-              <div class="foot">
-                <span class="role-t">{roleLabel[p.role]}</span>
-                <span class="km">{p.km} km-re</span>
-              </div>
-            </article>
-          ))}
+          {nearby.map((p) => <ProjectCard project={p} km={p.km} />)}
         </div>
         <p style="margin-top:1.5rem"><a href="/#referenciak" class="btn btn-ghost">Mind a referencia a főoldalon <span class="arr" aria-hidden="true">→</span></a></p>
       </div>
@@ -194,12 +140,12 @@ const jsonLd = [
           <article class="card">
             <h3>Építési műszaki ellenőrzés</h3>
             <p>Az építtető oldalán, a kivitelezővel szemben: minőség, mennyiség, határidő és költség folyamatos kontrollja a tervtől az átadásig. Szerződés- és árajánlat-felülvizsgálat, e-napló, teljesítésigazolás.</p>
-            <a href="/#szolgaltatasok" class="lu">Részletek a főoldalon →</a>
+            <a href="/tudnivalok/muszaki-ellenor-feladatai/" class="lu">A műszaki ellenőr feladatai →</a>
           </article>
           <article class="card">
             <h3>Felelős műszaki vezetés</h3>
             <p>A kivitelező oldalán, magas- és mélyépítésben, közületi és magánberuházásokon. Jogosultság: MV-Ép/A és MV-M 05-50111.</p>
-            <a href="/#szerep" class="lu">Miben más a két szerep? →</a>
+            <a href="/tudnivalok/felelos-muszaki-vezeto/" class="lu">Az FMV szerepe részletesen →</a>
           </article>
         </div>
       </div>
@@ -215,11 +161,4 @@ const jsonLd = [
       </div>
     </section>
 
-    <Contact />
-  </main>
-
-  <Footer base="/" />
-  <FloatingUI />
-
-  <script is:inline src="/site.js"></script>
-</BaseLayout>
+</SubPage>
